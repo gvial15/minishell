@@ -1,5 +1,6 @@
 #include "../libft/libft.h"
 #include "../ms.h"
+#include "libft.h"
 
 static char	*get_full_path(char **envp)
 {
@@ -26,25 +27,54 @@ static char	**get_paths(char **envp)
 	return (paths);
 }
 
-char	*get_cmd_path(char *cmd, char **envp) // needs to parse eg: <test grep t > out
-{											  // function was built to receive
-	int		i;								  // parsed cmd like: "grep"
+static int	have_sign(char *split)
+{
+	if (ft_strchr(split, '<') || ft_strchr(split, '>'))
+		return (1);
+	return (0);
+}
+
+char	*isolate_cmd(char *cmd_brut)
+{
+	int		i;
+	char	*cmd;
+	char	**split;
+
+	split = ft_split(cmd_brut, ' ');
+	cmd = NULL;
+	i = -1;
+	while (split[++i])
+	{
+		if (!have_sign(split[i])
+			&& ((i == 0) || (i != 0 && !have_sign(split[i - 1]))
+			|| (i != 0 && have_sign(split[i - 1]) && ft_strlen(split[i - 1]) > 1)))
+		{
+			cmd = split[i];
+			break ;
+		}	
+	}
+	// free(split);
+	return (cmd);
+}
+
+char	*get_cmd_path(char *cmd, char **envp)
+{
+	int		i;
 	char	*path;
 	char	**paths;
-	char	**cmd_without_args;
+	char	*cmd_without_args;
 
 	i = -1;
 	paths = get_paths(envp);
-	cmd_without_args = ft_split(cmd, ' ');
+	cmd_without_args = isolate_cmd(cmd);
 	while (paths[++i])
 	{
-		path = ft_strjoin(paths[i], cmd_without_args[0]);
+		path = ft_strjoin(paths[i], cmd_without_args);
 		if (access(path, X_OK) == 0)
 			break ;
 		free(path);
 		path = NULL;
 	}
-	free_split(cmd_without_args);
 	free_split(paths);
 	return (path);
 }

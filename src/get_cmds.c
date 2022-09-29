@@ -33,7 +33,7 @@ void	get_cmds(char **envp, t_ms *ms)
 		new_cmd = malloc(sizeof(t_cmd) * 1);
 		new_cmd->fd_in = get_fd(split[i], '<'); // default = 0 or open <filename> at exec later
 		new_cmd->fd_out = get_fd(split[i], '>');; // default = 1;
-		new_cmd->cmd_path = get_cmd_path(split[i], envp); // todo
+		new_cmd->cmd_path = get_cmd_path(split[i], envp);
 		// printf("%s\n", get_cmd_path("grep", envp));
 		new_cmd->args = NULL; // todo
 		new_cmd->next = NULL;
