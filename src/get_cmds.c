@@ -1,7 +1,5 @@
 #include "../ms.h"
 
-
-// <from grep t >out
 char	*get_fd(char *cmd, char sign)
 {
 	char	*filename;
@@ -22,6 +20,8 @@ char	*get_fd(char *cmd, char sign)
 	return (filename);
 }
 
+// receive full line from readline, split it between the pipes (|)
+// and then parse all the pipe into a linked list
 void	get_cmds(char **envp, t_ms *ms)
 {
 	int		i;
