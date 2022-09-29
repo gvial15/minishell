@@ -1,4 +1,4 @@
-#include "ms.h"
+#include "../ms.h"
 
 t_cmd	*lst_last(t_cmd *head)
 {

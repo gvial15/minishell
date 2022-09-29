@@ -1,4 +1,4 @@
-#include "ms.h"
+#include "../ms.h"
 
 char	*get_fd(char *cmd, char sign)
 {

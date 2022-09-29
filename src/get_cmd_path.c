@@ -1,5 +1,5 @@
-#include "libft/libft.h"
-#include "ms.h"
+#include "../libft/libft.h"
+#include "../ms.h"
 
 static char	*get_full_path(char **envp)
 {
