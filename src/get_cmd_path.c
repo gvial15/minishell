@@ -1,6 +1,16 @@
-#include "../libft/libft.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   get_cmd_path.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: gvial <marvin@42quebec.com>                +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/09/29 18:28:10 by gvial             #+#    #+#             */
+/*   Updated: 2022/09/29 18:28:12 by gvial            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../ms.h"
-#include "libft.h"
 
 static char	*get_full_path(char **envp)
 {
@@ -47,13 +57,14 @@ char	*isolate_cmd(char *cmd_brut)
 	{
 		if (!have_sign(split[i])
 			&& ((i == 0) || (i != 0 && !have_sign(split[i - 1]))
-			|| (i != 0 && have_sign(split[i - 1]) && ft_strlen(split[i - 1]) > 1)))
+				|| (i != 0 && have_sign(split[i - 1])
+					&& ft_strlen(split[i - 1]) > 1)))
 		{
-			cmd = split[i];
+			cmd = ft_strdup(split[i]);
 			break ;
 		}	
 	}
-	// free(split);
+	free_split(split);
 	return (cmd);
 }
 
@@ -75,6 +86,7 @@ char	*get_cmd_path(char *cmd, char **envp)
 		free(path);
 		path = NULL;
 	}
+	free(cmd_without_args);
 	free_split(paths);
 	return (path);
 }

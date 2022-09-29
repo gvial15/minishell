@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   lst_utils.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: gvial <marvin@42quebec.com>                +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/09/29 18:28:28 by gvial             #+#    #+#             */
+/*   Updated: 2022/09/29 18:28:29 by gvial            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../ms.h"
 
 t_cmd	*lst_last(t_cmd *head)
@@ -30,12 +42,13 @@ void	free_lst(t_cmd *head)
 
 	if (head == NULL)
 		return ;
-	while (head->next)
+	while (head)
 	{
-		tmp = head->next;
 		free(head->fd_in);
-		free(head);
-		head = tmp;
+		free(head->fd_out);
+		free(head->cmd_path);
+		tmp = head;
+		head = head->next;
+		free(tmp);
 	}
-	free(head);
 }

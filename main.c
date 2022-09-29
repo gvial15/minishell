@@ -1,4 +1,16 @@
-#include "libft.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: gvial <marvin@42quebec.com>                +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/09/29 18:27:46 by gvial             #+#    #+#             */
+/*   Updated: 2022/09/29 18:27:48 by gvial            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "libft/libft.h"
 #include "ms.h"
 
 void	print_cmd_lst(t_cmd *head)
@@ -9,7 +21,7 @@ void	print_cmd_lst(t_cmd *head)
 	while (head)
 	{
 		printf("*****\n");
-		printf("cmd#%i\n", i);		
+		printf("cmd#%i\n", i);
 		printf("cmd_path: %s\n", head->cmd_path);
 		printf("fd_in: %s\n", head->fd_in);
 		printf("fd_out: %s\n", head->fd_out);
@@ -30,7 +42,7 @@ int	main(int ac, char **av, char **envp)
 	t_ms	ms;
 
 	if (ac != 1)
-		return(0);
+		return (0);
 	init_ms(&ms);
 	while (1)
 	{
@@ -48,10 +60,8 @@ int	main(int ac, char **av, char **envp)
 	}
 }
 
-
 // parsing stdin/out for each cmds is working test:
 // <from >to | <from2 >to2 ..
-
 
 // note
 // ➜  ms <test grept a | <test grep a

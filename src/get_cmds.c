@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   get_cmds.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: gvial <marvin@42quebec.com>                +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/09/29 18:28:19 by gvial             #+#    #+#             */
+/*   Updated: 2022/09/29 18:28:21 by gvial            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../ms.h"
 
 char	*get_fd(char *cmd, char sign)
@@ -36,11 +48,12 @@ void	get_cmds(char **envp, t_ms *ms)
 		new_cmd->fd_in = get_fd(split[i], '<');
 		new_cmd->fd_out = get_fd(split[i], '>');
 		new_cmd->cmd_path = get_cmd_path(split[i], envp);
-		new_cmd->args = NULL; // todo
+		new_cmd->args = NULL;
 		new_cmd->next = NULL;
 		if (ms->cmds == NULL)
 			ms->cmds = new_cmd;
 		else
 			lst_last(ms->cmds)->next = new_cmd;
 	}
+	free_split(split);
 }
