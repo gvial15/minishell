@@ -1,5 +1,7 @@
 #include "../ms.h"
 
+
+// <from grep t >out
 char	*get_fd(char *cmd, char sign)
 {
 	char	*filename;
@@ -9,9 +11,11 @@ char	*get_fd(char *cmd, char sign)
 	start = 1;
 	i = 0;
 	while (cmd[i] && cmd[i] != sign)
+		++i;
+	if (cmd[i] == sign || cmd[i] == ' ')
+		start = ++i;;
+	while (cmd[i] == sign || cmd[i] == ' ')
 		start = ++i;
-	if (cmd[start] == sign)
-		start++;
 	if (i == ft_strlen(cmd))
 		return (NULL);
 	while (cmd[i] && cmd[i] != ' ')
