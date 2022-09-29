@@ -12,8 +12,6 @@ char	*get_fd(char *cmd, char sign)
 	i = 0;
 	while (cmd[i] && cmd[i] != sign)
 		++i;
-	if (cmd[i] == sign || cmd[i] == ' ')
-		start = ++i;;
 	while (cmd[i] == sign || cmd[i] == ' ')
 		start = ++i;
 	if (i == ft_strlen(cmd))
