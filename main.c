@@ -10,7 +10,6 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft/libft.h"
 #include "ms.h"
 
 void	print_cmd_lst(t_cmd *head)
