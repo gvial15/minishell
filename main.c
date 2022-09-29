@@ -51,6 +51,7 @@ int	main(int ac, char **av, char **envp)
 			exit(0);
 		if (ms.last_line)
 		{
+			add_history(ms.last_line);
 			get_cmds(envp, &ms);
 			print_cmd_lst(ms.cmds);
 			execute_cmds(&ms);
