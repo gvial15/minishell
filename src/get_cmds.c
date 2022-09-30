@@ -11,7 +11,6 @@
 /* ************************************************************************** */
 
 #include "../ms.h"
-#include <stdio.h>
 
 char	*get_fd(char *cmd, char sign)
 {
@@ -33,7 +32,6 @@ char	*get_fd(char *cmd, char sign)
 	return (filename);
 }
 
-// <from grep t is tes > out
 char	**parse_args(char *cmd)
 {
 	char	**args;
@@ -66,8 +64,6 @@ char	**parse_args(char *cmd)
 	return (args);
 }
 
-// receive full line from readline, split it between the pipes (|)
-// and then parse all the pipe into a linked list
 void	get_cmds(char **envp, t_ms *ms)
 {
 	int		i;

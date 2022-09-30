@@ -19,12 +19,6 @@
 # include <readline/history.h>
 # include <readline/readline.h>
 
-// eg:
-// input: <infile grep t > out | ...
-// *cmd_path: /usr/bin/grep
-// **args: "t"
-// char *fd_in: infile ... int fd: open(infile, O_RDONLY)
-// char *fd_out: out ... int fd: open(out, O_CREAT, O_RDWR)
 typedef struct s_cmd
 {
 	char			*cmd_path;

@@ -56,17 +56,9 @@ int	main(int ac, char **av, char **envp)
 			add_history(ms.last_line);
 			get_cmds(envp, &ms);
 			print_cmd_lst(ms.cmds);
-			execute_cmds(&ms);
+			// execute_cmds(&ms);
 			free_lst(ms.cmds);
 			ms.cmds = NULL;
 		}
 	}
 }
-
-// parsing stdin/out for each cmds is working test:
-// <from >to | <from2 >to2 ..
-
-// note
-// ➜  ms <test grept a | <test grep a
-// zsh: command not found: grept
-// a
