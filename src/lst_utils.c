@@ -51,9 +51,10 @@ void	free_lst(t_cmd *head)
 		return ;
 	while (head)
 	{
+		free(head->cmd_path);
+		free_split(head->args);
 		free(head->fd_in);
 		free(head->fd_out);
-		free(head->cmd_path);
 		tmp = head;
 		head = head->next;
 		free(tmp);
