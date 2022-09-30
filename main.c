@@ -23,6 +23,7 @@ void	print_cmd_lst(t_cmd *head)
 		printf("*****\n");
 		printf("cmd#%i\n", i);
 		printf("cmd_path: %s\n", head->cmd_path);
+		printf("args:\n");
 		print_split(head->args);
 		printf("fd_in: %s\n", head->fd_in);
 		printf("fd_out: %s\n", head->fd_out);
