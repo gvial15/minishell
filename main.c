@@ -10,6 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "libft/libft.h"
 #include "ms.h"
 
 void	print_cmd_lst(t_cmd *head)
@@ -22,6 +23,7 @@ void	print_cmd_lst(t_cmd *head)
 		printf("*****\n");
 		printf("cmd#%i\n", i);
 		printf("cmd_path: %s\n", head->cmd_path);
+		print_split(head->args);
 		printf("fd_in: %s\n", head->fd_in);
 		printf("fd_out: %s\n", head->fd_out);
 		head = head->next;

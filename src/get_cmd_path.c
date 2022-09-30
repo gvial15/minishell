@@ -37,13 +37,6 @@ static char	**get_paths(char **envp)
 	return (paths);
 }
 
-static int	have_sign(char *split)
-{
-	if (ft_strchr(split, '<') || ft_strchr(split, '>'))
-		return (1);
-	return (0);
-}
-
 char	*isolate_cmd(char *cmd_brut)
 {
 	int		i;

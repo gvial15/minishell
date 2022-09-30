@@ -7,7 +7,7 @@ SRCS = 	convert/ft_atoi.c  convert/ft_ltoa.c convert/ft_itoa.c convert/ft_itoa_b
 		string/ft_strdup.c string/ft_substr.c string/ft_strjoin.c \
 		string/ft_striteri.c string/ft_strmapi.c string/ft_strtrim.c \
 		print/ft_putchar_fd.c print/ft_putstr_fd.c print/ft_putendl_fd.c \
-		print/ft_putnbr_fd.c print/print_int_tab.c \
+		print/ft_putnbr_fd.c print/print_int_tab.c print/print_split.c \
 		ft_is/ft_isalnum.c ft_is/ft_isalpha.c ft_is/ft_isascii.c \
 		ft_is/ft_isdigit.c ft_is/ft_isprint.c \
 		ft_printf/ft_printf.c ft_printf/format_and_print.c ft_printf/print_c.c \

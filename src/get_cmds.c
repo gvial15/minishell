@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "../ms.h"
+#include <stdio.h>
 
 char	*get_fd(char *cmd, char sign)
 {
@@ -32,6 +33,39 @@ char	*get_fd(char *cmd, char sign)
 	return (filename);
 }
 
+// <from grep t is tes > out
+char	**parse_args(char *cmd)
+{
+	char	**args;
+	char	**split;
+	int		i;
+	int		j;
+	int		cmd_i;
+	int		arg_count;
+
+	split = ft_split(cmd, ' ');
+	arg_count = 0;
+	i = -1;
+	while (split[++i])
+	{
+		if (!have_sign(split[i])
+			&& ((i == 0) || (i != 0 && !have_sign(split[i - 1]))
+				|| (i != 0 && have_sign(split[i - 1])
+					&& ft_strlen(split[i - 1]) > 1)))
+			break ;
+	}
+	cmd_i = i;
+	while (split[++i] && !have_sign(split[i]))
+		arg_count++;
+	args = malloc(sizeof(char *) * arg_count + 1);
+	j = -1;
+	while (++j < arg_count)
+		args[j] = ft_strdup(split[++cmd_i]);
+	args[j] = 0;
+	free_split(split);
+	return (args);
+}
+
 // receive full line from readline, split it between the pipes (|)
 // and then parse all the pipe into a linked list
 void	get_cmds(char **envp, t_ms *ms)
@@ -48,7 +82,7 @@ void	get_cmds(char **envp, t_ms *ms)
 		new_cmd->fd_in = get_fd(split[i], '<');
 		new_cmd->fd_out = get_fd(split[i], '>');
 		new_cmd->cmd_path = get_cmd_path(split[i], envp);
-		new_cmd->args = NULL;
+		new_cmd->args = parse_args(split[i]);
 		new_cmd->next = NULL;
 		if (ms->cmds == NULL)
 			ms->cmds = new_cmd;

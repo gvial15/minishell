@@ -13,8 +13,9 @@
 #ifndef MS_H
 # define MS_H
 
-# include "libft/libft.h"
 # include <stdio.h>
+# include <unistd.h>
+# include "libft/libft.h"
 # include <readline/history.h>
 # include <readline/readline.h>
 
@@ -39,10 +40,13 @@ typedef struct s_ms
 	t_cmd	*cmds;
 }	t_ms;
 
+
 void	execute_cmds(t_ms *ms);
 void	get_cmds(char **envp, t_ms *ms);
 char	*get_cmd_path(char *cmd_brut, char **envp);
-// lst
+
+// utils
+int		have_sign(char *s);
 void	free_lst(t_cmd *head);
 t_cmd	*lst_last(t_cmd *head);
 

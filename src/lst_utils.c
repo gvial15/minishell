@@ -12,6 +12,13 @@
 
 #include "../ms.h"
 
+int	have_sign(char *s)
+{
+	if (ft_strchr(s, '<') || ft_strchr(s, '>'))
+		return (1);
+	return (0);
+}
+
 t_cmd	*lst_last(t_cmd *head)
 {
 	if (!head)
