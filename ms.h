@@ -25,6 +25,7 @@ typedef struct s_cmd
 	char			**args;
 	char			*fd_in;
 	char			*fd_out;
+	char			**envp;
 	struct s_cmd	*next;
 }	t_cmd;
 
@@ -35,7 +36,7 @@ typedef struct s_ms
 }	t_ms;
 
 
-void	execute_cmds(t_ms *ms);
+void	exec(t_ms *ms);
 void	get_cmds(char **envp, t_ms *ms);
 char	*get_cmd_path(char *cmd_brut, char **envp);
 

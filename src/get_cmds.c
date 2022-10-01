@@ -79,6 +79,7 @@ void	get_cmds(char **envp, t_ms *ms)
 		new_cmd->fd_out = get_fd(split[i], '>');
 		new_cmd->cmd_path = get_cmd_path(split[i], envp);
 		new_cmd->args = parse_args(split[i]);
+		new_cmd->envp = envp;
 		new_cmd->next = NULL;
 		if (ms->cmds == NULL)
 			ms->cmds = new_cmd;
