@@ -32,7 +32,6 @@ char	*get_fd(char *cmd, char sign)
 	return (filename);
 }
 
-
 // valgrind invalid write
 char	**parse_args(char *cmd)
 {
