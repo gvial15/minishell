@@ -33,10 +33,11 @@ void	print_cmd_lst(t_cmd *head)
 }
 /************^^^^^testing functions^^^^^************/
 
-static void	init_ms(t_ms *ms)
+static void	init_ms(t_ms *ms, char **envp)
 {
 	ms->cmds = NULL;
 	ms->last_line = NULL;
+	ms->envp = envp;
 }
 
 int	main(int ac, char **av, char **envp)
@@ -45,7 +46,7 @@ int	main(int ac, char **av, char **envp)
 
 	if (ac != 1)
 		return (0);
-	init_ms(&ms);
+	init_ms(&ms, envp);
 	while (1)
 	{
 		ms.last_line = readline("$> ");
@@ -56,7 +57,9 @@ int	main(int ac, char **av, char **envp)
 			add_history(ms.last_line);
 			get_cmds(envp, &ms);
 			print_cmd_lst(ms.cmds);
+
 			// execute_cmds(&ms);
+
 			free_lst(ms.cmds);
 			ms.cmds = NULL;
 		}

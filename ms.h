@@ -25,13 +25,13 @@ typedef struct s_cmd
 	char			**args;
 	char			*fd_in;
 	char			*fd_out;
-	char			**envp;
 	struct s_cmd	*next;
 }	t_cmd;
 
 typedef struct s_ms
 {
 	char	*last_line;
+	char	**envp;
 	t_cmd	*cmds;
 }	t_ms;
 
@@ -44,5 +44,6 @@ char	*get_cmd_path(char *cmd_brut, char **envp);
 int		have_sign(char *s);
 void	free_lst(t_cmd *head);
 t_cmd	*lst_last(t_cmd *head);
+int		find_cmd_i(char **split);
 
 #endif

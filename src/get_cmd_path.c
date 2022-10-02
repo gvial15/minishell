@@ -39,24 +39,11 @@ static char	**get_paths(char **envp)
 
 char	*isolate_cmd(char *cmd_brut)
 {
-	int		i;
 	char	*cmd;
 	char	**split;
 
 	split = ft_split(cmd_brut, ' ');
-	cmd = NULL;
-	i = -1;
-	while (split[++i])
-	{
-		if (!have_sign(split[i])
-			&& ((i == 0) || (i != 0 && !have_sign(split[i - 1]))
-				|| (i != 0 && have_sign(split[i - 1])
-					&& ft_strlen(split[i - 1]) > 1)))
-		{
-			cmd = ft_strdup(split[i]);
-			break ;
-		}	
-	}
+	cmd = ft_strdup(split[find_cmd_i(split)]);
 	free_split(split);
 	return (cmd);
 }

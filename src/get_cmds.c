@@ -43,16 +43,8 @@ char	**parse_args(char *cmd)
 
 	split = ft_split(cmd, ' ');
 	arg_count = 0;
-	i = -1;
-	while (split[++i])
-	{
-		if (!have_sign(split[i])
-			&& ((i == 0) || (i != 0 && !have_sign(split[i - 1]))
-				|| (i != 0 && have_sign(split[i - 1])
-					&& ft_strlen(split[i - 1]) > 1)))
-			break ;
-	}
-	cmd_i = i;
+	i = find_cmd_i(split);
+	cmd_i = find_cmd_i(split);
 	while (split[++i] && !have_sign(split[i]))
 		arg_count++;
 	args = malloc(sizeof(char *) * arg_count + 1);
@@ -75,11 +67,11 @@ void	get_cmds(char **envp, t_ms *ms)
 	while (split[++i])
 	{
 		new_cmd = malloc(sizeof(t_cmd) * 1);
+		// TODO: manage environment variables eg. $> export test=4, $> echo $test, prints out 4
 		new_cmd->fd_in = get_fd(split[i], '<');
 		new_cmd->fd_out = get_fd(split[i], '>');
 		new_cmd->cmd_path = get_cmd_path(split[i], envp);
 		new_cmd->args = parse_args(split[i]);
-		new_cmd->envp = envp;
 		new_cmd->next = NULL;
 		if (ms->cmds == NULL)
 			ms->cmds = new_cmd;

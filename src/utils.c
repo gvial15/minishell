@@ -12,6 +12,22 @@
 
 #include "../ms.h"
 
+int	find_cmd_i(char **split)
+{
+	int	i;
+
+	i = -1;
+	while (split[++i])
+	{
+		if (!have_sign(split[i])
+			&& ((i == 0) || (i != 0 && !have_sign(split[i - 1]))
+				|| (i != 0 && have_sign(split[i - 1])
+					&& ft_strlen(split[i - 1]) > 1)))
+			break ;
+	}
+	return (i);
+}
+
 int	have_sign(char *s)
 {
 	if (ft_strchr(s, '<') || ft_strchr(s, '>'))

@@ -1,4 +1,4 @@
-SRC = main.c src/get_cmd_path.c src/get_cmds.c src/exec.c src/lst_utils.c
+SRC = main.c src/get_cmd_path.c src/get_cmds.c src/exec.c src/utils.c
 
 OBJ = $(SRC:%c=%o)
 
