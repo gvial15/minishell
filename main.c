@@ -10,6 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "libft/libft.h"
 #include "ms.h"
 
 void	print_cmd_lst(t_cmd *head)
@@ -35,9 +36,17 @@ void	print_cmd_lst(t_cmd *head)
 
 static void	init_ms(t_ms *ms, char **envp)
 {
+	int		i;
+
 	ms->cmds = NULL;
 	ms->last_line = NULL;
-	ms->envp = envp;
+	i = 0;
+	while (envp[i])
+		i++;
+	ms->envp = malloc(sizeof(char *) * i);
+	i = -1;
+	while (envp[++i])
+		ms->envp[i] = ft_strdup(envp[i]);
 }
 
 int	main(int ac, char **av, char **envp)
@@ -51,7 +60,10 @@ int	main(int ac, char **av, char **envp)
 	{
 		ms.last_line = readline("$> ");
 		if (!ft_strncmp(ms.last_line, "exit", 4))
+		{
+			printf("exit\n");
 			exit(0);
+		}
 		if (ms.last_line)
 		{
 			add_history(ms.last_line);
@@ -65,6 +77,7 @@ int	main(int ac, char **av, char **envp)
 			ms.cmds = NULL;
 		}
 	}
+	free_split(ms.envp);
 }
 
 // my plan:
