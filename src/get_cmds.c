@@ -66,13 +66,13 @@ void	get_cmds(char **envp, t_ms *ms)
 	i = -1;
 	while (split[++i])
 	{
-		// TODO: manage environment variables eg. $> export test=4, $> echo $test, prints out 4
-		// export var=value doesnt work inline with other pipes (|), must be alone on its line
 		new_cmd = malloc(sizeof(t_cmd) * 1);
+		new_cmd->args = parse_args(split[i]);
 		new_cmd->fd_in = get_fd(split[i], '<');
 		new_cmd->fd_out = get_fd(split[i], '>');
 		new_cmd->cmd_path = get_cmd_path(split[i], envp);
-		new_cmd->args = parse_args(split[i]);
+		if (ft_strnstr(new_cmd->cmd_path, "export", ft_strlen(new_cmd->cmd_path)))
+			ms->envp = add_env_var(ms->envp, *new_cmd->args);
 		new_cmd->next = NULL;
 		if (ms->cmds == NULL)
 			ms->cmds = new_cmd;

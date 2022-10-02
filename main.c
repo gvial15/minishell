@@ -25,7 +25,6 @@ void	print_cmd_lst(t_cmd *head)
 		printf("cmd_path: %s\n", head->cmd_path);
 		printf("args:\n");
 		print_split(head->args);
-		printf("\n");
 		printf("fd_in: %s\n", head->fd_in);
 		printf("fd_out: %s\n", head->fd_out);
 		head = head->next;
@@ -43,7 +42,7 @@ static void	init_ms(t_ms *ms, char **envp)
 	i = 0;
 	while (envp[i])
 		i++;
-	ms->envp = malloc(sizeof(char *) * i);
+	ms->envp = malloc(sizeof(char *) * i + 1);
 	i = -1;
 	while (envp[++i])
 		ms->envp[i] = ft_strdup(envp[i]);
@@ -62,17 +61,18 @@ int	main(int ac, char **av, char **envp)
 		if (!ft_strncmp(ms.last_line, "exit", 4))
 		{
 			printf("exit\n");
+			free_split(ms.envp);
 			exit(0);
 		}
 		if (ms.last_line)
 		{
 			add_history(ms.last_line);
-
 			get_cmds(envp, &ms);
 			print_cmd_lst(ms.cmds);
-
 			exec(&ms);
-
+			printf("\n***********************\n");
+			printf("ms.envp:\n");
+			print_split(ms.envp);
 			free_lst(ms.cmds);
 			ms.cmds = NULL;
 		}

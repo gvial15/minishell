@@ -16,5 +16,15 @@
 // redirecting stdin/out accordingly for each commands
 void	exec(t_ms *ms)
 {
-	(void) ms;
+	t_cmd	*current;
+
+	current = ms->cmds;
+	while (current)
+	{
+		if (!ft_strnstr(current->cmd_path, "export", ft_strlen(current->cmd_path)))
+		{
+			// execute cmd
+		}
+		current = current->next;
+	}
 }

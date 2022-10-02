@@ -66,7 +66,9 @@ char	*get_cmd_path(char *cmd, char **envp)
 		free(path);
 		path = NULL;
 	}
-	free(cmd_without_args);
 	free_split(paths);
+	if (path == NULL)
+		return (cmd_without_args);
+	free(cmd_without_args);
 	return (path);
 }

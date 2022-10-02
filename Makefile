@@ -1,10 +1,11 @@
-SRC = main.c src/get_cmd_path.c src/get_cmds.c src/exec.c src/utils.c
+SRC =	main.c src/get_cmd_path.c src/get_cmds.c src/exec.c \
+		src/utils.c src/envp.c \
 
 OBJ = $(SRC:%c=%o)
 
 CC = gcc
 
-# CFLAGS = -Wall -Werror -Wextra :: muted for testing purpose
+# CFLAGS = -Wall -Werror -Wextra | muted for testing purpose
 
 NAME = ms
 

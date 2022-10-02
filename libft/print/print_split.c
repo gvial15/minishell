@@ -17,5 +17,5 @@ void	print_split(char **split)
 
 	i = -1;
 	while (split[++i])
-		ft_printf("%s ", split[i]);
+		ft_printf("%s\n", split[i]);
 }
