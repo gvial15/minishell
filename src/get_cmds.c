@@ -67,7 +67,7 @@ void	get_cmds(char **envp, t_ms *ms)
 	while (split[++i])
 	{
 		// TODO: manage environment variables eg. $> export test=4, $> echo $test, prints out 4
-		// export var=value doesnt work inline with other pipes (|), must be alone
+		// export var=value doesnt work inline with other pipes (|), must be alone on its line
 		new_cmd = malloc(sizeof(t_cmd) * 1);
 		new_cmd->fd_in = get_fd(split[i], '<');
 		new_cmd->fd_out = get_fd(split[i], '>');
