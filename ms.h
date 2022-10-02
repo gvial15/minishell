@@ -35,7 +35,6 @@ typedef struct s_ms
 	t_cmd	*cmds;
 }	t_ms;
 
-
 void	exec(t_ms *ms);
 void	get_cmds(char **envp, t_ms *ms);
 char	*get_cmd_path(char *cmd_brut, char **envp);

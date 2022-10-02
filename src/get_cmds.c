@@ -38,19 +38,18 @@ char	**parse_args(char *cmd)
 	char	**split;
 	int		i;
 	int		j;
-	int		cmd_i;
 	int		arg_count;
 
 	split = ft_split(cmd, ' ');
 	arg_count = 0;
 	i = find_cmd_i(split);
-	cmd_i = find_cmd_i(split);
 	while (split[++i] && !have_sign(split[i]))
 		arg_count++;
 	args = malloc(sizeof(char *) * arg_count + 1);
 	j = -1;
+	i = find_cmd_i(split);
 	while (++j < arg_count)
-		args[j] = ft_strdup(split[++cmd_i]);
+		args[j] = ft_strdup(split[++i]);
 	args[j] = 0;
 	free_split(split);
 	return (args);
