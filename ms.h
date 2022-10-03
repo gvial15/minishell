@@ -36,10 +36,10 @@ typedef struct s_ms
 }	t_ms;
 
 void	exec(t_ms *ms);
-char	**unset_env_var();
 void	get_cmds(char **envp, t_ms *ms);
-char	**add_env_var(char **envp, char *var_name);
 char	*get_cmd_path(char *cmd_brut, char **envp);
+char	**add_env_var(char **envp, char *var_name);
+char	**unset_env_var(char **envp, char *var_name);
 
 // utils
 int		have_sign(char *s);

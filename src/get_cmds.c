@@ -64,6 +64,14 @@ static void	get_exec_data(t_cmd **cmd, char *line, char **envp)
 	(*cmd)->cmd_path = get_cmd_path(line, envp);
 }
 
+static void	manage_env_var(t_ms **ms, t_cmd *cmd)
+{
+	if (ft_strnstr(cmd->cmd_path, "unset", ft_strlen(cmd->cmd_path)))
+		(*ms)->envp = unset_env_var((*ms)->envp, *cmd->args);
+	if (ft_strnstr(cmd->cmd_path, "export", ft_strlen(cmd->cmd_path)))
+		(*ms)->envp = add_env_var((*ms)->envp, *cmd->args);
+}
+
 void	get_cmds(char **envp, t_ms *ms)
 {
 	int		i;
@@ -82,8 +90,7 @@ void	get_cmds(char **envp, t_ms *ms)
 	{
 		new_cmd = malloc(sizeof(t_cmd) * 1);
 		get_exec_data(&new_cmd, split[i], envp);
-		if (ft_strnstr(new_cmd->cmd_path, "export", ft_strlen(new_cmd->cmd_path)))
-			ms->envp = add_env_var(ms->envp, *new_cmd->args);
+		manage_env_var(&ms, new_cmd);
 		new_cmd->next = NULL;
 		if (ms->cmds == NULL)
 			ms->cmds = new_cmd;

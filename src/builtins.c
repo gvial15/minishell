@@ -12,11 +12,10 @@
 
 #include "../ms.h"
 
-char	**unset_env_var()
+char	**unset_env_var(char **envp, char *var_name)
 {
 	char	**new_envp;
 
-	
 	return (new_envp);
 }
 
