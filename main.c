@@ -73,7 +73,9 @@ int	main(int ac, char **av, char **envp)
 }
 
 // (1) this version parses each pipe in a linked lst and then execute the linked lst
-// (2) another way could be to parse + execute them one by one
+// (2) another way could be to parse + execute them one by one, just start at the exec step directly and
+// (2) .. use the parsing cmds to get needed info directly inside the exec.c functs.)
+// (2) .. then save the fd_in/fd_out state in a t_state struct for the next execution
 //
 // my plan (1):
 //
