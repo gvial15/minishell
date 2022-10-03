@@ -62,6 +62,12 @@ void	get_cmds(char **envp, t_ms *ms)
 	char	**split;
 	t_cmd	*new_cmd;
 
+	if (!ft_strncmp(ms->last_line, "exit", 4))
+	{
+		printf("exit\n");
+		free_split(ms->envp);
+		exit(0);
+	}
 	split = ft_split(ms->last_line, '|');
 	i = -1;
 	while (split[++i])

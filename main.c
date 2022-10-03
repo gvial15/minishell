@@ -58,12 +58,6 @@ int	main(int ac, char **av, char **envp)
 	while (1)
 	{
 		ms.last_line = readline("$> ");
-		if (!ft_strncmp(ms.last_line, "exit", 4))
-		{
-			printf("exit\n");
-			free_split(ms.envp);
-			exit(0);
-		}
 		if (ms.last_line)
 		{
 			add_history(ms.last_line);
