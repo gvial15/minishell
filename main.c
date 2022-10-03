@@ -42,7 +42,7 @@ static void	init_ms(t_ms *ms, char **envp)
 	i = 0;
 	while (envp[i])
 		i++;
-	ms->envp = malloc(sizeof(char *) * i + 1);
+	ms->envp = malloc(sizeof(char *) * (i + 1));
 	i = -1;
 	while (envp[++i])
 		ms->envp[i] = ft_strdup(envp[i]);
@@ -64,8 +64,6 @@ int	main(int ac, char **av, char **envp)
 			get_cmds(envp, &ms);
 			print_cmd_lst(ms.cmds);
 			exec(&ms);
-			printf("\n***********************\n");
-			printf("ms.envp:\n");
 			print_split(ms.envp);
 			free_lst(ms.cmds);
 			ms.cmds = NULL;
@@ -74,6 +72,8 @@ int	main(int ac, char **av, char **envp)
 	free_split(ms.envp);
 }
 
+// this version parses each pipe in a linked lst and then execute the linked lst
+// another way could be to parse + execute them one by one
 // my plan:
 //
 //  eg. -> <infile cmd args > out | <infile2 cmd2 args > out2

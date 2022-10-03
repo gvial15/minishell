@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   envp.c                                             :+:      :+:    :+:   */
+/*   builtins.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gvial <marvin@42quebec.com>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -16,6 +16,7 @@ char	**unset_env_var()
 {
 	char	**new_envp;
 
+	
 	return (new_envp);
 }
 
@@ -27,7 +28,7 @@ char	**add_env_var(char **envp, char *var)
 	
 	if (*var == '=')
 	{
-		printf("'%s': not a valid identifier\n", var);
+		printf("export: '%s': not a valid identifier\n", var);
 		return (envp);
 	}
 	if (*var != '=' && split_count(var, '=') < 2)

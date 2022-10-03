@@ -1,5 +1,5 @@
 SRC =	main.c src/get_cmd_path.c src/get_cmds.c src/exec.c \
-		src/utils.c src/envp.c \
+		src/utils.c src/builtins.c \
 
 OBJ = $(SRC:%c=%o)
 
