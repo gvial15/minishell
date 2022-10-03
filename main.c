@@ -72,9 +72,10 @@ int	main(int ac, char **av, char **envp)
 	free_split(ms.envp);
 }
 
-// this version parses each pipe in a linked lst and then execute the linked lst
-// another way could be to parse + execute them one by one
-// my plan:
+// (1) this version parses each pipe in a linked lst and then execute the linked lst
+// (2) another way could be to parse + execute them one by one
+//
+// my plan (1):
 //
 //  eg. -> <infile cmd args > out | <infile2 cmd2 args > out2
 //					|							|
