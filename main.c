@@ -10,7 +10,6 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft/libft.h"
 #include "ms.h"
 
 void	print_cmd_lst(t_cmd *head)
@@ -48,6 +47,7 @@ int	main(int ac, char **av, char **envp)
 	if (ac != 1)
 		return (0);
 	init_data(&data, envp);
+	
 	while (1)
 	{
 		data->last_line = readline("$> ");
