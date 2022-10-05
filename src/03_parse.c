@@ -79,6 +79,8 @@ void	parse(char **envp, t_ms **data)
 		new_cmd->cmd_path = get_cmd_path(split[i], envp);
 		if (new_cmd->cmd_path)
 			new_cmd->args = parse_args(split[i]);
+		else
+			new_cmd->args = NULL;
 		new_cmd->fd_in = NULL;
 		new_cmd->fd_out = get_fd_out(split[i]);
 		new_cmd->next = NULL;
