@@ -18,7 +18,7 @@ char	**add_env_var(char **envp, char *var)
 	int		i;
 	int		j;
 	
-	if (*var == '=')
+	if (*var == '=' || *var == ',' || *var == '.' || ft_isdigit(*var))
 	{
 		printf("export: '%s': not a valid identifier\n", var);
 		return (envp);

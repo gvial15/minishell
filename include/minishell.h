@@ -74,7 +74,6 @@ t_cmd	*lst_last(t_cmd *head);
 int		find_cmd_i(char **split);
 void	parse(char **envp, t_ms **ms);
 char	*get_cmd_path(char *cmd, char **envp);
-char	*get_cmd_path(char *cmd_brut, char **envp);
 
 //04_builtins
 char	**add_env_var(char **envp, char *var_name);

@@ -27,7 +27,7 @@ void	print_cmd_lst(t_cmd *head)
 		printf("args:\n");
 		print_split(head->args);
 		printf("fd_in: %s\n", head->fd_in);
-		printf("fd_out:\n");
+		printf("fd_out: \n");
 		print_split(head->fd_out);
 		head = head->next;
 		i++;

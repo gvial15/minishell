@@ -43,7 +43,11 @@ static char	*isolate_cmd(char *cmd_brut)
 	char	**split;
 
 	split = ft_split(cmd_brut, ' ');
-	cmd = ft_strdup(split[find_cmd_i(split)]);
+	if (split_count(cmd_brut, ' ') == 1
+		&& (*split[0] == '<' || *split[0] == '>'))
+		cmd =  NULL;
+	else
+		cmd = ft_strdup(split[find_cmd_i(split)]);
 	free_split(split);
 	return (cmd);
 }
@@ -60,6 +64,8 @@ char	*get_cmd_path(char *cmd, char **envp)
 	cmd_without_args = isolate_cmd(cmd);
 	while (paths[++i])
 	{
+		if (cmd_without_args == NULL)
+			break ;
 		path = ft_strjoin(paths[i], cmd_without_args);
 		if (access(path, X_OK) == 0)
 			break ;
