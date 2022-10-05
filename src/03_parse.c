@@ -37,7 +37,7 @@ static char	**get_fd_out(char *cmd)
 			fds[j++] = ft_strdup(&split[i][1]);
 	}
 	fds[j] = 0;
-	free(split);
+	free_split(split);
 	return (fds);
 }
 
