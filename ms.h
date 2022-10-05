@@ -25,6 +25,7 @@ typedef struct s_cmd
 	char			**args;
 	char			*fd_in;
 	char			*fd_out;
+	int				append;
 	struct s_cmd	*next;
 }	t_cmd;
 
