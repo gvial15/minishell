@@ -6,7 +6,7 @@
 /*   By: mraymond <mraymond@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/29 18:27:32 by gvial             #+#    #+#             */
-/*   Updated: 2022/10/05 10:18:46 by mraymond         ###   ########.fr       */
+/*   Updated: 2022/10/05 10:37:16 by mraymond         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@
 # include <errno.h>
 # include <stdio.h>
 # include <unistd.h>
-# include "include/libft/libft.h"
+# include "libft/libft.h"
 # include <readline/history.h>
 # include <readline/readline.h>
 
@@ -51,10 +51,10 @@ typedef struct s_ms
 //PROTOTYPES_FILES==============================================================
 //0_main.c
 void	prompter(t_ms *ms);
-t_ms	*get_ms(void);
 
 //01_init.c
-void	ms_init(t_ms *ms, char **envp);
+void	ms_init(t_ms *ms, int argc, char **argv, char **envp);
+t_ms	*get_ms(void);
 
 //02_signal.c
 void	signal_init(void);

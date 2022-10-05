@@ -6,7 +6,7 @@
 /*   By: mraymond <mraymond@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/05 09:58:59 by mraymond          #+#    #+#             */
-/*   Updated: 2022/10/05 10:24:51 by mraymond         ###   ########.fr       */
+/*   Updated: 2022/10/05 10:44:23 by mraymond         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,9 @@ void	signal_init(void)
 void	fct_sigquit(int sig)
 {
 	t_ms	*ms;
+	int		temp;
 
+	temp = sig;
 	ms = get_ms();
 
 
@@ -35,7 +37,9 @@ void	fct_sigquit(int sig)
 void	fct_sigint(int sig)
 {
 	t_ms	*ms;
+	int		temp;
 
+	temp = sig;
 	ms = get_ms();
 	
 	//TEMP-----------------------------------
@@ -45,6 +49,9 @@ void	fct_sigint(int sig)
 
 void	fct_sigabrt(int sig)
 {
+	int		temp;
+
+	temp = sig;
 	//TEMP-----------------------------------
 	printf("signal ctrl-\\ -> do nothing");
 }
