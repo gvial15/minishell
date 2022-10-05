@@ -6,14 +6,14 @@
 /*   By: mraymond <mraymond@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/29 18:27:32 by gvial             #+#    #+#             */
-/*   Updated: 2022/10/05 09:38:48 by mraymond         ###   ########.fr       */
+/*   Updated: 2022/10/05 10:07:11 by mraymond         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
-//LIBRARIES
+//LIBRARIES=====================================================================
 # include <unistd.h>
 # include <fcntl.h>
 # include <stdlib.h>
@@ -25,7 +25,9 @@
 # include <readline/history.h>
 # include <readline/readline.h>
 
-//STRUCTS
+//==============================================================================
+
+//STRUCTS=======================================================================
 typedef struct s_cmd
 {
 	char			*cmd_path;
@@ -44,7 +46,24 @@ typedef struct s_ms
 	t_cmd	*cmds;
 }	t_ms;
 
-//PROTOTYPES
+//==============================================================================
 
+//PROTOTYPES_FILES==============================================================
+//0_main.c
+void	prompter(t_ms *ms);
+t_ms	*get_ms(void);
+
+//01_init.c
+void	ms_init(t_ms *ms);
+
+//02_signal.c
+void	signal_init(void);
+void	fct_sigquit(int sig);
+void	fct_sigint(int sig);
+
+//exec.c 
+//parse.c
+
+//==============================================================================
 
 #endif

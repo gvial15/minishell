@@ -2,10 +2,12 @@
 
 int	main(int argc, char **argv, char **envp)
 {
-	
+	t_ms	*ms;
+
+	ms = getms();
 }
 
-void	prompter(t_ms* ms)
+void	prompter(t_ms *ms)
 {
 	ms->last_line = readline(" >> ");
 	add_history(ms->last_line);
