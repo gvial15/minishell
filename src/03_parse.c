@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../ms.h"
+#include "../include/minishell.h"
 
 char	**parse_args(char *cmd)
 {
@@ -36,7 +36,7 @@ char	**parse_args(char *cmd)
 	return (args);
 }
 
-void	parse(char **envp, t_data **data)
+void	parse(char **envp, t_ms **data)
 {
 	int		i;
 	char	**split;

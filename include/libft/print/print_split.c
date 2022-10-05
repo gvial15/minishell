@@ -1,18 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   exec.c                                             :+:      :+:    :+:   */
+/*   print_split.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gvial <marvin@42quebec.com>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/09/29 18:28:01 by gvial             #+#    #+#             */
-/*   Updated: 2022/09/29 18:28:03 by gvial            ###   ########.fr       */
+/*   Created: 2022/03/28 10:22:56 by gvial             #+#    #+#             */
+/*   Updated: 2022/03/28 10:23:34 by gvial            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+#include "../libft.h"
 
-#include "../ms.h"
-
-void	exec(t_data **data)
+void	print_split(char **split)
 {
+	int	i;
 
+	if (!split)
+	{
+		printf("(null)\n");
+		return ;
+	}
+	i = -1;
+	while (split[++i])
+		ft_printf("%s\n", split[i]);
 }

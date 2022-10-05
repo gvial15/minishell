@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../ms.h"
+#include "../include/minishell.h"
 
 char	**add_env_var(char **envp, char *var)
 {

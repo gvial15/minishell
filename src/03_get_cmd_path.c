@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../ms.h"
+#include "../include/minishell.h"
 
 static char	*get_full_path(char **envp)
 {
@@ -37,7 +37,7 @@ static char	**get_paths(char **envp)
 	return (paths);
 }
 
-char	*isolate_cmd(char *cmd_brut)
+static char	*isolate_cmd(char *cmd_brut)
 {
 	char	*cmd;
 	char	**split;

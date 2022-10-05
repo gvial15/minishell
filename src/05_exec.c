@@ -1,21 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   print_split.c                                      :+:      :+:    :+:   */
+/*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gvial <marvin@42quebec.com>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/03/28 10:22:56 by gvial             #+#    #+#             */
-/*   Updated: 2022/03/28 10:23:34 by gvial            ###   ########.fr       */
+/*   Created: 2022/09/29 18:28:01 by gvial             #+#    #+#             */
+/*   Updated: 2022/09/29 18:28:03 by gvial            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include "../libft.h"
 
-void	print_split(char **split)
+#include "../include/minishell.h"
+
+void	exec(t_ms **ms)
 {
-	int	i;
-
-	i = -1;
-	while (split[++i])
-		ft_printf("%s\n", split[i]);
+	(void) ms;
 }

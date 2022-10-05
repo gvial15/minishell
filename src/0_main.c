@@ -10,12 +10,14 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ms.h"
+#include "../include/minishell.h"
 
 void	print_cmd_lst(t_cmd *head)
 {
 	int	i;
 
+	if (!DEBUG)
+		return ;
 	i = 0;
 	while (head)
 	{
@@ -25,43 +27,40 @@ void	print_cmd_lst(t_cmd *head)
 		printf("args:\n");
 		print_split(head->args);
 		printf("fd_in: %s\n", head->fd_in);
-		printf("fd_out: %s\n", head->fd_out);
+		printf("fd_out:\n");
+		print_split(head->fd_out);
 		head = head->next;
 		i++;
 	}
 }
 /************^^^^^testing functions^^^^^************/
 
-static void	init_data(t_data **data, char **envp)
+static void	prompter(t_ms *ms)
 {
-	(*data) = malloc(sizeof(t_data) * 1);
-	(*data)->cmds = NULL;
-	(*data)->last_line = NULL;
-	(*data)->envp = envp;
+	ms->last_line = readline(" minishell >> ");
+	while (ms->last_line && ft_strlen(ms->last_line) == 0)
+		ms->last_line = readline(" minishell >> ");
+	if (ft_strnstr(ms->last_line, "exit", 4))
+		exit(0) ;
+	add_history(ms->last_line);
 }
 
 int	main(int ac, char **av, char **envp)
 {
-	t_data	*data;
+	(void) ac;
+	(void) av;
+	t_ms	*ms;
 
-	if (ac != 1)
-		return (0);
-	init_data(&data, envp);
-	
+	ms = get_ms();
+	ms_init(ms, envp);
 	while (1)
 	{
-		data->last_line = readline("$> ");
-		if (ft_strnstr(data->last_line, "exit", 4))
-			break ;
-		if (data->last_line)
-		{
-			add_history(data->last_line);
-			parse(envp, &data);
-			print_cmd_lst(data->cmds);
-			// exec(&data);
-			free_lst(data->cmds);
-			data->cmds = NULL;
-		}
+		prompter(ms);
+		parse(envp, &ms);
+		print_cmd_lst(ms->cmds);
+		// exec(&data);
+		free_lst(ms->cmds);
+		ms->cmds = NULL;	
 	}
-	free(data);
+	free(ms);
 }

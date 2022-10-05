@@ -1,34 +1,113 @@
-SRC =	main.c \
-		src/parsing/parse.c src/parsing/get_cmd_path.c src/parsing/utils.c \
-		src/exec.c src/builtins.c \
+#PROGRAM NAME-------------------------------------------------------------------
 
-OBJ = $(SRC:%c=%o)
+NAME 			= 	minishell
 
-CC = gcc
+#SYSTEM VAR---------------------------------------------------------------------
 
-# CFLAGS = -Wall -Werror -Wextra | muted for testing purpose
+R = $(shell tput -Txterm setaf 1)
+G = $(shell tput -Txterm setaf 2)
+C = $(shell tput -Txterm setaf 6)
+W = $(shell tput -Txterm setaf 7)
+Y = $(shell tput -Txterm setaf 3)
+Z = $(shell tput -Txterm setaf 5)
 
-NAME = ms
+CFLAGS 			= 	-Wall -Werror -Wextra
+CC				= 	gcc
+RM				= 	rm -rf
+VALG_LEAK		=	valgrind --leak-check=full
+UNAME_S		 	= 	$(shell uname -s)
+REL_PATH		=	$(shell pwd)
+LEAK_CMD		=	leaks --atExit --
 
-RM = rm -rf
+READLINEA		=	-lreadline
+LIBRARY			=	$(READLINEA) $(LIBFT)
 
-MAKELIBFT = cd libft && make -s
+#DIRECTORIES--------------------------------------------------------------------
 
-LIBFT = libft/libft.a
+SRCS_DIR 		= 	./src
+OBJS_DIR		= 	./obj
+INCLUDE_DIR		=	./include
+LIBFT_DIR		= 	$(INCLUDE_DIR)/libft
+NAME_DSYM		=	./$(NAME).dSYM
 
-all: $(NAME)
+#FILES--------------------------------------------------------------------------
 
-$(NAME): $(OBJ)
-	$(MAKELIBFT)
-	$(CC) $(OBJ) $(LIBFT) -lreadline -o $(NAME)
+#  To make the list of all src, do this command in terminal in project folder
+#  find ./src -type f | cut -c7- | sed 's/$/ \\/'
+SRCS_FILES	 	= 	0_main.c \
+					01_init.c \
+					03_utils.c \
+					03_parse.c \
+					03_get_cmd_path.c \
+					04_builtins.c \
+					05_exec.c \
+
+HEADERS_FILES	=	minishell.h
+
+LIBFT_FILES		= 	libft.a
+
+#FILES VAR----------------------------------------------------------------------
+SRCS 			= 	$(addprefix $(SRCS_DIR)/, $(SRCS_FILES))
+
+HEADERS			=	$(addprefix $(INCLUDE_DIR)/, $(HEADERS_FILES))
+
+OBJS 			= 	$(SRCS:$(SRCS_DIR)/%.c=$(OBJS_DIR)/%.o)
+OBJS_BONUS 		= 	$(SRCS_BONUS:$(SRCS_DIR_BONUS)/%.c=$(OBJS_DIR_BONUS)/%.o)
+
+LIBFT 			= 	$(addprefix $(LIBFT_DIR)/, $(LIBFT_FILES))
+
+LIBFT_LINUX		=	-L$(REL_PATH)/libft -lft
+
+#SYSTEM RULES-------------------------------------------------------------------
+
+$(OBJS_DIR)/%.o: $(SRCS_DIR)/%.c $(HEADERS)
+	@$(CC) $(CFLAGS) -c $< -o $@
+
+#COMPILING RULES------------------------------------------------------------------
+
+all : 				init $(NAME)
+
+init:
+					@$(MAKE) -s -C $(LIBFT_DIR)
+					@mkdir -p $(OBJS_DIR)
+
+$(NAME):			$(OBJS) 
+ifeq ($(UNAME_S),Linux)
+					@gcc $(CFLAGS) libft/*c $(SRCS) -o $(NAME) $(READLINEA)
+else
+					@$(CC) $(CFLAGS) -o $(NAME) $(OBJS) $(LIBRARY)
+endif
+					@echo "$G$(NAME)         compiled$W"
+					
+$(LIBFT):
+					@cd $(LIBFT_DIR)/ && make
+					
 
 clean:
-# cd libft && make clean -s
-	$(RM) $(OBJ)
+ifneq ($(wildcard $(OBJS_DIR)),)									
+					@$(MAKE) -s clean -C $(LIBFT_DIR)
+					@$(RM) $(OBJS)
+					@$(RM) $(OBJS_DIR)
+					@$(RM) $(OBJS_BONUS)
+					@$(RM) $(OBJS_DIR_BONUS)
+					@echo "$R$(NAME) objects deleted$W"
+endif
 
-fclean: clean
-	cd libft && make fclean -s
-	$(RM) $(NAME)
+fclean: 			clean
+ifneq ($(wildcard $(NAME)),)					
+					@$(MAKE) -s fclean -C $(LIBFT_DIR)
+					@$(RM) $(NAME_DSYM)
+					@$(RM) $(NAME)
+					@$(RM) $(NAME_BONUS)
+					@echo "$R$(NAME)         deleted$W"
+endif
+	
+re: 				fclean all
 
-re: fclean all
+debug: $(LIBFT)
+				gcc -g $(CFLAGS) $(LIBRARY) $(SRCS) -o $(NAME) -D DEBUG=1
+
+#PHONY--------------------------------------------------------------------------
+
+.PHONY:				all clean fclean re init init_bonus debug
 

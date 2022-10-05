@@ -14,7 +14,7 @@ SRCS = 	convert/ft_atoi.c  convert/ft_ltoa.c convert/ft_itoa.c convert/ft_itoa_b
 		ft_printf/print_u.c ft_printf/print_x.c ft_printf/print_nbr.c \
 		ft_printf/print_p.c ft_printf/print_percent.c ft_printf/print_s.c \
 		get_next_line/get_next_line.c get_next_line/get_next_line_utils.c \
-		bubble_sort.c \
+		bubble_sort.c string/ft_strrchr_i.c \
 
 
 BONUSSRCS = lst/ft_lstnew.c lst/ft_lstadd_front.c lst/ft_lstsize.c lst/ft_lstlast.c \
