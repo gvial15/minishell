@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   0_main.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gvial <marvin@42quebec.com>                +#+  +:+       +#+        */
+/*   By: mraymond <mraymond@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/29 18:27:46 by gvial             #+#    #+#             */
-/*   Updated: 2022/09/29 18:27:48 by gvial            ###   ########.fr       */
+/*   Updated: 2022/10/05 14:51:08 by mraymond         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,19 +38,20 @@ void	print_cmd_lst(t_cmd *head)
 static void	prompter(t_ms *ms)
 {
 	ms->last_line = readline(" minishell >> ");
-	while (ms->last_line && ft_strlen(ms->last_line) == 0)
+	while (ms->last_line && (ft_strlen(ms->last_line) == 0
+			|| ft_isallspace(ms->last_line)))
 		ms->last_line = readline(" minishell >> ");
 	if (ft_strnstr(ms->last_line, "exit", 4))
-		exit(0) ;
+		exit (0);
 	add_history(ms->last_line);
 }
 
 int	main(int ac, char **av, char **envp)
 {
+	t_ms	*ms;
+	
 	(void) ac;
 	(void) av;
-	t_ms	*ms;
-
 	ms = get_ms();
 	ms_init(ms, envp);
 	while (1)
@@ -60,7 +61,7 @@ int	main(int ac, char **av, char **envp)
 		print_cmd_lst(ms->cmds);
 		// exec(&data);
 		free_lst(ms->cmds);
-		ms->cmds = NULL;	
+		ms->cmds = NULL;
 	}
 	free(ms);
 }

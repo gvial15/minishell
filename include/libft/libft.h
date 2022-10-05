@@ -6,7 +6,7 @@
 /*   By: mraymond <mraymond@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/31 16:08:42 by gvial             #+#    #+#             */
-/*   Updated: 2022/10/05 11:27:21 by mraymond         ###   ########.fr       */
+/*   Updated: 2022/10/05 14:47:25 by mraymond         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,5 +83,7 @@ int		ft_strncmp(const char *s1, const char *s2, size_t n);
 
 //martin_fct
 size_t	ft_strrchr_i(char *s, int c);
+int		ft_isspace_r(char c);
+int		ft_isallspace(char *str);
 
 #endif
