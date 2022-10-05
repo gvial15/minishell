@@ -1,4 +1,6 @@
-SRC =	main.c src/parse.c src/exec.c \
+SRC =	main.c \
+		src/parsing/parse.c src/parsing/get_cmd_path.c src/parsing/utils.c \
+		src/exec.c src/builtins.c \
 
 OBJ = $(SRC:%c=%o)
 
