@@ -3,12 +3,13 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gvial <marvin@42quebec.com>                +#+  +:+       +#+        */
+/*   By: mraymond <mraymond@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/31 16:08:42 by gvial             #+#    #+#             */
-/*   Updated: 2022/08/04 15:20:55 by gvial            ###   ########.fr       */
+/*   Updated: 2022/10/05 11:27:21 by mraymond         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 #ifndef LIBFT_H
 # define LIBFT_H
 
@@ -79,5 +80,8 @@ int		ft_atoi(const char *str);
 int		ft_printf(const char *s, ...);
 int		ft_memcmp(const void *s1, const void *s2, size_t n);
 int		ft_strncmp(const char *s1, const char *s2, size_t n);
+
+//martin_fct
+size_t	ft_strrchr_i(char *s, int c);
 
 #endif
