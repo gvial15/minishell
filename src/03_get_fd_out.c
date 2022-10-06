@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   builtins.c                                         :+:      :+:    :+:   */
+/*   get_fd_in_out.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gvial <marvin@42quebec.com>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -12,28 +12,42 @@
 
 #include "../include/minishell.h"
 
-char	**add_env_var(char **envp, char *var)
+static int	get_fdout_count(char **split)
 {
-	char	**new_envp;
+	int	i;
+	int	fd_count;
+
+	fd_count = 0;
+	i = -1;
+	while (split[++i])
+		if (split[i][0] == '>')
+			fd_count++;
+	return (fd_count);
+}
+
+// problem with "">> out"
+char	**get_fd_out(t_cmd **new_cmd, char *cmd)
+{
 	int		i;
 	int		j;
-	
-	if (*var == '=' || *var == ',' || *var == '.' || ft_isdigit(*var))
+	char	**fds;
+	char	**split;
+
+	(*new_cmd)->append = 0;
+	split = ft_split(cmd, ' ');
+	fds = malloc(sizeof(char *) * get_fdout_count(split) + 1);
+	j = 0;
+	i = -1;
+	while (split[++i])
 	{
-		printf("export: '%s': not a valid identifier\n", var);
-		return (envp);
+		if (i != 0 && *split[i - 1] == '>' && ft_strlen(split[i - 1]) == 1)
+			fds[j++] = ft_strdup(split[i]);
+		else if (split[i][0] == '>' && ft_strlen(split[i]) > 1)
+			fds[j++] = ft_strdup(&split[i][1]);
 	}
-	if (*var != '=' && split_count(var, '=') < 2)
-		return (envp);
-	i = 0;
-	while (envp[i])
-		i++;
-	new_envp = malloc(sizeof(char *) * (i + 3));
-	j = -1;
-	while (++j < i)
-		new_envp[j] = ft_strdup(envp[j]);
-	new_envp[j] = ft_strdup(var);
-	new_envp[++j] = 0;
-	free_split(envp);
-	return (new_envp);
+	if (fds[j -1][0] == '>')
+		(*new_cmd)->append = 1;
+	fds[j] = 0;
+	// need to reformat double (>>) fd_out
+	return (fds);
 }

@@ -39,7 +39,8 @@ typedef struct s_cmd
 	char			**args;
 	char			*fd_in;
 	char			**fd_out;
-	int				append_out;
+	int				append;
+	int				heredoc;
 	struct s_cmd	*next;
 }	t_cmd;
 
@@ -74,6 +75,7 @@ t_cmd	*lst_last(t_cmd *head);
 int		find_cmd_i(char **split);
 void	parse(char **envp, t_ms **ms);
 char	*get_cmd_path(char *cmd, char **envp);
+char	**get_fd_out(t_cmd **new_cmd, char *cmd);
 
 //04_builtins
 char	**add_env_var(char **envp, char *var_name);

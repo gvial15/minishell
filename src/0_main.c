@@ -29,6 +29,7 @@ void	print_cmd_lst(t_cmd *head)
 		printf("fd_in: %s\n", head->fd_in);
 		printf("fd_out: \n");
 		print_split(head->fd_out);
+		printf("append:%i\n", head->append);
 		head = head->next;
 		i++;
 	}

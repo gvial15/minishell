@@ -12,35 +12,6 @@
 
 #include "../include/minishell.h"
 
-static char	**get_fd_out(char *cmd)
-{
-	int		i;
-	int		j;
-	char	**fds;
-	int		fd_count;
-	char	**split;
-
-	split = ft_split(cmd, ' ');
-	fd_count = 0;
-	i = -1;
-	while (split[++i])
-		if (split[i][0] == '>')
-			fd_count++;
-	fds = malloc(sizeof(char *) * fd_count + 1);
-	j = 0;
-	i = -1;
-	while (split[++i])
-	{
-		if (i != 0 && *split[i - 1] == '>')
-			fds[j++] = ft_strdup(split[i]);
-		else if (*split[i] == '>' && ft_strlen(split[i]) > 1)
-			fds[j++] = ft_strdup(&split[i][1]);
-	}
-	fds[j] = 0;
-	free_split(split);
-	return (fds);
-}
-
 char	**parse_args(char *cmd)
 {
 	char	**args;
@@ -65,13 +36,11 @@ char	**parse_args(char *cmd)
 	return (args);
 }
 
-void	parse(char **envp, t_ms **data)
+void	create_cmd_lst(t_ms **data, char **split, char **envp)
 {
 	int		i;
-	char	**split;
 	t_cmd	*new_cmd;
 
-	split = ft_split((*data)->last_line, '|');
 	i = -1;
 	while (split[++i])
 	{
@@ -81,13 +50,21 @@ void	parse(char **envp, t_ms **data)
 			new_cmd->args = parse_args(split[i]);
 		else
 			new_cmd->args = NULL;
+		new_cmd->heredoc = 0;
 		new_cmd->fd_in = NULL;
-		new_cmd->fd_out = get_fd_out(split[i]);
+		new_cmd->fd_out = get_fd_out(&new_cmd, split[i]);
 		new_cmd->next = NULL;
 		if ((*data)->cmds == NULL)
 			(*data)->cmds = new_cmd;
 		else
 			lst_last((*data)->cmds)->next = new_cmd;
 	}
+}
+
+void	parse(char **envp, t_ms **data)
+{
+	char	**split;
+	split = ft_split((*data)->last_line, '|');
+	create_cmd_lst(data, split, envp);
 	free_split(split);
 }
