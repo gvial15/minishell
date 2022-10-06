@@ -6,7 +6,7 @@
 /*   By: mraymond <mraymond@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/29 18:27:32 by gvial             #+#    #+#             */
-/*   Updated: 2022/10/05 11:19:09 by mraymond         ###   ########.fr       */
+/*   Updated: 2022/10/06 10:39:04 by mraymond         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,20 @@
 #  define DEBUG 0
 # endif
 
+//MESSAGES=====================================================================
+
+//prompter
+# define PROMPTER_TITLE " ms->"
+# define PROMPTER_END " $> "
+
+# define ERR_FIRST "minishell: "
+
+//line error
+# define ERR_LINE_QUOTE "line parse error -> open quote"
+# define ERR_LINE_PIPE "syntax error near unexpected token `|'"
+
+//==============================================================================
+
 //STRUCTS=======================================================================
 
 typedef struct s_cmd
@@ -49,6 +63,9 @@ typedef struct s_ms
 	char	**envp;
 	int		*pipe;
 	t_cmd	*cmds;
+	char	line_prompt[200];
+	char	*line_path;
+	char	working_path[1000];
 }	t_ms;
 
 //==============================================================================
@@ -56,8 +73,8 @@ typedef struct s_ms
 //PROTOTYPES_FILES==============================================================
 //0_main.c
 
-
 //01_init.c
+void	set_prompter_path(t_ms *ms);
 void	ms_init(t_ms *ms, char **envp);
 t_ms	*get_ms(void);
 
@@ -80,6 +97,9 @@ char	**add_env_var(char **envp, char *var_name);
 
 //05_exec.c
 void	exec(t_ms **ms);
+
+//line_parcing
+int		valid_line(char *line);
 
 // utils
 
