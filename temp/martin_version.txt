@@ -19,5 +19,7 @@ v002
 							add		define		- PROMPTER_TITLE	-> BEGINNING OF line_prompt
 												- PROMPTER_END		-> END of line_prompter
 			0_main			change	readline(ms->line_prompt)
+- add		folder temp	-> to put note or code that will be remove at the END
+
 
 
