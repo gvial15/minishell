@@ -1,5 +1,8 @@
 - add 		libft ft_isspace_r
 - add		libft ft_isallspace
 - change 	0_main.c	prompter	loop if ft_isallspace
-
-- adding	lineparsing
+- change	0_main.c	prompter	now return int for valid line
+- add		valid_line.c	
+- change	makefile				add valid_line.c
+- change	minishell.h		add		- define message error
+							add		- prototype valid_line

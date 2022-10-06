@@ -6,7 +6,7 @@
 /*   By: mraymond <mraymond@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/29 18:27:32 by gvial             #+#    #+#             */
-/*   Updated: 2022/10/06 09:07:49 by mraymond         ###   ########.fr       */
+/*   Updated: 2022/10/06 09:27:20 by mraymond         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,6 @@ typedef struct s_ms
 //PROTOTYPES_FILES==============================================================
 //0_main.c
 
-
 //01_init.c
 void	ms_init(t_ms *ms, char **envp);
 t_ms	*get_ms(void);
@@ -93,8 +92,7 @@ char	**add_env_var(char **envp, char *var_name);
 void	exec(t_ms **ms);
 
 //line_parcing
-int	valid_line(char *line);
-
+int		valid_line(char *line);
 
 // utils
 

@@ -36,12 +36,12 @@ NAME_DSYM		=	./$(NAME).dSYM
 #  find ./src -type f | cut -c7- | sed 's/$/ \\/'
 SRCS_FILES	 	= 	0_main.c \
 					01_init.c \
+					01_valid_line.c \
 					03_utils.c \
 					03_parse.c \
 					03_get_cmd_path.c \
 					04_builtins.c \
 					05_exec.c \
-					line_parsing.c
 
 HEADERS_FILES	=	minishell.h
 

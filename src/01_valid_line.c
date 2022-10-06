@@ -6,7 +6,7 @@
 /*   By: mraymond <mraymond@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/05 15:00:25 by mraymond          #+#    #+#             */
-/*   Updated: 2022/10/06 09:19:55 by mraymond         ###   ########.fr       */
+/*   Updated: 2022/10/06 09:27:05 by mraymond         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,35 +82,3 @@ int	valid_line(char *line)
 	}
 	return (0);
 }
-
-
-
-
-
-
-
-
-/*
-//return char of quote content Need to confirm if one closing before using it
-char	*quote_content(char *first_quote_position)
-{
-	int		i;
-	char	*str_quote;
-
-	i = len_next_quote(first_quote_position, first_quote_position[0]);
-	str_quote = (char *)malloc(sizeof(char) * i);
-	ft_strlcpy(str_quote, first_quote_position[1], i);
-	return (str_quote);
-}
-
-//return the position of the second quote starting at first_quote_position
-int	len_next_quote(char *first_quote_position, char quote)
-{
-	int	i;
-
-	i = 1;
-	while (first_quote_position[i] != quote)
-		i++;
-	return (i);
-}
-*/
