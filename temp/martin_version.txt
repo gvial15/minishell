@@ -1,0 +1,23 @@
+v001
+- add 		libft ft_isspace_r
+- add		libft ft_isallspace
+- change 	0_main.c	prompter	loop if ft_isallspace
+- change	0_main.c	prompter	now return int for valid line
+- add		valid_line.c	
+- change	makefile				add valid_line.c
+- change	minishell.h		add		- define message error
+							add		- prototype valid_line
+
+
+v002
+- add		line_prompter functionality
+			01_init.c		add		- line_prompter_init
+									- set_promter_path
+			minishell.h		add		struct ms	- working_path -> actual working_path
+												- line_prompt[200] -> str before command
+												- line_path -> ptr in line_prompt after PROMPTER_TITLE
+							add		define		- PROMPTER_TITLE	-> BEGINNING OF line_prompt
+												- PROMPTER_END		-> END of line_prompter
+			0_main			change	readline(ms->line_prompt)
+
+

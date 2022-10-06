@@ -6,7 +6,7 @@
 /*   By: mraymond <mraymond@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/29 18:27:32 by gvial             #+#    #+#             */
-/*   Updated: 2022/10/06 09:35:36 by mraymond         ###   ########.fr       */
+/*   Updated: 2022/10/06 10:39:04 by mraymond         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,10 @@
 # endif
 
 //MESSAGES=====================================================================
+
+//prompter
+# define PROMPTER_TITLE " ms->"
+# define PROMPTER_END " $> "
 
 # define ERR_FIRST "minishell: "
 
@@ -59,6 +63,9 @@ typedef struct s_ms
 	char	**envp;
 	int		*pipe;
 	t_cmd	*cmds;
+	char	line_prompt[200];
+	char	*line_path;
+	char	working_path[1000];
 }	t_ms;
 
 //==============================================================================
@@ -67,6 +74,7 @@ typedef struct s_ms
 //0_main.c
 
 //01_init.c
+void	set_prompter_path(t_ms *ms);
 void	ms_init(t_ms *ms, char **envp);
 t_ms	*get_ms(void);
 

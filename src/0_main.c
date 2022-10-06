@@ -6,7 +6,7 @@
 /*   By: mraymond <mraymond@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/29 18:27:46 by gvial             #+#    #+#             */
-/*   Updated: 2022/10/06 08:52:13 by mraymond         ###   ########.fr       */
+/*   Updated: 2022/10/06 10:21:42 by mraymond         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,10 +41,10 @@ void	print_cmd_lst(t_cmd *head)
 */
 static int	prompter(t_ms *ms)
 {
-	ms->last_line = readline(" minishell >> ");
+	ms->last_line = readline(ms->line_prompt);
 	while (ms->last_line && (ft_strlen(ms->last_line) == 0
 			|| ft_isallspace(ms->last_line)))
-		ms->last_line = readline(" minishell >> ");
+		ms->last_line = readline(ms->line_prompt);
 	if (ft_strnstr(ms->last_line, "exit", 4))
 		exit (0);
 	add_history(ms->last_line);
@@ -54,7 +54,7 @@ static int	prompter(t_ms *ms)
 int	main(int ac, char **av, char **envp)
 {
 	t_ms	*ms;
-	
+
 	(void) ac;
 	(void) av;
 	ms = get_ms();
