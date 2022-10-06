@@ -6,7 +6,7 @@
 /*   By: mraymond <mraymond@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/05 09:28:21 by mraymond          #+#    #+#             */
-/*   Updated: 2022/10/06 10:41:16 by mraymond         ###   ########.fr       */
+/*   Updated: 2022/10/06 13:25:33 by mraymond         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,4 +66,3 @@ t_ms	*get_ms(void)
 		ms = (t_ms *)malloc(sizeof(t_ms));
 	return (ms);
 }
-

@@ -22,4 +22,7 @@ v002
 - add		folder temp	-> to put note or code that will be remove at the END
 
 
-
+v003
+- add		execution
+			minishell.h		add		struct ms	- fd_pipe -> for fd in/out and pipe
+												- cmd_index -> to let the child program which command he is

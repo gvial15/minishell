@@ -6,7 +6,7 @@
 /*   By: mraymond <mraymond@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/29 18:27:32 by gvial             #+#    #+#             */
-/*   Updated: 2022/10/06 10:39:04 by mraymond         ###   ########.fr       */
+/*   Updated: 2022/10/06 12:59:57 by mraymond         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,9 @@ typedef struct s_ms
 	char	line_prompt[200];
 	char	*line_path;
 	char	working_path[1000];
+	int		cmd_index;
+	int		nb_cmd;
+	int		*child_id;
 }	t_ms;
 
 //==============================================================================
