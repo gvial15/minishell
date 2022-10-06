@@ -6,23 +6,16 @@
 /*   By: mraymond <mraymond@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/05 15:00:25 by mraymond          #+#    #+#             */
-/*   Updated: 2022/10/05 15:32:34 by mraymond         ###   ########.fr       */
+/*   Updated: 2022/10/06 09:19:55 by mraymond         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-//return 0 if valid error code else
-int	valid_line(char *line)
-{
-	if (valid_quotes(line) != 0)
-		printf("error quote\n");
-	if (valid_pipe(line) != 0)
-		printf("error pipe\n");
-}
-
-//return 0 if something each side of pipe. Else return 1
-int	valid_pipe(char *line)
+/*return 0 if something each side of pipe. 
+Else return 1
+*/
+static int	valid_pipe(char *line)
 {
 	int	i;
 	int	val;
@@ -33,7 +26,7 @@ int	valid_pipe(char *line)
 	i = 0;
 	while (line[i])
 	{
-		while (line[i] != '|')
+		while (line[i] && line[i] != '|')
 		{
 			val += ft_isspace_r(line[i]);
 			i++;
@@ -43,10 +36,15 @@ int	valid_pipe(char *line)
 		val = 0;
 		i++;
 	}
+	if (line[i - 1] == '|')
+		return (1);
 	return (0);
 }
 
-int	valid_quotes(char *line)
+/*return 0 if quotes closed
+Else return 1
+*/
+static int	valid_quotes(char *line)
 {
 	int	i;
 	int	s_quote;
@@ -67,6 +65,23 @@ int	valid_quotes(char *line)
 	return (1);
 }
 
+/*return 0 if valid line
+Else return (1)
+*/
+int	valid_line(char *line)
+{
+	if (valid_pipe(line) != 0)
+	{
+		printf("%s%s\n", ERR_FIRST, ERR_LINE_PIPE);
+		return (1);
+	}
+	if (valid_quotes(line) != 0)
+	{
+		printf("%s%s\n", ERR_FIRST, ERR_LINE_QUOTE);
+		return (1);
+	}
+	return (0);
+}
 
 
 
@@ -74,6 +89,8 @@ int	valid_quotes(char *line)
 
 
 
+
+/*
 //return char of quote content Need to confirm if one closing before using it
 char	*quote_content(char *first_quote_position)
 {
@@ -96,3 +113,4 @@ int	len_next_quote(char *first_quote_position, char quote)
 		i++;
 	return (i);
 }
+*/

@@ -6,7 +6,7 @@
 /*   By: mraymond <mraymond@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/29 18:27:32 by gvial             #+#    #+#             */
-/*   Updated: 2022/10/05 11:19:09 by mraymond         ###   ########.fr       */
+/*   Updated: 2022/10/06 09:07:49 by mraymond         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,16 @@
 # ifndef DEBUG
 #  define DEBUG 0
 # endif
+
+//MESSAGES=====================================================================
+
+# define ERR_FIRST "minishell: "
+
+//line error
+# define ERR_LINE_QUOTE "open quote"
+# define ERR_LINE_PIPE "syntax error near unexpected token `|'"
+
+//==============================================================================
 
 //STRUCTS=======================================================================
 
@@ -81,6 +91,10 @@ char	**add_env_var(char **envp, char *var_name);
 
 //05_exec.c
 void	exec(t_ms **ms);
+
+//line_parcing
+int	valid_line(char *line);
+
 
 // utils
 

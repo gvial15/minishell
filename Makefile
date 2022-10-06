@@ -41,6 +41,7 @@ SRCS_FILES	 	= 	0_main.c \
 					03_get_cmd_path.c \
 					04_builtins.c \
 					05_exec.c \
+					line_parsing.c
 
 HEADERS_FILES	=	minishell.h
 
