@@ -6,7 +6,7 @@
 /*   By: mraymond <mraymond@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/29 18:27:32 by gvial             #+#    #+#             */
-/*   Updated: 2022/10/06 09:27:20 by mraymond         ###   ########.fr       */
+/*   Updated: 2022/10/06 09:35:36 by mraymond         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@
 # define ERR_FIRST "minishell: "
 
 //line error
-# define ERR_LINE_QUOTE "open quote"
+# define ERR_LINE_QUOTE "line parse error -> open quote"
 # define ERR_LINE_PIPE "syntax error near unexpected token `|'"
 
 //==============================================================================
