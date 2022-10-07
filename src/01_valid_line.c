@@ -6,7 +6,7 @@
 /*   By: mraymond <mraymond@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/05 15:00:25 by mraymond          #+#    #+#             */
-/*   Updated: 2022/10/06 15:31:17 by mraymond         ###   ########.fr       */
+/*   Updated: 2022/10/07 13:46:32 by mraymond         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 /*return 0 if something each side of pipe. 
 Else return 1
 */
-static int	valid_empty(char *line)
+static int	valid_cmd(char *line)
 {
 	int	i;
 	int	val;
@@ -28,9 +28,7 @@ static int	valid_empty(char *line)
 	{
 		while (line[i] && line[i] != '|')
 		{
-			val += ft_isspace_r(line[i]);
-			if (line[i] == '<' || line[i] == '>')
-				val -= 1;
+			val += ft_iscmd_char(line[i]);
 			i++;
 		}
 		if (val == 0)
@@ -38,7 +36,7 @@ static int	valid_empty(char *line)
 		val = 0;
 		i++;
 	}
-	if (line[i - 1] == '|')
+	if (line[i - 1] == '|' || line[i - 1] == '<' || line[i - 1] == '>')
 		return (1);
 	return (0);
 }
@@ -67,13 +65,6 @@ static int	valid_quotes(char *line)
 	return (1);
 }
 
-int	empty_case(char *line)
-{
-	if (ft_strnstr(line, "|", ft_strlen(line)))
-		return (lineerr_pipe);
-	if ()
-}
-
 /*return 0 if valid line
 Else return (1)
 */
@@ -82,18 +73,21 @@ int	valid_line(char *line)
 	int	error;
 
 	error = 0;
-	if (ft_strnstr(line, "<<<<<", ft_strlen(line)))
+	if (valid_quotes(line) != 0)
+		error = lineerr_quote;
+	else if (ft_strnstr(line, "<<<<<", ft_strlen(line)))
 		error = lineerr_4in;
 	else if (ft_strnstr(line, "<<<<", ft_strlen(line)))
 		error = lineerr_3in;
-	if (ft_strnstr(line, ">>>>", ft_strlen(line)))
+	else if (ft_strnstr(line, ">>>>", ft_strlen(line)))
 		error = lineerr_4in;
 	else if (ft_strnstr(line, ">>>", ft_strlen(line)))
 		error = lineerr_3in;
-	if (valid_empty(line) != 0 && ft_strnstr(line, "|", ft_strlen(line)))
+	else if (valid_cmd(line) != 0
+		&& ft_strnstr(line, "|", ft_strlen(line)) != NULL)
 		error = lineerr_pipe;
-	if (valid_quotes(line) != 0)
-		error = lineerr_quote;
+	else if (valid_cmd(line) != 0)
+		error = lineerr_nocmd;
 	return (print_line_err(error));
 }
 
@@ -103,16 +97,18 @@ int	print_line_err(int error)
 	{
 		printf("%s", ERR_FIRST);
 		if (error == lineerr_quote)
-			printf("%s\n", ERR_LINE_PIPE);
+			printf("%s\n", ERR_LINE_QUOTE);
+		else if (error == lineerr_nocmd)
+			printf("%s\n", ERR_LINE_NOCMD);
 		else
 		{
 			printf("%s", ERR_SYNTAX_ERROR);
 			if (error == lineerr_pipe)
 				printf("%s\n", ERR_LINE_PIPE);
 			if (error == lineerr_4in)
-				printf("%s\n", ERR_LINE_4IN);
+				printf("%s\n", ERR_LINE_5IN);
 			if (error == lineerr_3in)
-				printf("%s\n", ERR_LINE_3IN);
+				printf("%s\n", ERR_LINE_4IN);
 			if (error == lineerr_4out)
 				printf("%s\n", ERR_LINE_4OUT);
 			if (error == lineerr_3out)

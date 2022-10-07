@@ -6,7 +6,7 @@
 /*   By: mraymond <mraymond@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/29 18:27:32 by gvial             #+#    #+#             */
-/*   Updated: 2022/10/06 15:20:36 by mraymond         ###   ########.fr       */
+/*   Updated: 2022/10/07 13:42:55 by mraymond         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@
 
 //line error
 # define ERR_LINE_QUOTE "line parse error -> open quote"
+# define ERR_LINE_NOCMD "line parse error -> no command"
 # define ERR_SYNTAX_ERROR "syntax error near unexpected token "
 # define ERR_LINE_PIPE "`|'"
 # define ERR_LINE_4IN "`<'"
@@ -56,6 +57,7 @@
 enum e_line_err
 {
 	lineerr_quote = 1,
+	lineerr_nocmd,
 	lineerr_pipe,
 	lineerr_3in,
 	lineerr_4in,

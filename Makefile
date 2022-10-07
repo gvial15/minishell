@@ -84,24 +84,20 @@ $(LIBFT):
 					@cd $(LIBFT_DIR)/ && make
 					
 
-clean:
-ifneq ($(wildcard $(OBJS_DIR)),)									
+clean:									
 					@$(MAKE) -s clean -C $(LIBFT_DIR)
 					@$(RM) $(OBJS)
 					@$(RM) $(OBJS_DIR)
 					@$(RM) $(OBJS_BONUS)
 					@$(RM) $(OBJS_DIR_BONUS)
 					@echo "$R$(NAME) objects deleted$W"
-endif
 
 fclean: 			clean
-ifneq ($(wildcard $(NAME)),)					
-					@$(MAKE) -s fclean -C $(LIBFT_DIR)
+					@$(MAKE) -s fclean -C $(LIBFT_DIR)				
 					@$(RM) $(NAME_DSYM)
 					@$(RM) $(NAME)
 					@$(RM) $(NAME_BONUS)
 					@echo "$R$(NAME)         deleted$W"
-endif
 	
 re: 				fclean all
 
