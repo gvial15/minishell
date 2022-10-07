@@ -64,6 +64,9 @@ void	create_cmd_lst(t_ms **data, char **split, char **envp)
 void	parse(char **envp, t_ms **data)
 {
 	char	**split;
+
+	(*data)->last_line = space_out_redirections((*data)->last_line);
+
 	split = ft_split((*data)->last_line, '|');
 	create_cmd_lst(data, split, envp);
 	free_split(split);

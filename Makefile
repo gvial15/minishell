@@ -37,6 +37,7 @@ NAME_DSYM		=	./$(NAME).dSYM
 SRCS_FILES	 	= 	0_main.c \
 					01_init.c \
 					01_valid_line.c \
+					03_format_line.c \
 					03_utils.c \
 					03_parse.c \
 					03_get_cmd_path.c \

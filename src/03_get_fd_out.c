@@ -12,7 +12,7 @@
 
 #include "../include/minishell.h"
 
-static int	get_fdout_count(char **split)
+static int	get_fd_out_count(char **split)
 {
 	int	i;
 	int	fd_count;
@@ -25,29 +25,37 @@ static int	get_fdout_count(char **split)
 	return (fd_count);
 }
 
-// problem with "">> out"
+void	create_fds(char **split, char **fds)
+{
+	int	i;
+	int	j;
+
+	j = 0;
+	i = -1;
+	while (split[++i])
+	{
+		if (i != 0 && split[i - 1][0] == '>' && ft_strlen(split[i - 1]) == 1) // > out
+			fds[j++] = ft_strdup(split[i]);
+		if (split[i][0] == '>' && split[i][1] != '>' && ft_strlen(split[i]) > 1) // >out
+			fds[j++] = ft_strdup(&split[i][1]);
+		if (i != 0 && ft_strnstr(split[i - 1], ">>", 2) && ft_strlen(split[i - 1]) == 2) // >> out
+			fds[j++] = ft_strdup(split[i]);
+		if (ft_strnstr(split[i], ">>", 2) && ft_strlen(split[i]) > 2) // >>out
+			fds[j++] = ft_strdup(&split[i][2]);
+	}
+	fds[j] = 0;
+}
+
 char	**get_fd_out(t_cmd **new_cmd, char *cmd)
 {
-	int		i;
-	int		j;
 	char	**fds;
 	char	**split;
 
 	(*new_cmd)->append = 0;
 	split = ft_split(cmd, ' ');
-	fds = malloc(sizeof(char *) * get_fdout_count(split) + 1);
-	j = 0;
-	i = -1;
-	while (split[++i])
-	{
-		if (i != 0 && *split[i - 1] == '>' && ft_strlen(split[i - 1]) == 1)
-			fds[j++] = ft_strdup(split[i]);
-		else if (split[i][0] == '>' && ft_strlen(split[i]) > 1)
-			fds[j++] = ft_strdup(&split[i][1]);
-	}
-	if (fds[j -1][0] == '>')
-		(*new_cmd)->append = 1;
-	fds[j] = 0;
-	// need to reformat double (>>) fd_out
+	fds = malloc(sizeof(char *) * get_fd_out_count(split) + 1);
+	create_fds(split, fds);
+	// check append
+	free_split(split);
 	return (fds);
 }

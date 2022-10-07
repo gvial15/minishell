@@ -1,6 +1,6 @@
 #include "../include/minishell.h"
 
-int	need_space(char *last_line, int i)
+static int	need_space(char *last_line, int i)
 {
 	if (i != 0 && (last_line[i] == '>' || last_line[i] == '<'))
 		if (last_line[i - 1] != ' ' && last_line[i - 1] != '<'
