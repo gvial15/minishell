@@ -6,7 +6,7 @@
 /*   By: mraymond <mraymond@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/29 18:27:32 by gvial             #+#    #+#             */
-/*   Updated: 2022/10/07 15:15:08 by mraymond         ###   ########.fr       */
+/*   Updated: 2022/10/07 16:25:45 by mraymond         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,10 @@
 # define ERR_LINE_4OUT "`>>'"
 # define ERR_LINE_NEWLINE "`newline'"
 
+//open_err
+# define ERR_OPEN_NOSUCH ": No such file or directory"
+# define ERR_OPEN_PERM ": Permission denied"
+
 //==============================================================================
 
 //ENUM_ERROR====================================================================
@@ -63,6 +67,12 @@ enum e_line_err
 	lineerr_4in,
 	lineerr_3out,
 	lineerr_4out
+};
+
+enum e_open_err
+{
+	openerr_nosuch,
+	openerr_perm
 };
 
 //==============================================================================
