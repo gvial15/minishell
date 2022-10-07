@@ -6,7 +6,7 @@
 /*   By: mraymond <mraymond@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/29 18:27:32 by gvial             #+#    #+#             */
-/*   Updated: 2022/10/06 10:39:04 by mraymond         ###   ########.fr       */
+/*   Updated: 2022/10/07 13:42:55 by mraymond         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,14 +34,36 @@
 //MESSAGES=====================================================================
 
 //prompter
-# define PROMPTER_TITLE " ms->"
+# define PROMPTER_TITLE " ms-> "
 # define PROMPTER_END " $> "
 
 # define ERR_FIRST "minishell: "
 
 //line error
 # define ERR_LINE_QUOTE "line parse error -> open quote"
-# define ERR_LINE_PIPE "syntax error near unexpected token `|'"
+# define ERR_LINE_NOCMD "line parse error -> no command"
+# define ERR_SYNTAX_ERROR "syntax error near unexpected token "
+# define ERR_LINE_PIPE "`|'"
+# define ERR_LINE_4IN "`<'"
+# define ERR_LINE_5IN "`<<'"
+# define ERR_LINE_3OUT "`>'"
+# define ERR_LINE_4OUT "`>>'"
+# define ERR_LINE_NEWLINE "`newline'"
+
+//==============================================================================
+
+//ENUM_ERROR====================================================================
+
+enum e_line_err
+{
+	lineerr_quote = 1,
+	lineerr_nocmd,
+	lineerr_pipe,
+	lineerr_3in,
+	lineerr_4in,
+	lineerr_3out,
+	lineerr_4out
+};
 
 //==============================================================================
 
@@ -101,8 +123,9 @@ char	**add_env_var(char **envp, char *var_name);
 //05_exec.c
 void	exec(t_ms **ms);
 
-//line_parcing
+//01_valid_line
 int		valid_line(char *line);
+int		print_line_err(int error);
 
 // utils
 
