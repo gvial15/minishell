@@ -6,19 +6,19 @@
 /*   By: mraymond <mraymond@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/29 18:28:01 by gvial             #+#    #+#             */
-/*   Updated: 2022/10/06 13:33:12 by mraymond         ###   ########.fr       */
+/*   Updated: 2022/10/07 15:14:52 by mraymond         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-void	exec(t_ms **ms)
+void	exec(t_ms *ms)
 {
-	(*ms)->nb_cmd = ft_lstsize((*ms)->cmds);
-	(*ms)->child_id = (int *)ft_calloc((*ms)->nb_cmd, sizeof(int));
-	fd_allocation((*ms));
-	child_creation((*ms));
-	waiting_n_closefd((*ms));
+	ms->nb_cmd = ft_lstsize(ms->cmds);
+	ms->child_id = (int *)ft_calloc(ms->nb_cmd, sizeof(int));
+	fd_allocation(ms);
+	child_creation(ms);
+	waiting_n_closefd(ms);
 }
 
 void	child_creation(t_ms *ms)
@@ -107,16 +107,31 @@ void	fd_allocation(t_ms *ms)
 
 void	child_execution(t_ms *ms)
 {
+	t_cmd	*cmd;
+
+	cmd = cmd_lst_index(ms, ms->cmd_index);
+	pipe_redirection(ms, cmd);
+	//redirection in
+	//redirection out
+	//execution
 	
 }
 
-t_cmd	*cmd_lst_index(t_ms *ms, int lst_index)
+void	pipe_redirection(t_ms *ms, t_cmd *cmd)
 {
-	int	i;
+	dup2(ms->pipe[ms->cmd_index * 2], 0);
+	dup2(ms->pipe[ms->cmd_index * 2 + 1], 1);
+}
+
+
+
+t_cmd	*cmd_lst_index(t_ms *ms, int cmd_index)
+{
+	int		i;
 	t_cmd	*temp;
 
 	temp = ms->cmds;
 	i = -1;
-	while (++i < lst_index && temp->next)
+	while (++i < cmd_index && temp->next)
 		temp = temp->next;
 }
