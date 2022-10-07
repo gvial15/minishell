@@ -16,6 +16,8 @@ char	*ft_strchr(const char *s, int c)
 	int	i;
 	int	dstsize;
 
+	if (!s)
+		return (NULL);
 	dstsize = ft_strlen((char *)s) + 1;
 	i = -1;
 	while (++i < dstsize)

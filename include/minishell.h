@@ -39,6 +39,10 @@
 
 # define ERR_FIRST "minishell: "
 
+//parsing
+# define GREATER_THAN ">>"
+# define LESSER_THAN "<<"
+
 //line error
 # define ERR_LINE_QUOTE "line parse error -> open quote"
 # define ERR_LINE_PIPE "syntax error near unexpected token `|'"
@@ -54,7 +58,7 @@ typedef struct s_cmd
 	char			**fd_in;
 	char			**fd_out;
 	int				append;
-	int				heredoc;
+	int				*heredoc;
 	struct s_cmd	*next;
 }	t_cmd;
 
