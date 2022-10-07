@@ -26,7 +26,8 @@ void	print_cmd_lst(t_cmd *head)
 		printf("cmd_path: %s\n", head->cmd_path);
 		printf("args:\n");
 		print_split(head->args);
-		printf("fd_in: %s\n", head->fd_in);
+		printf("fd_in:\n");
+		print_split(head->fd_in);
 		printf("fd_out: \n");
 		print_split(head->fd_out);
 		printf("append:%i\n", head->append);
@@ -36,10 +37,6 @@ void	print_cmd_lst(t_cmd *head)
 }
 /************^^^^^testing functions^^^^^************/
 
-/*	show prompter until not NULL/empty
-	add to history
-	return if line valid
-*/
 static int	prompter(t_ms *ms)
 {
 	ms->last_line = readline(ms->line_prompt);
@@ -66,7 +63,7 @@ int	main(int ac, char **av, char **envp)
 		{
 			parse(envp, ms);
 			print_cmd_lst(ms->cmds);
-			free_lst(ms->cmds);
+			free_cmds(ms->cmds);
 		}
 		ms->cmds = NULL;
 	}

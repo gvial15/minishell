@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_fd_in_out.c                                    :+:      :+:    :+:   */
+/*   get_fd_out.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gvial <marvin@42quebec.com>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -12,7 +12,7 @@
 
 #include "../include/minishell.h"
 
-static int	get_fd_out_count(char **split)
+static int	get_fd_in_out_count(char **split)
 {
 	int	i;
 	int	fd_count;
@@ -34,13 +34,13 @@ void	create_fds(char **split, char **fds)
 	i = -1;
 	while (split[++i])
 	{
-		if (i != 0 && split[i - 1][0] == '>' && ft_strlen(split[i - 1]) == 1) // > out
+		if (i != 0 && split[i - 1][0] == '>' && ft_strlen(split[i - 1]) == 1)
 			fds[j++] = ft_strdup(split[i]);
-		if (split[i][0] == '>' && split[i][1] != '>' && ft_strlen(split[i]) > 1) // >out
+		if (split[i][0] == '>' && split[i][1] != '>' && ft_strlen(split[i]) > 1)
 			fds[j++] = ft_strdup(&split[i][1]);
-		if (i != 0 && ft_strnstr(split[i - 1], ">>", 2) && ft_strlen(split[i - 1]) == 2) // >> out
+		if (i != 0 && ft_strnstr(split[i - 1], ">>", 2) && ft_strlen(split[i - 1]) == 2)
 			fds[j++] = ft_strdup(split[i]);
-		if (ft_strnstr(split[i], ">>", 2) && ft_strlen(split[i]) > 2) // >>out
+		if (ft_strnstr(split[i], ">>", 2) && ft_strlen(split[i]) > 2)
 			fds[j++] = ft_strdup(&split[i][2]);
 	}
 	fds[j] = 0;
@@ -63,16 +63,19 @@ static void	check_append(t_cmd *new_cmd, char **split)
 	}
 }
 
-char	**get_fd_out(t_cmd *new_cmd, char *cmd)
+char	**get_fd_in_out(t_cmd *new_cmd, char *cmd, char sign)
 {
 	char	**fds;
 	char	**split;
 
 	new_cmd->append = 0;
 	split = ft_split(cmd, ' ');
-	fds = malloc(sizeof(char *) * get_fd_out_count(split) + 1);
+	fds = malloc(sizeof(char *) * get_fd_in_out_count(split) + 1);
 	create_fds(split, fds);
-	check_append(new_cmd, split);
+	if (sign == '>')
+		check_append(new_cmd, split);
+	// if (sign == '<')
+	// 	check_heredocs(new_cmd, split);
 	free_split(split);
 	return (fds);
 }

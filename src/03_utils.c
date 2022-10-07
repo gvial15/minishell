@@ -59,7 +59,7 @@ int	lst_len(t_cmd *head)
 	return (len);
 }
 
-void	free_lst(t_cmd *cmd)
+void	free_cmds(t_cmd *cmd)
 {
 	t_cmd	*tmp;
 
