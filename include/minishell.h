@@ -6,7 +6,7 @@
 /*   By: mraymond <mraymond@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/29 18:27:32 by gvial             #+#    #+#             */
-/*   Updated: 2022/10/06 10:39:04 by mraymond         ###   ########.fr       */
+/*   Updated: 2022/10/07 18:43:55 by mraymond         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@
 //MESSAGES=====================================================================
 
 //prompter
-# define PROMPTER_TITLE " ms->"
+# define PROMPTER_TITLE " ms-> "
 # define PROMPTER_END " $> "
 
 # define ERR_FIRST "minishell: "
@@ -45,7 +45,41 @@
 
 //line error
 # define ERR_LINE_QUOTE "line parse error -> open quote"
-# define ERR_LINE_PIPE "syntax error near unexpected token `|'"
+# define ERR_LINE_NOCMD "line parse error -> no command"
+# define ERR_SYNTAX_ERROR "syntax error near unexpected token "
+# define ERR_LINE_PIPE "`|'"
+# define ERR_LINE_4IN "`<'"
+# define ERR_LINE_5IN "`<<'"
+# define ERR_LINE_3OUT "`>'"
+# define ERR_LINE_4OUT "`>>'"
+# define ERR_LINE_NEWLINE "`newline'"
+
+//open_err
+# define ERR_OPEN_NOSUCH ": No such file or directory"
+# define ERR_OPEN_PERM ": Permission denied"
+
+# define ERR_EXECVE "command not found: "
+
+//==============================================================================
+
+//ENUM_ERROR====================================================================
+
+enum e_line_err
+{
+	lineerr_quote = 1,
+	lineerr_nocmd,
+	lineerr_pipe,
+	lineerr_3in,
+	lineerr_4in,
+	lineerr_3out,
+	lineerr_4out
+};
+
+enum e_open_err
+{
+	openerr_nosuch,
+	openerr_perm
+};
 
 //==============================================================================
 
@@ -71,6 +105,10 @@ typedef struct s_ms
 	char	line_prompt[200];
 	char	*line_path;
 	char	working_path[1000];
+	int		cmd_index;
+	int		nb_cmd;
+	int		*child_id;
+	int		err_num;
 }	t_ms;
 
 //==============================================================================
@@ -103,12 +141,36 @@ char	*space_out_redirections(char *last_line);
 char	**add_env_var(char **envp, char *var_name);
 
 //05_exec.c
-void	exec(t_ms **ms);
+void	exec(t_ms *ms);
+void	fd_allocation(t_ms *ms);
+void	child_creation(t_ms *ms);
+void	waiting_n_closefd(t_ms *ms);
+int		child_process_to_index(t_ms *ms, int waitpid_return);
 
-//line_parcing
+//05_child_exec.c
+void	child_execution(t_ms *ms);
+t_cmd	*cmd_lst_index(t_ms *ms, int cmd_index);
+void	pipe_redirection(t_ms *ms);
+void	exec_fail(t_ms *ms);
+void	close_keep_errno(int fd);
+
+//05_redirection.c
+int		redirection_in(t_cmd *cmd);
+int		here_doc(char *str_eof);
+int		open_fd_in(char *filename);
+int		print_open_err(char *filename, int error);
+void	redirection_out(t_cmd *cmd);
+
+//01_valid_line
 int		valid_line(char *line);
+int		print_line_err(int error);
 
 // utils
+int		lst_len(t_cmd *head);
+
+//utils2
+void	free_dbl_ptr(void **ptr, int option);
+void	free_ms(t_ms *ms, int with_lstcmds);
 
 //==============================================================================
 

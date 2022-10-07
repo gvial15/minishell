@@ -38,12 +38,16 @@ SRCS_FILES	 	= 	0_main.c \
 					01_init.c \
 					01_valid_line.c \
 					03_format_line.c \
-					03_utils.c \
-					03_parse.c \
 					03_get_cmd_path.c \
 					03_get_fd_in_out.c \
+					03_get_fd_out.c \
+					03_parse.c \
+					03_utils.c \
+					03_utils2.c \
 					04_builtins.c \
+					05_child_exec.c \
 					05_exec.c \
+					05_redirection.c \
 
 HEADERS_FILES	=	minishell.h
 
@@ -86,24 +90,20 @@ $(LIBFT):
 					@cd $(LIBFT_DIR)/ && make
 					
 
-clean:
-ifneq ($(wildcard $(OBJS_DIR)),)									
+clean:									
 					@$(MAKE) -s clean -C $(LIBFT_DIR)
 					@$(RM) $(OBJS)
 					@$(RM) $(OBJS_DIR)
 					@$(RM) $(OBJS_BONUS)
 					@$(RM) $(OBJS_DIR_BONUS)
 					@echo "$R$(NAME) objects deleted$W"
-endif
 
 fclean: 			clean
-ifneq ($(wildcard $(NAME)),)					
-					@$(MAKE) -s fclean -C $(LIBFT_DIR)
+					@$(MAKE) -s fclean -C $(LIBFT_DIR)				
 					@$(RM) $(NAME_DSYM)
 					@$(RM) $(NAME)
 					@$(RM) $(NAME_BONUS)
 					@echo "$R$(NAME)         deleted$W"
-endif
 	
 re: 				fclean all
 
