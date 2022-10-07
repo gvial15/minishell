@@ -29,6 +29,7 @@ void	print_cmd_lst(t_cmd *head)
 		printf("fd_in: %s\n", head->fd_in);
 		printf("fd_out: \n");
 		print_split(head->fd_out);
+		printf("append:%i\n", head->append);
 		head = head->next;
 		i++;
 	}
@@ -63,9 +64,8 @@ int	main(int ac, char **av, char **envp)
 	{
 		if (prompter(ms) == 0)
 		{
-			parse(envp, &ms);
+			parse(envp, ms);
 			print_cmd_lst(ms->cmds);
-			// exec(&data);
 			free_lst(ms->cmds);
 		}
 		ms->cmds = NULL;
