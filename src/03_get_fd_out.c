@@ -46,16 +46,33 @@ void	create_fds(char **split, char **fds)
 	fds[j] = 0;
 }
 
-char	**get_fd_out(t_cmd **new_cmd, char *cmd)
+static void	check_append(t_cmd *new_cmd, char **split)
+{
+	int	i;
+
+	i = -1;
+	while (split[++i])
+	{
+		if (ft_strnstr(split[i], ">", ft_strlen(split[i])))
+		{
+			if (ft_strnstr(split[i], ">>", 2))
+				new_cmd->append = 1;
+			else
+				new_cmd->append = 0;
+		}
+	}
+}
+
+char	**get_fd_out(t_cmd *new_cmd, char *cmd)
 {
 	char	**fds;
 	char	**split;
 
-	(*new_cmd)->append = 0;
+	new_cmd->append = 0;
 	split = ft_split(cmd, ' ');
 	fds = malloc(sizeof(char *) * get_fd_out_count(split) + 1);
 	create_fds(split, fds);
-	// check append
+	check_append(new_cmd, split);
 	free_split(split);
 	return (fds);
 }

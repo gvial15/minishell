@@ -64,9 +64,8 @@ int	main(int ac, char **av, char **envp)
 	{
 		if (prompter(ms) == 0)
 		{
-			parse(envp, &ms);
+			parse(envp, ms);
 			print_cmd_lst(ms->cmds);
-			// exec(&data);
 			free_lst(ms->cmds);
 		}
 		ms->cmds = NULL;
