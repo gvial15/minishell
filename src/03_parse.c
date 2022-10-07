@@ -36,26 +36,38 @@ char	**parse_args(char *cmd)
 	return (args);
 }
 
-void	parse(char **envp, t_ms **data)
+static void	create_cmd_lst(t_ms *data, char **split, char **envp)
 {
 	int		i;
-	char	**split;
 	t_cmd	*new_cmd;
 
-	split = ft_split((*data)->last_line, '|');
 	i = -1;
 	while (split[++i])
 	{
 		new_cmd = malloc(sizeof(t_cmd) * 1);
 		new_cmd->cmd_path = get_cmd_path(split[i], envp);
-		new_cmd->args = parse_args(split[i]);
-		new_cmd->fd_in = NULL;
-		new_cmd->fd_out = NULL;
-		new_cmd->next = NULL;
-		if ((*data)->cmds == NULL)
-			(*data)->cmds = new_cmd;
+		if (new_cmd->cmd_path)
+			new_cmd->args = parse_args(split[i]);
 		else
-			lst_last((*data)->cmds)->next = new_cmd;
+			new_cmd->args = NULL;
+		new_cmd->heredoc = 0;
+		new_cmd->fd_in = NULL;
+		new_cmd->fd_out = get_fd_out(new_cmd, split[i]);
+		new_cmd->next = NULL;
+		if (data->cmds == NULL)
+			data->cmds = new_cmd;
+		else
+			lst_last(data->cmds)->next = new_cmd;
 	}
+}
+
+void	parse(char **envp, t_ms *data)
+{
+	char	**split;
+
+	data->last_line = space_out_redirections(data->last_line);
+
+	split = ft_split(data->last_line, '|');
+	create_cmd_lst(data, split, envp);
 	free_split(split);
 }

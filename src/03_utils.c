@@ -59,24 +59,24 @@ int	lst_len(t_cmd *head)
 	return (len);
 }
 
-void	free_lst(t_cmd *head)
+void	free_lst(t_cmd *cmd)
 {
 	t_cmd	*tmp;
 
-	if (head == NULL)
+	if (cmd == NULL)
 		return ;
-	while (head)
+	while (cmd)
 	{
-		if (head->cmd_path)
-			free(head->cmd_path);
-		if (head->args)
-			free_split(head->args);
-		if (head->fd_in)
-			free(head->fd_in);
-		if (head->fd_out)
-			free(head->fd_out);
-		tmp = head;
-		head = head->next;
+		if (cmd->cmd_path)
+			free(cmd->cmd_path);
+		if (cmd->args)
+			free_split(cmd->args);
+		if (cmd->fd_in)
+			free(cmd->fd_in);
+		if (cmd->fd_out)
+			free_split(cmd->fd_out);
+		tmp = cmd;
+		cmd = cmd->next;
 		free(tmp);
 	}
 }

@@ -16,6 +16,8 @@ void	free_split(char **split)
 {
 	int	i;
 
+	if (!split)
+		return ;
 	i = -1;
 	while (split[++i])
 		free(split[i]);
