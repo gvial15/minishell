@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
+#include <stdio.h>
 
 int	have_sign(char *s)
 {
@@ -19,6 +20,7 @@ int	have_sign(char *s)
 	return (0);
 }
 
+// <in < in2 <<in3 << in4     in4 is picked up as the cmd
 int	find_cmd_i(char **split)
 {
 	int	i;
@@ -28,7 +30,7 @@ int	find_cmd_i(char **split)
 	{
 		if (!have_sign(split[i])
 			&& ((i == 0) || (i != 0 && !have_sign(split[i - 1]))
-				|| (i != 0 && have_sign(split[i - 1])
+				|| (i != 0 && !have_sign(split[i - 1])
 					&& ft_strlen(split[i - 1]) > 1)))
 			break ;
 	}
@@ -59,7 +61,7 @@ int	lst_len(t_cmd *head)
 	return (len);
 }
 
-void	free_lst(t_cmd *cmd)
+void	free_cmds(t_cmd *cmd)
 {
 	t_cmd	*tmp;
 
@@ -75,6 +77,7 @@ void	free_lst(t_cmd *cmd)
 			free(cmd->fd_in);
 		if (cmd->fd_out)
 			free_split(cmd->fd_out);
+		// free here_docs
 		tmp = cmd;
 		cmd = cmd->next;
 		free(tmp);

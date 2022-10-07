@@ -26,6 +26,8 @@ char	**parse_args(char *cmd)
 	i = find_cmd_i(split);
 	while (split[++i] && !have_sign(split[i]))
 		arg_count++;
+	if (arg_count == 0)
+		return (NULL);
 	args = malloc(sizeof(char *) * arg_count + 1);
 	j = -1;
 	i = find_cmd_i(split);
@@ -46,13 +48,10 @@ static void	create_cmd_lst(t_ms *data, char **split, char **envp)
 	{
 		new_cmd = malloc(sizeof(t_cmd) * 1);
 		new_cmd->cmd_path = get_cmd_path(split[i], envp);
-		if (new_cmd->cmd_path)
-			new_cmd->args = parse_args(split[i]);
-		else
-			new_cmd->args = NULL;
+		new_cmd->args = parse_args(split[i]);
 		new_cmd->heredoc = 0;
-		new_cmd->fd_in = NULL;
-		new_cmd->fd_out = get_fd_out(new_cmd, split[i]);
+		new_cmd->fd_in = get_fd_in_out(new_cmd, split[i], '<');
+		new_cmd->fd_out = get_fd_in_out(new_cmd, split[i], '>');
 		new_cmd->next = NULL;
 		if (data->cmds == NULL)
 			data->cmds = new_cmd;
@@ -66,7 +65,6 @@ void	parse(char **envp, t_ms *data)
 	char	**split;
 
 	data->last_line = space_out_redirections(data->last_line);
-
 	split = ft_split(data->last_line, '|');
 	create_cmd_lst(data, split, envp);
 	free_split(split);
