@@ -6,7 +6,7 @@
 /*   By: mraymond <mraymond@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/05 15:00:25 by mraymond          #+#    #+#             */
-/*   Updated: 2022/10/06 10:55:43 by mraymond         ###   ########.fr       */
+/*   Updated: 2022/10/06 15:31:17 by mraymond         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 /*return 0 if something each side of pipe. 
 Else return 1
 */
-static int	valid_pipe(char *line)
+static int	valid_empty(char *line)
 {
 	int	i;
 	int	val;
@@ -29,6 +29,8 @@ static int	valid_pipe(char *line)
 		while (line[i] && line[i] != '|')
 		{
 			val += ft_isspace_r(line[i]);
+			if (line[i] == '<' || line[i] == '>')
+				val -= 1;
 			i++;
 		}
 		if (val == 0)
@@ -65,20 +67,57 @@ static int	valid_quotes(char *line)
 	return (1);
 }
 
+int	empty_case(char *line)
+{
+	if (ft_strnstr(line, "|", ft_strlen(line)))
+		return (lineerr_pipe);
+	if ()
+}
+
 /*return 0 if valid line
 Else return (1)
 */
 int	valid_line(char *line)
 {
-	if (valid_pipe(line) != 0)
-	{
-		printf("%s%s\n", ERR_FIRST, ERR_LINE_PIPE);
-		return (1);
-	}
+	int	error;
+
+	error = 0;
+	if (ft_strnstr(line, "<<<<<", ft_strlen(line)))
+		error = lineerr_4in;
+	else if (ft_strnstr(line, "<<<<", ft_strlen(line)))
+		error = lineerr_3in;
+	if (ft_strnstr(line, ">>>>", ft_strlen(line)))
+		error = lineerr_4in;
+	else if (ft_strnstr(line, ">>>", ft_strlen(line)))
+		error = lineerr_3in;
+	if (valid_empty(line) != 0 && ft_strnstr(line, "|", ft_strlen(line)))
+		error = lineerr_pipe;
 	if (valid_quotes(line) != 0)
+		error = lineerr_quote;
+	return (print_line_err(error));
+}
+
+int	print_line_err(int error)
+{
+	if (error > 0)
 	{
-		printf("%s%s\n", ERR_FIRST, ERR_LINE_QUOTE);
-		return (1);
+		printf("%s", ERR_FIRST);
+		if (error == lineerr_quote)
+			printf("%s\n", ERR_LINE_PIPE);
+		else
+		{
+			printf("%s", ERR_SYNTAX_ERROR);
+			if (error == lineerr_pipe)
+				printf("%s\n", ERR_LINE_PIPE);
+			if (error == lineerr_4in)
+				printf("%s\n", ERR_LINE_4IN);
+			if (error == lineerr_3in)
+				printf("%s\n", ERR_LINE_3IN);
+			if (error == lineerr_4out)
+				printf("%s\n", ERR_LINE_4OUT);
+			if (error == lineerr_3out)
+				printf("%s\n", ERR_LINE_3OUT);
+		}
 	}
-	return (0);
+	return (error);
 }
