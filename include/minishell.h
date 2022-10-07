@@ -6,7 +6,7 @@
 /*   By: mraymond <mraymond@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/29 18:27:32 by gvial             #+#    #+#             */
-/*   Updated: 2022/10/07 16:25:45 by mraymond         ###   ########.fr       */
+/*   Updated: 2022/10/07 16:52:47 by mraymond         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,8 @@
 //open_err
 # define ERR_OPEN_NOSUCH ": No such file or directory"
 # define ERR_OPEN_PERM ": Permission denied"
+
+# define ERR_EXECVE "command not found: "
 
 //==============================================================================
 

@@ -6,7 +6,7 @@
 /*   By: mraymond <mraymond@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/29 18:28:01 by gvial             #+#    #+#             */
-/*   Updated: 2022/10/07 16:28:13 by mraymond         ###   ########.fr       */
+/*   Updated: 2022/10/07 16:57:24 by mraymond         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,16 +110,36 @@ void	child_execution(t_ms *ms)
 	t_cmd	*cmd;
 
 	cmd = cmd_lst_index(ms, ms->cmd_index);
-	pipe_redirection(ms, cmd);
+	pipe_redirection(ms);
 	redirection_in(cmd);
-	//redirection out
-	//execution
+	redirection_out(cmd);
+	execve(cmd->cmd_path, cmd->args, ms->envp);
+	printf("%s%s%s\n", ERR_FIRST, ERR_EXECVE, cmd->args[0]);
+	//exec fail 
 	
 }
 
+void	redirection_out(t_cmd *cmd)
+{
+	int	i;
+	int	new_fd_out;
 
+	i = -1;
+	new_fd_out = 0;
+	while (cmd->fd_out[++i] && new_fd_out != -1)
+	{
+		if (append[i] == 1)
+			new_fd_out = open(filename, O_WRONLY | O_CREAT | O_APPEND, 0644);
+		else
+			new_fd_out = open(filename, O_WRONLY | O_CREAT, 0644);
+		if (cmd->fd_out[i + 1] && new_fd_out != -1)
+			close(new_fd_out);
+	}
+	if (new_fd_out != -1)
+		dup2(new_fd_out, 1);
+}
 
-void	pipe_redirection(t_ms *ms, t_cmd *cmd)
+void	pipe_redirection(t_ms *ms)
 {
 	dup2(ms->pipe[ms->cmd_index * 2], 0);
 	dup2(ms->pipe[ms->cmd_index * 2 + 1], 1);
@@ -134,7 +154,7 @@ int	redirection_in(t_cmd *cmd)
 	new_fd_in = 0;
 	while (cmd->fd_in[++i] && new_fd_in != -1)
 	{
-		if (cmd->heredoc == 0)
+		if (cmd->heredoc == 1)
 			new_fd_in = here_doc(cmd->fd_in[i]);
 		else
 			new_fd_in = open_fd_in(cmd->fd_in[i]);
