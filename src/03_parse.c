@@ -49,8 +49,10 @@ char	**parse_args(char *cmd)
 
 	args = NULL;
 	split = ft_split(cmd, ' ');
-	arg_count = 0;
 	i = find_cmd_i(split);
+	arg_count = 0;
+	if (!split[i])
+		return (NULL);
 	while (split[++i] && !have_redirec(split[i]))
 		arg_count++;
 	if (arg_count == 0)
