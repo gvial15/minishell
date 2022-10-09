@@ -12,6 +12,20 @@
 
 #include "../include/minishell.h"
 
+int	print_heredoc(int *heredoc)
+{
+	int	i;
+
+	if (heredoc[0] == -1)
+		return (printf("heredoc: (null)\n"));
+	printf("heredoc: ");
+	i = -1;
+	while (heredoc[++i] != -1)
+		printf("%i ", heredoc[i]);
+	printf("\n");
+	return (0);
+}
+
 void	print_cmd_lst(t_cmd *head)
 {
 	int	i;
@@ -31,6 +45,7 @@ void	print_cmd_lst(t_cmd *head)
 		printf("fd_out: \n");
 		print_split(head->fd_out);
 		printf("append:%i\n", head->append);
+		print_heredoc(head->heredoc);
 		head = head->next;
 		i++;
 	}

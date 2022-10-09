@@ -12,8 +12,6 @@
 
 #include "../include/minishell.h"
 
-/*Copy the last dir of working path in line_path (part of line_prompter)
-*/
 void	set_prompter_path(t_ms *ms)
 {
 	int	i_last_dir;
@@ -25,11 +23,6 @@ void	set_prompter_path(t_ms *ms)
 		PROMPTER_END, ft_strlen(PROMPTER_END) + 1);
 }
 
-/*Set the begining of line_prompt to PROMPTER_TITLE
-Set line_path address to ptr after PROMPTER_TITLE
-Set the working_path to actual PWD envp
-Call set_prompter_path
-*/
 static void	line_prompter_init(t_ms *ms)
 {
 	int		i;

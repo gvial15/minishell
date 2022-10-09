@@ -128,7 +128,8 @@ void	fct_sigint(int sig);
 void	fct_sigabrt(int sig);
 
 //03_parsing
-int		have_sign(char *s);
+int		have_redirec(char *s);
+int		have_dbl_redirec(char *s);
 void	free_cmds(t_cmd *head);
 t_cmd	*lst_last(t_cmd *head);
 int		find_cmd_i(char **split);

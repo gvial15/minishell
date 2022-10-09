@@ -11,30 +11,19 @@
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
-#include <stdio.h>
 
-int	have_sign(char *s)
+int	have_redirec(char *s)
 {
-	if (ft_strchr(s, '<') || ft_strchr(s, '>'))
+	if (s[0] == '<' || s[0] == '>')
 		return (1);
 	return (0);
 }
 
-// <in < in2 <<in3 << in4     in4 is picked up as the cmd
-int	find_cmd_i(char **split)
+int	have_dbl_redirec(char *s)
 {
-	int	i;
-
-	i = -1;
-	while (split[++i])
-	{
-		if (!have_sign(split[i])
-			&& ((i == 0) || (i != 0 && !have_sign(split[i - 1]))
-				|| (i != 0 && !have_sign(split[i - 1])
-					&& ft_strlen(split[i - 1]) > 1)))
-			break ;
-	}
-	return (i);
+	if (ft_strnstr(s, ">>", 2) || ft_strnstr(s, "<<", 2))
+		return (1);
+	return (0);
 }
 
 t_cmd	*lst_last(t_cmd *head)
@@ -77,7 +66,8 @@ void	free_cmds(t_cmd *cmd)
 			free(cmd->fd_in);
 		if (cmd->fd_out)
 			free_split(cmd->fd_out);
-		// free here_docs
+		if (cmd->heredoc)
+			free(cmd->heredoc);
 		tmp = cmd;
 		cmd = cmd->next;
 		free(tmp);

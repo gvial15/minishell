@@ -11,7 +11,6 @@
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
-#include <stdlib.h>
 
 static int	get_fd_in_out_count(char **split, int sign)
 {
@@ -31,7 +30,7 @@ static void	check_heredocs(t_cmd *new_cmd, char **split)
 	int		i;
 	int		j;
 
-	new_cmd->heredoc = malloc(sizeof(int) * get_fd_in_out_count(split, '<'));
+	new_cmd->heredoc = malloc(sizeof(int) * get_fd_in_out_count(split, '<') + 1);
 	j = 0;
 	i = -1;
 	while (split[++i])
