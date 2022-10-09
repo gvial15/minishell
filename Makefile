@@ -40,7 +40,6 @@ SRCS_FILES	 	= 	0_main.c \
 					03_format_line.c \
 					03_get_cmd_path.c \
 					03_get_fd_in_out.c \
-					03_get_fd_out.c \
 					03_parse.c \
 					03_utils.c \
 					03_utils2.c \

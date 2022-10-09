@@ -38,8 +38,9 @@ int	here_doc(char *str_eof)
 	int		fd_pipe[2];
 	char	*line;
 
-	pipe(fd_pipe[2]);
+	pipe(&fd_pipe[2]);
 	readline("> ");
+	line = NULL;
 	while (ft_strncmp(line, str_eof, ft_strlen(line)))
 	{
 		write(fd_pipe[1], line, ft_strlen(line));
@@ -52,6 +53,7 @@ int	here_doc(char *str_eof)
 int	open_fd_in(char *filename)
 {
 	int	new_fd_in;
+	(void) new_fd_in;
 	int	error;
 
 	error = 0;

@@ -20,7 +20,7 @@ void	free_ms(t_ms *ms, int with_lstcmds)
 	free(ms->pipe);
 	free(ms->child_id);
 	if (with_lstcmds == 1)
-		free_lst(ms->cmds);
+		free_cmds(ms->cmds);
 }
 
 //option 0: with double ptr -- 1:only inside

@@ -36,6 +36,7 @@ t_cmd	*cmd_lst_index(t_ms *ms, int cmd_index)
 	i = -1;
 	while (++i < cmd_index && temp->next)
 		temp = temp->next;
+	return (temp);
 }
 
 void	pipe_redirection(t_ms *ms)
