@@ -77,7 +77,8 @@ void	free_cmds(t_cmd *cmd)
 			free(cmd->fd_in);
 		if (cmd->fd_out)
 			free_split(cmd->fd_out);
-		// free here_docs
+		if (cmd->heredoc)
+			free(cmd->heredoc);
 		tmp = cmd;
 		cmd = cmd->next;
 		free(tmp);
