@@ -22,7 +22,7 @@ static int	get_space_count(char *last_line)
 	return (space_count);
 }
 
-// this space out the redirection if needed ex: ">out>>out2" = ">out >>out2"
+// space out the redirections if needed ex: ">out>>out2" = ">out >>out2"
 char	*space_out_redirections(char *last_line)
 {
 	int		i;

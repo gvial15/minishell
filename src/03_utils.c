@@ -11,16 +11,21 @@
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
-#include <stdio.h>
 
-int	have_sign(char *s)
+int	have_redirec(char *s)
 {
-	if (ft_strchr(s, '<') || ft_strchr(s, '>'))
+	if (s[0] == '<' || s[0] == '>')
 		return (1);
 	return (0);
 }
 
-// <in < in2 <<in3 << in4     in4 is picked up as the cmd
+int	have_dbl_redirec(char *s)
+{
+	if (ft_strnstr(s, ">>", 2) || ft_strnstr(s, "<<", 2))
+		return (1);
+	return (0);
+}
+
 int	find_cmd_i(char **split)
 {
 	int	i;
@@ -28,11 +33,22 @@ int	find_cmd_i(char **split)
 	i = -1;
 	while (split[++i])
 	{
-		if (!have_sign(split[i])
-			&& ((i == 0) || (i != 0 && !have_sign(split[i - 1]))
-				|| (i != 0 && !have_sign(split[i - 1])
-					&& ft_strlen(split[i - 1]) > 1)))
-			break ;
+		if (!have_redirec(split[i]))
+		{
+			if (i == 0)
+				break;
+			if (i > 1 && !have_redirec(split[i - 1]) && have_dbl_redirec(split[i - 2])
+				&& ft_strlen(split[i - 2]) == 2)
+				break ; // >> out cmd
+			if (i > 1 && !have_redirec(split[i - 1]) && have_redirec(split[i - 2])
+				&& ft_strlen(split[i - 2]) == 1)
+				break ; // > out cmd
+			if (have_redirec(split[i - 1]) && ft_strlen(split[i - 1]) > 1
+				&& !have_dbl_redirec(split[i - 1]))
+				break ; // >out cmd
+			if (have_dbl_redirec(split[i - 1]) && ft_strlen(split[i - 1]) > 2)
+				break ;	// >>out cmd
+		}
 	}
 	return (i);
 }

@@ -24,7 +24,7 @@ char	**parse_args(char *cmd)
 	split = ft_split(cmd, ' ');
 	arg_count = 0;
 	i = find_cmd_i(split);
-	while (split[++i] && !have_sign(split[i]))
+	while (split[++i] && !have_redirec(split[i]))
 		arg_count++;
 	if (arg_count == 0)
 		return (NULL);
@@ -60,6 +60,7 @@ static void	create_cmd_lst(t_ms *data, char **split, char **envp)
 	}
 }
 
+// "<in" segfault
 void	parse(char **envp, t_ms *data)
 {
 	char	**split;
