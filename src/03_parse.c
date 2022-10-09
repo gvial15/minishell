@@ -12,6 +12,33 @@
 
 #include "../include/minishell.h"
 
+int	find_cmd_i(char **split)
+{
+	int	i;
+
+	i = -1;
+	while (split[++i])
+	{
+		if (!have_redirec(split[i]))
+		{
+			if (i == 0)
+				break;
+			if (i > 1 && !have_redirec(split[i - 1]) && have_dbl_redirec(split[i - 2])
+				&& ft_strlen(split[i - 2]) == 2)
+				break ; // >> out cmd
+			if (i > 1 && !have_redirec(split[i - 1]) && have_redirec(split[i - 2])
+				&& ft_strlen(split[i - 2]) == 1)
+				break ; // > out cmd
+			if (have_redirec(split[i - 1]) && ft_strlen(split[i - 1]) > 1
+				&& !have_dbl_redirec(split[i - 1]))
+				break ; // >out cmd
+			if (have_dbl_redirec(split[i - 1]) && ft_strlen(split[i - 1]) > 2)
+				break ;	// >>out cmd
+		}
+	}
+	return (i);
+}
+
 char	**parse_args(char *cmd)
 {
 	char	**args;
