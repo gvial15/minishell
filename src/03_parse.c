@@ -51,12 +51,13 @@ char	**parse_args(char *cmd)
 	split = ft_split(cmd, ' ');
 	i = find_cmd_i(split);
 	arg_count = 0;
-	if (!split[i])
-		return (NULL);
 	while (split[++i] && !have_redirec(split[i]))
 		arg_count++;
 	if (arg_count == 0)
+	{
+		free_split(split);
 		return (NULL);
+	}
 	args = malloc(sizeof(char *) * arg_count + 1);
 	j = -1;
 	i = find_cmd_i(split);

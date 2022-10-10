@@ -34,6 +34,7 @@ static char	**get_paths(char **envp)
 	i = -1;
 	while (paths[++i])
 		paths[i] = ft_strjoin_gnl(paths[i], "/");
+	paths[i] = 0;
 	return (paths);
 }
 
