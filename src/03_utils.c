@@ -63,7 +63,7 @@ void	free_cmds(t_cmd *cmd)
 		if (cmd->args)
 			free_split(cmd->args);
 		if (cmd->fd_in)
-			free(cmd->fd_in);
+			free_split(cmd->fd_in);
 		if (cmd->fd_out)
 			free_split(cmd->fd_out);
 		if (cmd->heredoc)
