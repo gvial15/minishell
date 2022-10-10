@@ -139,7 +139,7 @@ char	**get_fd_in_out(t_cmd *new_cmd, char *cmd, char sign);
 char	*space_out_redirections(char *last_line);
 
 //04_builtins
-char	**add_env_var(char **envp, char *var_name);
+char	**add_env_var(char **envp, char **vars);
 
 //05_exec.c
 void	exec(t_ms *ms);
