@@ -14,6 +14,8 @@
 
 int	have_redirec(char *s)
 {
+	if (s == NULL)
+		return (1);
 	if (s[0] == '<' || s[0] == '>')
 		return (1);
 	return (0);

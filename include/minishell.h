@@ -134,6 +134,7 @@ void	free_cmds(t_cmd *head);
 t_cmd	*lst_last(t_cmd *head);
 int		find_cmd_i(char **split);
 void	parse(char **envp, t_ms *ms);
+char	*isolate_cmd(char *cmd_brut);
 char	*get_cmd_path(char *cmd, char **envp);
 char	**get_fd_in_out(t_cmd *new_cmd, char *cmd, char sign);
 char	*space_out_redirections(char *last_line);

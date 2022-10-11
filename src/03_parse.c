@@ -41,34 +41,26 @@ int	find_cmd_i(char **split)
 
 char	**parse_args(char *cmd)
 {
-	char	**args;
-	char	**split;
 	int		i;
 	int		j;
 	int		arg_count;
+	char	**args;
+	char	**split;
 
 	args = NULL;
-	split = ft_split(cmd, ' ');
-	i = find_cmd_i(split);
-	if (!split[i])
-	{
-		free_split(split);
-		return (NULL);
-	}
 	arg_count = 0;
-	while (split[++i] && !have_redirec(split[i]))
-		arg_count++;
-	if (arg_count == 0)
-	{
-		free_split(split);
-		return (NULL);
-	}
-	args = malloc(sizeof(char *) * arg_count + 1);
-	j = -1;
+	split = ft_split(cmd, ' ');
+	if (isolate_cmd(cmd) == NULL)
+		return (args);
 	i = find_cmd_i(split);
-	while (++j < arg_count)
-		args[j] = ft_strdup(split[++i]);
-	args[j] = 0;
+	while (!have_redirec(split[++i]))
+		arg_count++;
+	args = malloc(sizeof(char *) * (arg_count + 2));
+	j = -1;
+	i = find_cmd_i(split) - 1;
+	while (!have_redirec(split[++i]))
+		args[++j] = ft_strdup(split[i]);
+	args[++j] = 0;
 	free_split(split);
 	return (args);
 }

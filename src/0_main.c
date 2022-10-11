@@ -78,7 +78,6 @@ int	main(int ac, char **av, char **envp)
 		{
 			parse(envp, ms);
 			print_cmd_lst(ms->cmds);
-			add_env_var(ms->envp, ms->cmds->args);
 			free_cmds(ms->cmds);
 		}
 		ms->cmds = NULL;
