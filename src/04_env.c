@@ -74,18 +74,41 @@ static int	var_count(char **args, char **envp)
 	while (args[++i])
 		if (is_valid(args[i], envp))
 			count++;
-	printf("%i\n", count);
 	return (count);
 }
 
+int	get_env_len(char **envp)
+{
+	int	env_len;
+
+	env_len = 0;
+	while (envp[env_len])
+		env_len++;
+	return (env_len);
+}
+
+
+//	still have to manage the reassignment of an already existing env var
 char	**add_env_var(char **envp, char **args)
 {
+	int		i;
+	int		j;
 	char	**new_envp;
 	int		var_count_;
 
 	var_count_ = var_count(args, envp);
 	if (!args || !var_count_)
 		return (envp);
-	new_envp = malloc(sizeof(char *) * var_count_ + 1);
+	new_envp = malloc(sizeof(char *) * (var_count_ + get_env_len(envp) + 1));
+	j = 0;
+	i = -1;
+	while (envp[++i])
+			new_envp[j++] = ft_strdup(envp[i]);
+	i = -1;
+	while (args[++i])
+		if (is_valid(args[i], envp))
+		new_envp[j++] = ft_strdup(args[i]);
+	new_envp[j++] = 0;
+	// free_split(envp); have to free envp
 	return (new_envp);
 }
