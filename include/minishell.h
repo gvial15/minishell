@@ -6,7 +6,7 @@
 /*   By: mraymond <mraymond@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/29 18:27:32 by gvial             #+#    #+#             */
-/*   Updated: 2022/10/07 18:43:55 by mraymond         ###   ########.fr       */
+/*   Updated: 2022/10/11 14:55:08 by mraymond         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,6 +94,7 @@ typedef struct s_cmd
 	int				append;
 	int				*heredoc;
 	struct s_cmd	*next;
+	int				fildes[2];
 }	t_cmd;
 
 typedef struct s_ms
@@ -144,6 +145,8 @@ char	**add_env_var(char **envp, char **vars);
 
 //05_exec.c
 void	exec(t_ms *ms);
+void	fd_redirection(t_ms *ms);
+void	close_ms_pipe(t_ms *ms);
 void	fd_allocation(t_ms *ms);
 void	child_creation(t_ms *ms);
 void	waiting_n_closefd(t_ms *ms);
@@ -152,8 +155,8 @@ int		child_process_to_index(t_ms *ms, int waitpid_return);
 //05_child_exec.c
 void	child_execution(t_ms *ms);
 t_cmd	*cmd_lst_index(t_ms *ms, int cmd_index);
-void	pipe_redirection(t_ms *ms);
-void	exec_fail(t_ms *ms);
+int		pipe_redirection(t_cmd *cmd);
+void	exec_fail(t_ms *ms, t_cmd *cmd);
 void	close_keep_errno(int fd);
 
 //05_redirection.c
@@ -161,7 +164,7 @@ int		redirection_in(t_cmd *cmd);
 int		here_doc(char *str_eof);
 int		open_fd_in(char *filename);
 int		print_open_err(char *filename, int error);
-void	redirection_out(t_cmd *cmd);
+int		redirection_out(t_cmd *cmd);
 
 //01_valid_line
 int		valid_line(char *line);
