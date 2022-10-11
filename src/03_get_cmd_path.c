@@ -38,7 +38,7 @@ static char	**get_paths(char **envp)
 	return (paths);
 }
 
-static char	*isolate_cmd(char *cmd_brut)
+char	*isolate_cmd(char *cmd_brut)
 {
 	char	*cmd;
 	char	**split;
