@@ -6,7 +6,7 @@
 /*   By: mraymond <mraymond@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/29 18:27:46 by gvial             #+#    #+#             */
-/*   Updated: 2022/10/06 10:21:42 by mraymond         ###   ########.fr       */
+/*   Updated: 2022/10/11 09:13:59 by mraymond         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,7 @@ int	main(int ac, char **av, char **envp)
 		{
 			parse(envp, ms);
 			print_cmd_lst(ms->cmds);
+			exec(ms);
 			free_cmds(ms->cmds);
 		}
 		ms->cmds = NULL;
