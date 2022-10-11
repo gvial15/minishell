@@ -88,7 +88,6 @@ static void	create_cmd_lst(t_ms *ms, char **split, char **envp)
 	}
 }
 
-// "<in" segfault
 void	parse(char **envp, t_ms *ms)
 {
 	char	**split;
