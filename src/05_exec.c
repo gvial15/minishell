@@ -6,7 +6,7 @@
 /*   By: mraymond <mraymond@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/29 18:28:01 by gvial             #+#    #+#             */
-/*   Updated: 2022/10/07 18:39:12 by mraymond         ###   ########.fr       */
+/*   Updated: 2022/10/11 09:30:58 by mraymond         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void	fd_allocation(t_ms *ms)
 	ms->pipe[0] = 0;
 	ms->pipe[(ms->nb_cmd - 1) * 2 + 1] = 1;
 	i = -1;
-	while (++i < ms->nb_cmd)
+	while (++i < ms->nb_cmd - 1)
 	{
 		pipe(temp_pipe);
 		ms->pipe[i * 2 + 1] = temp_pipe[1];
