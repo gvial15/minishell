@@ -78,6 +78,7 @@ int	main(int ac, char **av, char **envp)
 		{
 			parse(envp, ms);
 			print_cmd_lst(ms->cmds);
+			exec(ms);
 			free_cmds(ms->cmds);
 			exec(ms);
 		}
