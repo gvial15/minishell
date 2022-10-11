@@ -43,7 +43,10 @@ SRCS_FILES	 	= 	0_main.c \
 					03_parse.c \
 					03_utils.c \
 					03_utils2.c \
+<<<<<<< HEAD
 					04_env.c \
+=======
+>>>>>>> main
 					05_child_exec.c \
 					05_exec.c \
 					05_redirection.c \
