@@ -44,6 +44,7 @@ SRCS_FILES	 	= 	0_main.c \
 					03_utils.c \
 					03_utils2.c \
 					04_env.c \
+					04_env_utils.c \
 					05_child_exec.c \
 					05_exec.c \
 					05_redirection.c \
