@@ -23,7 +23,7 @@ static int	is_valid(char *var, char **envp)
 {
 	int		i;
 
-	i = -1;
+	i = 0;
 	while (var[++i])
 	{
 		if (var[i] == '=' && i != 0)
@@ -47,7 +47,7 @@ static int	var_count(char **args, char **envp)
 	int	count;
 
 	count = 0;
-	i = -1;
+	i = 0;
 	while (args[++i])
 		if (is_valid(args[i], envp))
 			count++;
@@ -60,6 +60,7 @@ char	**add_env_var(char **envp, char **args)
 	char	**new_envp;
 	int		var_count_;
 
+	printf("hello\n");
 	var_count_ = var_count(args, envp);
 	if (!args || !var_count_)
 		return (envp);
