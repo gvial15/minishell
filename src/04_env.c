@@ -12,10 +12,33 @@
 
 #include "../include/minishell.h"
 
+char	*get_varname(char *var)
+{
+	int		i;
+	int		j;
+	char	*varname;
+
+	i = 0;
+	while (var[i] != '=')
+		i++;
+	varname = malloc(sizeof(char) * i);
+	j = -1;
+	while (++j < i)
+		varname[j] = var[j];
+	return (varname);
+}
+
 static int	already_exist(char *var, char **envp)
 {
-	(void)	var;
-	(void)	envp;
+	int		i;
+	char	*varname;
+
+	varname = get_varname(var);
+	i = -1;
+	while (envp[++i])
+		if (ft_strnstr(envp[i], varname, ft_strlen(varname))
+			&& ft_strlen(get_varname(envp[i])) == ft_strlen(varname))
+			return (1);
 	return (0);
 }
 
@@ -23,12 +46,12 @@ static int	is_valid(char *var, char **envp)
 {
 	int		i;
 
-	i = 0;
+	i = -1;
 	while (var[++i])
 	{
 		if (var[i] == '=' && i != 0)
 			break ;
-		if (!ft_isalpha(var[i]) || (var[i] == '=' && i == 0))
+		if (i == 0 && (!ft_isalpha(var[i]) || var[i] == '='))
 		{
 			printf("export: '%s': not a valid identifier\n", var);
 			return (0);
@@ -60,7 +83,6 @@ char	**add_env_var(char **envp, char **args)
 	char	**new_envp;
 	int		var_count_;
 
-	printf("hello\n");
 	var_count_ = var_count(args, envp);
 	if (!args || !var_count_)
 		return (envp);
