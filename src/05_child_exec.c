@@ -6,7 +6,7 @@
 /*   By: mraymond <mraymond@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 18:36:55 by mraymond          #+#    #+#             */
-/*   Updated: 2022/10/12 11:11:45 by mraymond         ###   ########.fr       */
+/*   Updated: 2022/10/12 13:20:39 by mraymond         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,18 +23,6 @@ void	child_execution(t_ms *ms)
 	dup2(fd_stdout, 1);
 	printf("%s%s%s\n", ERR_FIRST, ERR_EXECVE, cmd->args[0]);
 	exec_fail(ms, cmd);
-}
-
-t_cmd	*cmd_lst_index(t_ms *ms, int cmd_index)
-{
-	int		i;
-	t_cmd	*temp;
-
-	temp = ms->cmds;
-	i = -1;
-	while (++i < cmd_index && temp->next)
-		temp = temp->next;
-	return (temp);
 }
 
 void	closing_pipe(t_ms *ms)
@@ -71,11 +59,3 @@ void	exec_fail(t_ms *ms, t_cmd *cmd)
 	exit(ms->child_id[ms->cmd_index]);
 }
 
-void	close_keep_errno(int fd)
-{
-	int	temp_errno;
-
-	temp_errno = errno;
-	close(fd);
-	errno = temp_errno;
-}

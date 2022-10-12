@@ -46,7 +46,8 @@ SRCS_FILES	 	= 	0_main.c \
 					04_env.c \
 					05_child_exec.c \
 					05_exec.c \
-					05_redirection.c \
+					05_exec_utils.c \
+					05_redirection.c 
 
 HEADERS_FILES	=	minishell.h
 
