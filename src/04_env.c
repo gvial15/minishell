@@ -20,10 +20,11 @@ char	**add_env_var(char **envp, char **args)
 	int		var_count_;
 
 	var_count_ = var_count(args, envp);
-	if (!args || !var_count_)
+	if (!args)
 		return (envp);
 	new_envp = ft_calloc((var_count_ + split_len(envp) + 1), sizeof(char *));
 	split_cpy(envp, new_envp);
+	reassign(new_envp, args);
 	i = split_len(new_envp);
 	j = 0;
 	while (args[++j])

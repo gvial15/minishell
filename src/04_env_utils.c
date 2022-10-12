@@ -12,6 +12,20 @@
 
 #include "../include/minishell.h"
 
+void	reassign(char **new_envp, char **args)
+{
+	int		i;
+	int		arg_i;
+	
+	i = 0;
+	while (args[++i])
+	{
+		arg_i = already_exist(args[i], new_envp);
+		if (arg_i != -1)
+			new_envp[arg_i] = ft_strdup(args[i]); // possible leak (free old new_envp[arg_i])
+	}
+}
+
 char	*get_varname(char *var)
 {
 	int		i;
@@ -38,8 +52,9 @@ int	already_exist(char *var, char **envp)
 	while (envp[++i])
 		if (ft_strnstr(envp[i], varname, ft_strlen(varname))
 			&& ft_strlen(get_varname(envp[i])) == ft_strlen(varname))
-			return (1);
-	return (0);
+			return (i);
+	free(varname);
+	return (-1);
 }
 
 int	is_valid(char *var, char **envp)
@@ -59,7 +74,7 @@ int	is_valid(char *var, char **envp)
 	}
 	if (!ft_strnstr(var, "=", ft_strlen(var)))
 		return (0);
-	if (already_exist(var, envp))
+	if (already_exist(var, envp) != -1)
 		return (0);
 	return (1);
 }

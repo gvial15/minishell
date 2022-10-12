@@ -142,9 +142,11 @@ char	*space_out_redirections(char *last_line);
 //04_builtins
 char	**add_env_var(char **envp, char **vars);
 //04_env_utils.c
+char	*get_varname(char *var);
 int		is_valid(char *var, char **envp);
 int		var_count(char **args, char **envp);
 int		already_exist(char *var, char **envp);
+void	reassign(char **new_envp, char **args);
 
 //01_valid_line
 int		valid_line(char *line);
