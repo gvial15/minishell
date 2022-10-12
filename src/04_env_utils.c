@@ -21,7 +21,7 @@ char	*get_varname(char *var)
 	i = 0;
 	while (var[i] != '=')
 		i++;
-	varname = malloc(sizeof(char) * i);
+	varname = ft_calloc(i, sizeof(char));
 	j = -1;
 	while (++j < i)
 		varname[j] = var[j];

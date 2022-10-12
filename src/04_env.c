@@ -14,20 +14,21 @@
 
 char	**add_env_var(char **envp, char **args)
 {
-	// int		i;
-	// int		j;
+	int		i;
+	int		j;
 	char	**new_envp;
 	int		var_count_;
 
 	var_count_ = var_count(args, envp);
 	if (!args || !var_count_)
 		return (envp);
-	new_envp = malloc(sizeof(char *) * (var_count_ + split_len(envp) + 1));
-//	fill up the new_envp with envp while looking for
-//	the already_there vars to overwrite them
-
-//	fill up the remaining of new_envp with new vars but skip the already_there ones
-
-//	free_split(envp); have to free envp
+	new_envp = ft_calloc((var_count_ + split_len(envp) + 1), sizeof(char *));
+	split_cpy(envp, new_envp);
+	i = split_len(new_envp);
+	j = 0;
+	while (args[++j])
+		if (is_valid(args[j], new_envp))
+			new_envp[i++] = ft_strdup(args[j]);
+	free_split(envp);
 	return (new_envp);
 }

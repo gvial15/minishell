@@ -115,7 +115,6 @@ typedef struct s_ms
 //==============================================================================
 
 //PROTOTYPES_FILES==============================================================
-//0_main.c
 
 //01_init.c
 void	set_prompter_path(t_ms *ms);
@@ -145,6 +144,7 @@ char	**add_env_var(char **envp, char **vars);
 //04_env_utils.c
 int		is_valid(char *var, char **envp);
 int		var_count(char **args, char **envp);
+int		already_exist(char *var, char **envp);
 
 //01_valid_line
 int		valid_line(char *line);

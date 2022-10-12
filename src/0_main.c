@@ -77,7 +77,6 @@ int	main(int ac, char **av, char **envp)
 		if (prompter(ms) == 0)
 		{
 			parse(envp, ms);
-			print_cmd_lst(ms->cmds);
 			if (ft_strnstr(ms->cmds[0].cmd_path, "export", 6)) // testing purpose only
 				ms->envp = add_env_var(ms->envp, ms->cmds[0].args);
 			print_split(ms->envp);
