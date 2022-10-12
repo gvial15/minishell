@@ -1,0 +1,8 @@
+Makefile
+include
+minishell
+minishell.dSYM
+obj
+sortie_dir
+src
+temp

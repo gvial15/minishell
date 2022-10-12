@@ -6,7 +6,7 @@
 /*   By: mraymond <mraymond@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/29 18:27:46 by gvial             #+#    #+#             */
-/*   Updated: 2022/10/11 15:13:26 by mraymond         ###   ########.fr       */
+/*   Updated: 2022/10/12 15:18:14 by mraymond         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,8 @@ static int	prompter(t_ms *ms)
 	while (ms->last_line && (ft_strlen(ms->last_line) == 0
 			|| ft_isallspace(ms->last_line)))
 		ms->last_line = readline(ms->line_prompt);
+	if (ms->last_line == NULL)
+		history_clear_n_exit(ms);
 	if (ft_strnstr(ms->last_line, "exit", 4))
 		exit (0);
 	add_history(ms->last_line);
@@ -70,7 +72,7 @@ int	main(int ac, char **av, char **envp)
 
 	(void) ac;
 	(void) av;
-	ms = get_ms();
+	ms = get_ms(0);
 	ms_init(ms, envp);
 	while (1)
 	{
@@ -84,4 +86,13 @@ int	main(int ac, char **av, char **envp)
 		ms->cmds = NULL;
 	}
 	free(ms);
+}
+
+void	history_clear_n_exit(t_ms *ms)
+{
+	if (ms->last_line == NULL)
+		write(2, "exit\n", 5);
+	get_ms(1);
+	clear_history();
+	exit(0);
 }
