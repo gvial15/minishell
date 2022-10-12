@@ -6,7 +6,7 @@
 /*   By: mraymond <mraymond@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 18:29:35 by mraymond          #+#    #+#             */
-/*   Updated: 2022/10/07 18:39:31 by mraymond         ###   ########.fr       */
+/*   Updated: 2022/10/11 15:18:25 by mraymond         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,6 @@ int	redirection_in(t_cmd *cmd)
 		if (new_fd_in != -1 && cmd->fd_in[i + 1])
 			close(new_fd_in);
 	}
-	if (new_fd_in != -1)
-		dup2(new_fd_in, 0);
 	return (new_fd_in);
 }
 
@@ -38,13 +36,13 @@ int	here_doc(char *str_eof)
 	int		fd_pipe[2];
 	char	*line;
 
-	pipe(&fd_pipe[2]);
-	readline("> ");
-	line = NULL;
+	pipe(fd_pipe);
+	line = readline("> ");
 	while (ft_strncmp(line, str_eof, ft_strlen(line)))
 	{
 		write(fd_pipe[1], line, ft_strlen(line));
-		readline("> ");
+		write(fd_pipe[1], "\n", 1);
+		line = readline("> ");
 	}
 	close(fd_pipe[1]);
 	return (fd_pipe[0]);
@@ -53,13 +51,12 @@ int	here_doc(char *str_eof)
 int	open_fd_in(char *filename)
 {
 	int	new_fd_in;
-	(void) new_fd_in;
 	int	error;
 
 	error = 0;
 	if (access(filename, F_OK) == -1)
 		error = openerr_nosuch;
-	else if (access(filename, X_OK) == -1)
+	else if (access(filename, R_OK) == -1)
 		error = openerr_perm;
 	else
 		new_fd_in = open(filename, O_RDONLY);
@@ -78,7 +75,7 @@ int	print_open_err(char *filename, int error)
 	return (-1);
 }
 
-void	redirection_out(t_cmd *cmd)
+int	redirection_out(t_cmd *cmd)
 {
 	int	i;
 	int	new_fd_out;
@@ -96,7 +93,5 @@ void	redirection_out(t_cmd *cmd)
 		if (cmd->fd_out[i + 1] && new_fd_out != -1)
 			close(new_fd_out);
 	}
-	if (new_fd_out != -1)
-		dup2(new_fd_out, 1);
+	return (new_fd_out);
 }
-
