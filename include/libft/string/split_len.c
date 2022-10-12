@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   04_env.c                                           :+:      :+:    :+:   */
+/*   split_len.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gvial <marvin@42quebec.com>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -10,24 +10,14 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/minishell.h"
-
-char	**add_env_var(char **envp, char **args)
+int	split_len(char **split)
 {
-	// int		i;
-	// int		j;
-	char	**new_envp;
-	int		var_count_;
+	int	i;
 
-	var_count_ = var_count(args, envp);
-	if (!args || !var_count_)
-		return (envp);
-	new_envp = malloc(sizeof(char *) * (var_count_ + split_len(envp) + 1));
-//	fill up the new_envp with envp while looking for
-//	the already_there vars to overwrite them
-
-//	fill up the remaining of new_envp with new vars but skip the already_there ones
-
-//	free_split(envp); have to free envp
-	return (new_envp);
+	if (!split)
+		return (0);
+	i = 0;
+	while (split[i])
+		i++;
+	return (i);
 }

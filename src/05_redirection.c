@@ -50,7 +50,6 @@ int	here_doc(char *str_eof)
 
 int	open_fd_in(char *filename)
 {
-	int	new_fd_in;
 	int	error;
 
 	error = 0;
@@ -58,8 +57,6 @@ int	open_fd_in(char *filename)
 		error = openerr_nosuch;
 	else if (access(filename, R_OK) == -1)
 		error = openerr_perm;
-	else
-		new_fd_in = open(filename, O_RDONLY);
 	return (print_open_err(filename, error));
 }
 

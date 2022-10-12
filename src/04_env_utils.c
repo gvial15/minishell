@@ -64,16 +64,6 @@ int	is_valid(char *var, char **envp)
 	return (1);
 }
 
-int	get_env_len(char **envp)
-{
-	int	env_len;
-
-	env_len = 0;
-	while (envp[env_len])
-		env_len++;
-	return (env_len);
-}
-
 int	var_count(char **args, char **envp)
 {
 	int	i;

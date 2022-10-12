@@ -45,7 +45,7 @@ static void	line_prompter_init(t_ms *ms)
 
 void	ms_init(t_ms *ms, char **envp)
 {
-	ms->envp = envp;
+	ms->envp = splitdup(envp);
 	ms->cmds = NULL;
 	ms->last_line = NULL;
 	line_prompter_init(ms);
