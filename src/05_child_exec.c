@@ -6,7 +6,7 @@
 /*   By: mraymond <mraymond@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 18:36:55 by mraymond          #+#    #+#             */
-/*   Updated: 2022/10/11 14:56:23 by mraymond         ###   ########.fr       */
+/*   Updated: 2022/10/12 11:11:45 by mraymond         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	child_execution(t_ms *ms)
 	int		fd_stdout;
 
 	cmd = cmd_lst_index(ms, ms->cmd_index);
-	fd_stdout = pipe_redirection(cmd);
+	fd_stdout = pipe_redirection(ms, cmd);
 	execve(cmd->cmd_path, cmd->args, ms->envp);
 	dup2(fd_stdout, 1);
 	printf("%s%s%s\n", ERR_FIRST, ERR_EXECVE, cmd->args[0]);
@@ -37,13 +37,27 @@ t_cmd	*cmd_lst_index(t_ms *ms, int cmd_index)
 	return (temp);
 }
 
-int	pipe_redirection(t_cmd *cmd)
+void	closing_pipe(t_ms *ms)
+{
+	t_cmd	*cmd;
+
+	cmd = ms->cmds;
+	while (cmd)
+	{
+		close_keep_errno(cmd->fildes[0]);
+		close_keep_errno(cmd->fildes[1]);
+		cmd = cmd->next;
+	}
+}
+
+int	pipe_redirection(t_ms *ms, t_cmd *cmd)
 {
 	int	fd_stdout;
 
 	fd_stdout = dup(1);
 	dup2(cmd->fildes[0], 0);
 	dup2(cmd->fildes[1], 1);
+	closing_pipe(ms);
 	return (fd_stdout);
 }
 

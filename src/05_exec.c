@@ -6,11 +6,25 @@
 /*   By: mraymond <mraymond@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/29 18:28:01 by gvial             #+#    #+#             */
-/*   Updated: 2022/10/11 15:14:17 by mraymond         ###   ########.fr       */
+/*   Updated: 2022/10/12 10:25:46 by mraymond         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
+
+void	print_cmd_fd(t_ms *ms)
+{
+	int		i;
+	t_cmd	*cmd;
+
+	i = -1;
+	cmd = ms->cmds;
+	while (cmd)
+	{
+		printf("index:%d fd_in:%d fd_out:%d\n", ++i, cmd->fildes[0], cmd->fildes[1]);
+		cmd = cmd->next;
+	}
+}
 
 void	exec(t_ms *ms)
 {
@@ -18,6 +32,7 @@ void	exec(t_ms *ms)
 	ms->child_id = (int *)ft_calloc(ms->nb_cmd, sizeof(int));
 	fd_allocation(ms);
 	fd_redirection(ms);
+	print_cmd_fd(ms);
 	child_creation(ms);
 	waiting_n_closefd(ms);
 }
@@ -119,8 +134,17 @@ void	waiting_n_closefd(t_ms *ms)
 			cmd = cmd_lst_index(ms, child_index);
 			close_keep_errno(cmd->fildes[0]);
 			close_keep_errno(cmd->fildes[1]);
+			printf("end process index:%d close fd_in:%d close fd_out:%d\n", child_index, cmd->fildes[0], cmd->fildes[1]);
 			if (child_index > 0)
-				close_keep_errno(cmd_lst_index(ms, child_index - 1)->fildes[0]);
+			{
+				close_keep_errno(cmd_lst_index(ms, child_index - 1)->fildes[1]);
+				printf("close %d\n", cmd_lst_index(ms, child_index - 1)->fildes[1]);
+			}
+			/*if (child_index < ms->nb_cmd - 1)
+			{
+				close_keep_errno(cmd_lst_index(ms, child_index + 1)->fildes[0]);
+				printf("close %d\n", cmd_lst_index(ms, child_index + 1)->fildes[0]);
+			}*/
 		}
 	}
 }
@@ -136,3 +160,5 @@ int	child_process_to_index(t_ms *ms, int waitpid_return)
 		return (-1);
 	return (i);
 }
+
+

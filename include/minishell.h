@@ -6,7 +6,7 @@
 /*   By: mraymond <mraymond@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/29 18:27:32 by gvial             #+#    #+#             */
-/*   Updated: 2022/10/11 14:55:08 by mraymond         ###   ########.fr       */
+/*   Updated: 2022/10/12 11:10:14 by mraymond         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -155,7 +155,7 @@ int		child_process_to_index(t_ms *ms, int waitpid_return);
 //05_child_exec.c
 void	child_execution(t_ms *ms);
 t_cmd	*cmd_lst_index(t_ms *ms, int cmd_index);
-int		pipe_redirection(t_cmd *cmd);
+int		pipe_redirection(t_ms *ms, t_cmd *cmd);
 void	exec_fail(t_ms *ms, t_cmd *cmd);
 void	close_keep_errno(int fd);
 
