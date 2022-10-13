@@ -12,7 +12,15 @@
 
 #include "../include/minishell.h"
 
-char	**add_env_var(char **envp, char **args)
+char	**unset_env_var(char **envp, char **args)
+{
+	char	**new_envp;
+
+
+	return (new_envp);
+}
+
+char	**export_env_var(char **envp, char **args)
 {
 	int		i;
 	int		j;

@@ -140,7 +140,8 @@ char	**get_fd_in_out(t_cmd *new_cmd, char *cmd, char sign);
 char	*space_out_redirections(char *last_line);
 
 //04_builtins
-char	**add_env_var(char **envp, char **vars);
+char	**export_env_var(char **envp, char **vars);
+char	**unset_env_var(char **envp, char **args);
 //04_env_utils.c
 char	*get_varname(char *var);
 int		is_valid(char *var, char **envp);

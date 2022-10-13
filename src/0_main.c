@@ -78,7 +78,7 @@ int	main(int ac, char **av, char **envp)
 		{
 			parse(envp, ms);
 			if (ft_strnstr(ms->cmds[0].cmd_path, "export", 6)) // testing purpose only
-				ms->envp = add_env_var(ms->envp, ms->cmds[0].args);
+				ms->envp = export_env_var(ms->envp, ms->cmds[0].args);
 			print_split(ms->envp);
 			// exec(ms);
 			free_cmds(ms->cmds);
