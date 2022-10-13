@@ -46,7 +46,7 @@ char	*isolate_cmd(char *cmd_brut)
 	split = ft_split(cmd_brut, ' ');
 	if (split_count(cmd_brut, ' ') == 1
 		&& (*split[0] == '<' || *split[0] == '>'))
-		cmd =  NULL;
+	cmd = NULL;
 	else
 		cmd = ft_strdup(split[find_cmd_i(split)]);
 	free_split(split);

@@ -58,4 +58,3 @@ void	exec_fail(t_ms *ms, t_cmd *cmd)
 	free_ms(ms, 1);
 	exit(ms->child_id[ms->cmd_index]);
 }
-

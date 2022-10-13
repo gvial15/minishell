@@ -12,7 +12,7 @@
 
 #include "../include/minishell.h"
 
-static int	get_fd_in_out_count(char **split, int sign)
+static int	get_fd_in_out_c(char **split, int sign)
 {
 	int	i;
 	int	fd_count;
@@ -30,7 +30,7 @@ static void	check_heredocs(t_cmd *new_cmd, char **split)
 	int		i;
 	int		j;
 
-	new_cmd->heredoc = malloc(sizeof(int) * get_fd_in_out_count(split, '<') + 1);
+	new_cmd->heredoc = malloc(sizeof(int) * get_fd_in_out_c(split, '<') + 1);
 	j = 0;
 	i = -1;
 	while (split[++i])
@@ -63,7 +63,7 @@ static void	check_append(t_cmd *new_cmd, char **split)
 	}
 }
 
-void	create_fds(char **split, char **fds, int sign)
+void	create_fds(char **s, char **fds, int sign)
 {
 	int		i;
 	int		j;
@@ -75,16 +75,16 @@ void	create_fds(char **split, char **fds, int sign)
 		dbl = LESSER_THAN;
 	j = 0;
 	i = -1;
-	while (split[++i])
+	while (s[++i])
 	{
-		if (i != 0 && split[i - 1][0] == sign && ft_strlen(split[i - 1]) == 1)
-			fds[j++] = ft_strdup(split[i]);
-		if (split[i][0] == sign && split[i][1] != sign && ft_strlen(split[i]) > 1)
-			fds[j++] = ft_strdup(&split[i][1]);
-		if (i != 0 && ft_strnstr(split[i - 1], dbl, 2) && ft_strlen(split[i - 1]) == 2)
-			fds[j++] = ft_strdup(split[i]);
-		if (ft_strnstr(split[i], dbl, 2) && ft_strlen(split[i]) > 2)
-			fds[j++] = ft_strdup(&split[i][2]);
+		if (i != 0 && s[i - 1][0] == sign && ft_strlen(s[i - 1]) == 1)
+			fds[j++] = ft_strdup(s[i]);
+		if (s[i][0] == sign && s[i][1] != sign && ft_strlen(s[i]) > 1)
+			fds[j++] = ft_strdup(&s[i][1]);
+		if (i != 0 && ft_strnstr(s[i - 1], dbl, 2) && ft_strlen(s[i - 1]) == 2)
+			fds[j++] = ft_strdup(s[i]);
+		if (ft_strnstr(s[i], dbl, 2) && ft_strlen(s[i]) > 2)
+			fds[j++] = ft_strdup(&s[i][2]);
 	}
 	fds[j] = 0;
 }
@@ -96,7 +96,7 @@ char	**get_fd_in_out(t_cmd *new_cmd, char *cmd, char sign)
 
 	new_cmd->append = 0;
 	split = ft_split(cmd, ' ');
-	fds = malloc(sizeof(char *) * get_fd_in_out_count(split, sign) + 1);
+	fds = malloc(sizeof(char *) * get_fd_in_out_c(split, sign) + 1);
 	create_fds(split, fds, sign);
 	if (sign == '>')
 		check_append(new_cmd, split);

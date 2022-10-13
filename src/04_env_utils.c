@@ -16,13 +16,16 @@ void	reassign(char **new_envp, char **args)
 {
 	int		i;
 	int		arg_i;
-	
+
 	i = 0;
 	while (args[++i])
 	{
 		arg_i = already_exist(args[i], new_envp);
 		if (arg_i != -1)
-			new_envp[arg_i] = ft_strdup(args[i]); // possible leak (free old new_envp[arg_i])
+		{
+			free(new_envp[arg_i]);
+			new_envp[arg_i] = ft_strdup(args[i]);
+		}
 	}
 }
 
@@ -46,13 +49,22 @@ int	already_exist(char *var, char **envp)
 {
 	int		i;
 	char	*varname;
+	char	*get_var_name_;
 
 	varname = get_varname(var);
 	i = -1;
 	while (envp[++i])
+	{
+		get_var_name_ = get_varname(envp[i]);
 		if (ft_strnstr(envp[i], varname, ft_strlen(varname))
-			&& ft_strlen(get_varname(envp[i])) == ft_strlen(varname))
+			&& ft_strlen(get_var_name_) == ft_strlen(varname))
+		{
+			free(get_var_name_);
+			free(varname);
 			return (i);
+		}
+		free(get_var_name_);
+	}
 	free(varname);
 	return (-1);
 }
