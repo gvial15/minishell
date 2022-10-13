@@ -12,14 +12,14 @@
 
 #include "../include/minishell.h"
 
-char	*get_varname(char *var)
+static char	*get_varname(char *var)
 {
 	int		i;
 	int		j;
 	char	*varname;
 
 	i = 0;
-	while (var[i] != '=')
+	while (var[i] && var[i] != '=')
 		i++;
 	varname = ft_calloc(i, sizeof(char));
 	j = -1;
