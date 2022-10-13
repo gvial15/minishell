@@ -12,12 +12,52 @@
 
 #include "../include/minishell.h"
 
+static int	unset_var_count(char **args, char **envp)
+{
+	int	i;
+	int	count;
+
+	count = 0;
+	i = 0;
+	while (args[++i])
+		if (already_exist(args[i], envp) >= 0)
+			count++;
+	return (count);
+}
+
 char	**unset_env_var(char **envp, char **args)
 {
+	int		i;
+	int		j;
+	int		var_count;
 	char	**new_envp;
 
-
+	if (!args)
+		return (NULL);
+	var_count = unset_var_count(args, envp);
+	if (var_count == 0)
+		return (envp);
+	new_envp = ft_calloc(split_len(envp) - var_count + 1, sizeof(char *));
+	j = -1;
+	i = -1;
+	while (envp[++i])
+		if (already_exist(envp[i], args) == -1)
+			new_envp[++j] = ft_strdup(envp[i]);
+	free_split(envp);
 	return (new_envp);
+}
+
+static int	export_var_count(char **args, char **envp)
+{
+	int	i;
+	int	count;
+
+	count = 0;
+	i = 0;
+	while (args[++i])
+		if (is_valid(args[i], 1) && already_exist(args[i], envp) == -1)
+			count++;
+	return (count);
 }
 
 char	**export_env_var(char **envp, char **args)
@@ -25,18 +65,18 @@ char	**export_env_var(char **envp, char **args)
 	int		i;
 	int		j;
 	char	**new_envp;
-	int		var_count_;
+	int		var_count;
 
-	var_count_ = var_count(args, envp);
 	if (!args)
 		return (envp);
-	new_envp = ft_calloc((var_count_ + split_len(envp) + 1), sizeof(char *));
+	var_count = export_var_count(args, envp);
+	new_envp = ft_calloc((var_count + split_len(envp) + 1), sizeof(char *));
 	split_cpy(envp, new_envp);
 	reassign(new_envp, args);
 	i = split_len(new_envp);
 	j = 0;
 	while (args[++j])
-		if (is_valid(args[j], new_envp))
+		if (is_valid(args[j], 0) && already_exist(args[j], new_envp) == -1)
 			new_envp[i++] = ft_strdup(args[j]);
 	free_split(envp);
 	return (new_envp);

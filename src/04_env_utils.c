@@ -69,7 +69,7 @@ int	already_exist(char *var, char **envp)
 	return (-1);
 }
 
-int	is_valid(char *var, char **envp)
+int	is_valid(char *var, int err)
 {
 	int		i;
 
@@ -80,26 +80,12 @@ int	is_valid(char *var, char **envp)
 			break ;
 		if (i == 0 && (!ft_isalpha(var[i]) || var[i] == '='))
 		{
-			printf("export: '%s': not a valid identifier\n", var);
+			if (err)
+				printf("export: '%s': not a valid identifier\n", var);
 			return (0);
 		}
 	}
 	if (!ft_strnstr(var, "=", ft_strlen(var)))
 		return (0);
-	if (already_exist(var, envp) != -1)
-		return (0);
 	return (1);
-}
-
-int	var_count(char **args, char **envp)
-{
-	int	i;
-	int	count;
-
-	count = 0;
-	i = 0;
-	while (args[++i])
-		if (is_valid(args[i], envp))
-			count++;
-	return (count);
 }

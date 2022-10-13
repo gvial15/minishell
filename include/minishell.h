@@ -144,8 +144,7 @@ char	**export_env_var(char **envp, char **vars);
 char	**unset_env_var(char **envp, char **args);
 //04_env_utils.c
 char	*get_varname(char *var);
-int		is_valid(char *var, char **envp);
-int		var_count(char **args, char **envp);
+int		is_valid(char *var, int err);
 int		already_exist(char *var, char **envp);
 void	reassign(char **new_envp, char **args);
 
