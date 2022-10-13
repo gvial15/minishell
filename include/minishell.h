@@ -144,9 +144,9 @@ char	**export_env_var(char **envp, char **vars);
 char	**unset_env_var(char **envp, char **args);
 //04_env_utils.c
 char	*get_varname(char *var);
-int		is_valid(char *var, int err);
+int		is_valid_export(char *var, int err);
+int		is_valid_unset(char *var, int err);
 int		already_exist(char *var, char **envp);
-void	reassign(char **new_envp, char **args);
 
 //01_valid_line
 int		valid_line(char *line);
