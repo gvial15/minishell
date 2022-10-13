@@ -86,7 +86,6 @@ void	create_fds(char **s, char **fds, int sign)
 		if (ft_strnstr(s[i], dbl, 2) && ft_strlen(s[i]) > 2)
 			fds[j++] = ft_strdup(&s[i][2]);
 	}
-	fds[j] = 0;
 }
 
 char	**get_fd_in_out(t_cmd *new_cmd, char *cmd, char sign)
@@ -96,7 +95,7 @@ char	**get_fd_in_out(t_cmd *new_cmd, char *cmd, char sign)
 
 	new_cmd->append = 0;
 	split = ft_split(cmd, ' ');
-	fds = malloc(sizeof(char *) * get_fd_in_out_c(split, sign) + 1);
+	fds = ft_calloc(get_fd_in_out_c(split, sign) + 1, sizeof(char *));
 	create_fds(split, fds, sign);
 	if (sign == '>')
 		check_append(new_cmd, split);
