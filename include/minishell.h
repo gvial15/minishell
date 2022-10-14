@@ -143,8 +143,8 @@ char	*space_out_redirections(char *last_line);
 char	**export_env_var(char **envp, char **vars);
 char	**unset_env_var(char **envp, char **args);
 //04_env_utils.c
-int		is_valid_export(char *var, int err);
 int		is_valid_unset(char *var, int err);
+int		is_valid_export(char *var, int err);
 int		already_exist(char *var, char **envp);
 
 //01_valid_line

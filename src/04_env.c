@@ -20,7 +20,8 @@ static int	unset_var_count(char **args, char **envp)
 	count = 0;
 	i = 0;
 	while (args[++i])
-		if (already_exist(args[i], envp) >= 0)
+		if (is_valid_unset(args[i], 1)
+			&& already_exist(args[i], envp) >= 0)
 			count++;
 	return (count);
 }

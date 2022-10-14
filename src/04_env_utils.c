@@ -52,7 +52,22 @@ int	already_exist(char *var, char **envp)
 	return (-1);
 }
 
-int		is_valid_unset(char *var, int err);
+int		is_valid_unset(char *var, int err)
+{
+	int	i;
+
+	i = -1;
+	while (var[++i])
+	{
+		if (var[i] == '=' || (i == 0 && ft_isdigit(var[i])))
+		{
+			if (err)
+				printf("unset: `%s': not a valid identifier", var);
+			return (0);
+		}
+	}
+	return (1);
+}
 
 int	is_valid_export(char *var, int err)
 {

@@ -30,8 +30,6 @@ void	print_cmd_lst(t_cmd *head)
 {
 	int	i;
 
-	if (!DEBUG)
-		return ;
 	i = 0;
 	while (head)
 	{
@@ -81,6 +79,7 @@ int	main(int ac, char **av, char **envp)
 				ms->envp = export_env_var(ms->envp, ms->cmds[0].args);
 			if (ft_strnstr(ms->cmds[0].cmd_path, "unset", 6)) // testing purpose only
 				ms->envp = unset_env_var(ms->envp, ms->cmds[0].args);
+			print_cmd_lst(ms->cmds);
 			print_split(ms->envp);
 			// exec(ms);
 			free_cmds(ms->cmds);
