@@ -62,6 +62,13 @@ static int	prompter(t_ms *ms)
 	return (valid_line(ms->last_line));
 }
 
+void	clear_ms(t_ms *ms)
+{
+	if (ms->envp)
+		free_split(ms->envp);
+	free(ms);
+}
+
 int	main(int ac, char **av, char **envp)
 {
 	t_ms	*ms;
@@ -79,12 +86,10 @@ int	main(int ac, char **av, char **envp)
 				ms->envp = export_env_var(ms->envp, ms->cmds[0].args);
 			if (ft_strnstr(ms->cmds[0].cmd_path, "unset", 6)) // testing purpose only
 				ms->envp = unset_env_var(ms->envp, ms->cmds[0].args);
-			print_cmd_lst(ms->cmds);
-			print_split(ms->envp);
-			// exec(ms);
+			exec(ms);
 			free_cmds(ms->cmds);
 		}
 		ms->cmds = NULL;
 	}
-	free(ms);
+	clear_ms(ms);
 }
