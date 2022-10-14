@@ -6,7 +6,7 @@
 /*   By: mraymond <mraymond@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 18:29:35 by mraymond          #+#    #+#             */
-/*   Updated: 2022/10/11 15:18:25 by mraymond         ###   ########.fr       */
+/*   Updated: 2022/10/12 15:03:06 by mraymond         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,8 @@ int	open_fd_in(char *filename)
 		error = openerr_nosuch;
 	else if (access(filename, R_OK) == -1)
 		error = openerr_perm;
+	else
+		return (open(filename, O_RDONLY));
 	return (print_open_err(filename, error));
 }
 

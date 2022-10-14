@@ -6,7 +6,7 @@
 /*   By: mraymond <mraymond@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/05 09:28:21 by mraymond          #+#    #+#             */
-/*   Updated: 2022/10/06 13:25:33 by mraymond         ###   ########.fr       */
+/*   Updated: 2022/10/12 14:00:31 by mraymond         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,11 +51,14 @@ void	ms_init(t_ms *ms, char **envp)
 	line_prompter_init(ms);
 }
 
-t_ms	*get_ms(void)
+//put 1 in arg to erase;
+t_ms	*get_ms(int erase)
 {
 	static t_ms	*ms = NULL;
 
 	if (!ms)
 		ms = (t_ms *)malloc(sizeof(t_ms));
+	if (erase == 1)
+		free(ms);
 	return (ms);
 }

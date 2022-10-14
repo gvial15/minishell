@@ -6,7 +6,7 @@
 /*   By: mraymond <mraymond@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/29 18:27:32 by gvial             #+#    #+#             */
-/*   Updated: 2022/10/12 13:27:27 by mraymond         ###   ########.fr       */
+/*   Updated: 2022/10/13 11:11:51 by mraymond         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ enum e_line_err
 
 enum e_open_err
 {
-	openerr_nosuch,
+	openerr_nosuch = 1,
 	openerr_perm
 };
 
@@ -110,16 +110,19 @@ typedef struct s_ms
 	int		nb_cmd;
 	int		*child_id;
 	int		err_num;
+	int		signal;
 }	t_ms;
 
 //==============================================================================
 
 //PROTOTYPES_FILES==============================================================
+//0_main.c
+void	history_clear_n_exit(t_ms *ms);
 
 //01_init.c
 void	set_prompter_path(t_ms *ms);
 void	ms_init(t_ms *ms, char **envp);
-t_ms	*get_ms(void);
+t_ms	*get_ms(int erase);
 
 //02_signal.c
 void	signal_init(void);
