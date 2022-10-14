@@ -6,7 +6,7 @@
 /*   By: mraymond <mraymond@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/29 18:28:19 by gvial             #+#    #+#             */
-/*   Updated: 2022/10/05 15:02:30 by mraymond         ###   ########.fr       */
+/*   Updated: 2022/10/14 12:23:56 by mraymond         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,4 +98,5 @@ void	parse(char **envp, t_ms *ms)
 	create_cmd_lst(ms, split, envp);
 	free_split(split);
 	free(ms->last_line);
+	ms->last_line = NULL;
 }

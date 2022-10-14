@@ -6,7 +6,7 @@
 /*   By: mraymond <mraymond@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 13:21:46 by mraymond          #+#    #+#             */
-/*   Updated: 2022/10/12 13:23:21 by mraymond         ###   ########.fr       */
+/*   Updated: 2022/10/14 13:11:42 by mraymond         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,14 +25,18 @@ int	child_process_to_index(t_ms *ms, int waitpid_return)
 }
 
 //close all pipe open (but not 0 and 1)
-void	close_ms_pipe(t_ms *ms)
+void	close_n_free_mspipe(t_ms *ms)
 {
 	int	i;
 
-	i = 0;
-	while (++i < ms->nb_cmd * 2 - 1)
-		close_keep_errno(ms->pipe[i]);
+	i = -1;
+	while (ms->pipe[++i])
+	{
+		if (ms->pipe[i] >= 3)
+			close_keep_errno(ms->pipe[i]);
+	}
 	free(ms->pipe);
+	ms->pipe = NULL;
 }
 
 void	close_keep_errno(int fd)
@@ -60,7 +64,6 @@ t_cmd	*cmd_lst_index(t_ms *ms, int cmd_index)
 */
 void	free_ms(t_ms *ms, int with_lstcmds)
 {
-	free(ms->child_id);
-	if (with_lstcmds == 1)
-		free_cmds(ms->cmds);
+	ms_reset(ms);
+	
 }

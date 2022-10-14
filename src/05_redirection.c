@@ -6,7 +6,7 @@
 /*   By: mraymond <mraymond@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 18:29:35 by mraymond          #+#    #+#             */
-/*   Updated: 2022/10/12 15:03:06 by mraymond         ###   ########.fr       */
+/*   Updated: 2022/10/14 09:46:25 by mraymond         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,7 @@ int	redirection_out(t_cmd *cmd)
 					0644);
 		else
 			new_fd_out = open(cmd->fd_out[i], O_WRONLY | O_CREAT | O_TRUNC,
-					0644);
+				 0644);
 		if (cmd->fd_out[i + 1] && new_fd_out != -1)
 			close(new_fd_out);
 	}
