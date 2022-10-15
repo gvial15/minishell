@@ -28,6 +28,14 @@ static int	new_i(char *cmd, int i)
 	return (i);
 }
 
+static int	next_space_i(char *cmd, int i)
+{
+	while (cmd[++i])
+		if (cmd[i] == ' ')
+			break ;
+	return (i);
+}
+
 static int	get_cmd_split_count(char *cmd)
 {
 	int	i;
@@ -53,11 +61,9 @@ char	**split_cmd(char *cmd)
 {
 	int		i;
 	int		j;
-	int		split_count;
 	char	**cmd_split;
 
-	split_count = get_cmd_split_count(cmd);
-	cmd_split = ft_calloc(split_count + 1, sizeof(char *));
+	cmd_split = ft_calloc(get_cmd_split_count(cmd) + 1, sizeof(char *));
 	j = 0;
 	i = -1;
 	while (cmd[++i])
@@ -68,7 +74,10 @@ char	**split_cmd(char *cmd)
 			i = new_i(cmd, i);
 		}
 		if (i != 0 && cmd[i] != ' ' && cmd[i - 1] == ' ')
-			cmd_split[j++] = ft_substr(cmd, i, 1);
+		{
+			cmd_split[j++] = ft_substr(cmd, i, next_space_i(cmd, i) - i);
+			i = next_space_i(cmd, i);
+		}
 	}
 	cmd_split[j] = 0;
 	return (cmd_split);

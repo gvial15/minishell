@@ -39,7 +39,7 @@ int	find_cmd_i(char **s)
 	return (i);
 }
 
-char	**parse_args(char *cmd)
+static char	**get_args(char *cmd)
 {
 	int		i;
 	int		j;
@@ -64,8 +64,6 @@ char	**parse_args(char *cmd)
 	return (args);
 }
 
-// as soon as there's a space after a pair quote it means the previous quoted text is finished:
-// "hell"o"is"a "test" = helloisa, test
 static void	create_cmd_lst(t_ms *ms, char **cmds, char **envp)
 {
 	int		i;
@@ -77,10 +75,9 @@ static void	create_cmd_lst(t_ms *ms, char **cmds, char **envp)
 	{
 		cmd = split_cmd(cmds[i]);
 		print_split(cmd);
-		(void)	cmd;
 		new_cmd = ft_calloc(1, sizeof(t_cmd));
 		new_cmd->cmd_path = get_cmd_path(cmds[i], envp);
-		new_cmd->args = parse_args(cmds[i]);
+		new_cmd->args = get_args(cmds[i]);
 		new_cmd->heredoc = 0;
 		new_cmd->append = 0;
 		new_cmd->fd_in = get_fds(new_cmd, cmds[i], '<');
