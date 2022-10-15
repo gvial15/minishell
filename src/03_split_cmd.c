@@ -73,11 +73,13 @@ char	**split_cmd(char *cmd)
 			cmd_split[j++] = ft_substr(cmd, i, new_i(cmd, i) - i + 1);
 			i = new_i(cmd, i);
 		}
-		if (i != 0 && cmd[i] != ' ' && cmd[i - 1] == ' ')
+		else if (i != 0 && cmd[i] != ' ' && cmd[i - 1] == ' ')
 		{
 			cmd_split[j++] = ft_substr(cmd, i, next_space_i(cmd, i) - i);
 			i = next_space_i(cmd, i);
 		}
+		else if (i == 0 && cmd[i] != ' ')
+			cmd_split[j++] = ft_substr(cmd, i, next_space_i(cmd, i) - i);
 	}
 	cmd_split[j] = 0;
 	return (cmd_split);
