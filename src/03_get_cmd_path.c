@@ -48,6 +48,7 @@ char	*get_cmd_path(char **cmd, char **envp)
 
 	i = -1;
 	cmd_i = find_cmd_i(cmd);
+	path = NULL;
 	if (cmd_i == -1)
 		return (NULL);
 	paths = get_paths(envp);

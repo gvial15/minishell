@@ -70,7 +70,10 @@ char	**split_cmd(char *cmd)
 	{
 		if (is_quote(cmd[i]))
 		{
-			cmd_split[j++] = ft_substr(cmd, i, new_i(cmd, i) - i + 1);
+			if (cmd[new_i(cmd, i)] == ' ')
+				cmd_split[j++] = ft_substr(cmd, i, new_i(cmd, i) - i);
+			else
+				cmd_split[j++] = ft_substr(cmd, i, new_i(cmd, i) - i + 1);
 			i = new_i(cmd, i);
 		}
 		else if ((i != 0 && cmd[i] != ' ' && cmd[i - 1] == ' ')
