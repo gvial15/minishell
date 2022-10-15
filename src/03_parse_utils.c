@@ -50,7 +50,7 @@ char	*remove_quotes(char *s)
 		if (is_quote(s[i]))
 			nb_quotes++;
 	if (nb_quotes == 0)
-		return (NULL);
+		return (s);
 	new_s = ft_calloc(ft_strlen(s) - (nb_quotes), sizeof(char));
 	j  = -1;
 	i  = -1;
