@@ -12,28 +12,6 @@
 
 #include "../include/minishell.h"
 
-// static char	**get_args(char **cmd)
-// {
-// 	int		i;
-// 	int		j;
-// 	int		arg_count;
-// 	char	**args;
-
-// 	args = NULL;
-// 	arg_count = 0;
-// 	if (find_cmd_i(cmd) == -1)
-// 		return (args);
-// 	i = find_cmd_i(cmd);
-// 	while (!have_redirec(cmd[++i]))
-// 		arg_count++;
-// 	args = ft_calloc((arg_count + 2), sizeof(char *));
-// 	j = -1;
-// 	i = find_cmd_i(cmd) - 1;
-// 	while (!have_redirec(cmd[++i]))
-// 		args[++j] = ft_strdup(cmd[i]);
-// 	free_split(cmd);
-// 	return (args);
-// }
 
 void	free_cmds(t_cmd *cmd)
 {
@@ -59,6 +37,29 @@ void	free_cmds(t_cmd *cmd)
 	}
 }
 
+// static char	**get_args(char **cmd)
+// {
+// 	int		i;
+// 	int		j;
+// 	int		arg_count;
+// 	char	**args;
+
+// 	args = NULL;
+// 	arg_count = 0;
+// 	if (find_cmd_i(cmd) == -1)
+// 		return (args);
+// 	i = find_cmd_i(cmd);
+// 	while (!have_redirec(cmd[++i]))
+// 		arg_count++;
+// 	args = ft_calloc((arg_count + 2), sizeof(char *));
+// 	j = -1;
+// 	i = find_cmd_i(cmd) - 1;
+// 	while (!have_redirec(cmd[++i]))
+// 		args[++j] = ft_strdup(cmd[i]);
+// 	free_split(cmd);
+// 	return (args);
+// }
+
 static void	create_cmd_lst(t_ms *ms, char **cmds, char **envp)
 {
 	int		i;
@@ -81,7 +82,8 @@ static void	create_cmd_lst(t_ms *ms, char **cmds, char **envp)
 			ms->cmds = new_cmd;
 		else
 			lst_last(ms->cmds)->next = new_cmd;
-		free(cmd);
+		if (!cmd)
+			free(cmd);
 	}
 }
 

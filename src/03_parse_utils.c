@@ -42,18 +42,22 @@ char	*remove_quotes(char *s)
 	int		nb_quotes;
 	char	*new_s;
 
+	if (!s)
+		return (NULL);
 	nb_quotes = 0;
 	i = -1;
 	while (s[++i])
 		if (is_quote(s[i]))
 			nb_quotes++;
-	new_s = ft_calloc(nb_quotes + 1, sizeof(char));
-	j  = 0;
+	if (nb_quotes == 0)
+		return (NULL);
+	new_s = ft_calloc(ft_strlen(s) - (nb_quotes), sizeof(char));
+	j  = -1;
 	i  = -1;
 	while (s[++i])
 		if (!is_quote(s[i]))
-			new_s[j++] = s[i];
-	new_s[j]  =0;
+			new_s[++j] = s[i];
+	new_s[j] = 0;
 	free(s);
 	return (new_s);
 }
