@@ -88,7 +88,7 @@ void	create_fds(char **s, char **fds, int sign)
 	}
 }
 
-char	**get_fd_in_out(t_cmd *new_cmd, char *cmd, char sign)
+char	**get_fds(t_cmd *new_cmd, char *cmd, char sign)
 {
 	char	**fds;
 	char	**split;
