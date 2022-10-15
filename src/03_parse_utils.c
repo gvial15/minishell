@@ -35,35 +35,54 @@ int	is_quote(char c)
 	return (0);
 }
 
-t_cmd	*lst_last(t_cmd *head)
+char	*remove_quotes(char *s)
 {
-	if (!head)
-		return (head);
-	while (head->next != NULL)
-		head = head->next;
-	return (head);
+	int		i;
+	int		j;
+	int		nb_quotes;
+	char	*new_s;
+
+	nb_quotes = 0;
+	i = -1;
+	while (s[++i])
+		if (is_quote(s[i]))
+			nb_quotes++;
+	new_s = ft_calloc(nb_quotes + 1, sizeof(char));
+	j  = 0;
+	i  = -1;
+	while (s[++i])
+		if (!is_quote(s[i]))
+			new_s[j++] = s[i];
+	new_s[j]  =0;
+	free(s);
+	return (new_s);
 }
 
-void	free_cmds(t_cmd *cmd)
+int	find_cmd_i(char **s)
 {
-	t_cmd	*tmp;
+	int	i;
 
-	if (cmd == NULL)
-		return ;
-	while (cmd)
+	i = -1;
+	while (s[++i])
 	{
-		if (cmd->cmd_path)
-			free(cmd->cmd_path);
-		if (cmd->args)
-			free_split(cmd->args);
-		if (cmd->fd_in)
-			free_split(cmd->fd_in);
-		if (cmd->fd_out)
-			free_split(cmd->fd_out);
-		if (cmd->heredoc)
-			free(cmd->heredoc);
-		tmp = cmd;
-		cmd = cmd->next;
-		free(tmp);
+		if (!have_redirec(s[i]))
+		{
+			if (i == 0)
+				break ;
+			if (i > 1 && !have_redirec(s[i - 1]) && have_dbl_redirec(s[i - 2])
+				&& ft_strlen(s[i - 2]) == 2)
+				break ;
+			if (i > 1 && !have_redirec(s[i - 1]) && have_redirec(s[i - 2])
+				&& ft_strlen(s[i - 2]) == 1)
+				break ;
+			if (have_redirec(s[i - 1]) && ft_strlen(s[i - 1]) > 1
+				&& !have_dbl_redirec(s[i - 1]))
+				break ;
+			if (have_dbl_redirec(s[i - 1]) && ft_strlen(s[i - 1]) > 2)
+				break ;
+		}
+		if (i == (int)ft_strlen(s[i]))
+			i = -1;
 	}
+	return (i);
 }

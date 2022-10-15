@@ -12,56 +12,51 @@
 
 #include "../include/minishell.h"
 
-int	find_cmd_i(char **s)
-{
-	int	i;
+// static char	**get_args(char **cmd)
+// {
+// 	int		i;
+// 	int		j;
+// 	int		arg_count;
+// 	char	**args;
 
-	i = -1;
-	while (s[++i])
+// 	args = NULL;
+// 	arg_count = 0;
+// 	if (find_cmd_i(cmd) == -1)
+// 		return (args);
+// 	i = find_cmd_i(cmd);
+// 	while (!have_redirec(cmd[++i]))
+// 		arg_count++;
+// 	args = ft_calloc((arg_count + 2), sizeof(char *));
+// 	j = -1;
+// 	i = find_cmd_i(cmd) - 1;
+// 	while (!have_redirec(cmd[++i]))
+// 		args[++j] = ft_strdup(cmd[i]);
+// 	free_split(cmd);
+// 	return (args);
+// }
+
+void	free_cmds(t_cmd *cmd)
+{
+	t_cmd	*tmp;
+
+	if (cmd == NULL)
+		return ;
+	while (cmd)
 	{
-		if (!have_redirec(s[i]))
-		{
-			if (i == 0)
-				break ;
-			if (i > 1 && !have_redirec(s[i - 1]) && have_dbl_redirec(s[i - 2])
-				&& ft_strlen(s[i - 2]) == 2)
-				break ;
-			if (i > 1 && !have_redirec(s[i - 1]) && have_redirec(s[i - 2])
-				&& ft_strlen(s[i - 2]) == 1)
-				break ;
-			if (have_redirec(s[i - 1]) && ft_strlen(s[i - 1]) > 1
-				&& !have_dbl_redirec(s[i - 1]))
-				break ;
-			if (have_dbl_redirec(s[i - 1]) && ft_strlen(s[i - 1]) > 2)
-				break ;
-		}
+		if (cmd->cmd_path)
+			free(cmd->cmd_path);
+		if (cmd->args)
+			free_split(cmd->args);
+		if (cmd->fd_in)
+			free_split(cmd->fd_in);
+		if (cmd->fd_out)
+			free_split(cmd->fd_out);
+		if (cmd->heredoc)
+			free(cmd->heredoc);
+		tmp = cmd;
+		cmd = cmd->next;
+		free(tmp);
 	}
-	return (i);
-}
-
-static char	**get_args(char *cmd)
-{
-	int		i;
-	int		j;
-	int		arg_count;
-	char	**args;
-	char	**split;
-
-	args = NULL;
-	arg_count = 0;
-	split = ft_split(cmd, ' ');
-	if (isolate_cmd(cmd) == NULL)
-		return (args);
-	i = find_cmd_i(split);
-	while (!have_redirec(split[++i]))
-		arg_count++;
-	args = ft_calloc((arg_count + 2), sizeof(char *));
-	j = -1;
-	i = find_cmd_i(split) - 1;
-	while (!have_redirec(split[++i]))
-		args[++j] = ft_strdup(split[i]);
-	free_split(split);
-	return (args);
 }
 
 static void	create_cmd_lst(t_ms *ms, char **cmds, char **envp)
@@ -74,10 +69,9 @@ static void	create_cmd_lst(t_ms *ms, char **cmds, char **envp)
 	while (cmds[++i])
 	{
 		cmd = split_cmd(cmds[i]);
-		print_split(cmd);
 		new_cmd = ft_calloc(1, sizeof(t_cmd));
-		new_cmd->cmd_path = get_cmd_path(cmds[i], envp);
-		new_cmd->args = get_args(cmds[i]);
+		new_cmd->cmd_path = get_cmd_path(cmd, envp);
+		// new_cmd->args = get_args(cmd);
 		new_cmd->heredoc = 0;
 		new_cmd->append = 0;
 		new_cmd->fd_in = get_fds(new_cmd, cmds[i], '<');

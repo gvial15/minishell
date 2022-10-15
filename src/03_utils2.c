@@ -41,3 +41,12 @@ int	lst_len(t_cmd *head)
 	}
 	return (len);
 }
+
+t_cmd	*lst_last(t_cmd *head)
+{
+	if (!head)
+		return (head);
+	while (head->next != NULL)
+		head = head->next;
+	return (head);
+}
