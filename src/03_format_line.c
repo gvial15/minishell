@@ -15,8 +15,8 @@
 static int	need_space(char *last_line, int i)
 {
 	if (i != 0 && (last_line[i] == '>' || last_line[i] == '<'))
-		if (last_line[i - 1] != ' ' && last_line[i - 1] != '<'
-			&& last_line[i - 1] != '>')
+		if (last_line[i - 1] != ' ' && !have_redirec(&last_line[i - 1])
+			&& !is_quote(last_line[i - 1]))
 			return (1);
 	return (0);
 }
