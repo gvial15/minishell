@@ -37,28 +37,28 @@ void	free_cmds(t_cmd *cmd)
 	}
 }
 
-// static char	**get_args(char **cmd)
-// {
-// 	int		i;
-// 	int		j;
-// 	int		arg_count;
-// 	char	**args;
+static char	**get_args(char **cmd)
+{
+	int		i;
+	int		j;
+	int		arg_count;
+	char	**args;
 
-// 	args = NULL;
-// 	arg_count = 0;
-// 	if (find_cmd_i(cmd) == -1)
-// 		return (args);
-// 	i = find_cmd_i(cmd);
-// 	while (!have_redirec(cmd[++i]))
-// 		arg_count++;
-// 	args = ft_calloc((arg_count + 2), sizeof(char *));
-// 	j = -1;
-// 	i = find_cmd_i(cmd) - 1;
-// 	while (!have_redirec(cmd[++i]))
-// 		args[++j] = ft_strdup(cmd[i]);
-// 	free_split(cmd);
-// 	return (args);
-// }
+	args = NULL;
+	arg_count = 0;
+	if (find_cmd_i(cmd) == -1)
+		return (args);
+	i = find_cmd_i(cmd);
+	while (!have_redirec(cmd[++i]))
+		arg_count++;
+	args = ft_calloc((arg_count + 2), sizeof(char *));
+	j = -1;
+	i = find_cmd_i(cmd) - 1;
+	while (!have_redirec(cmd[++i]))
+		args[++j] = remove_quotes(ft_strdup(cmd[i]));
+	free_split(cmd);
+	return (args);
+}
 
 static void	create_cmd_lst(t_ms *ms, char **cmds, char **envp)
 {
@@ -72,7 +72,7 @@ static void	create_cmd_lst(t_ms *ms, char **cmds, char **envp)
 		cmd = split_cmd(cmds[i]);
 		new_cmd = ft_calloc(1, sizeof(t_cmd));
 		new_cmd->cmd_path = get_cmd_path(cmd, envp);
-		// new_cmd->args = get_args(cmd);
+		new_cmd->args = get_args(cmd);
 		new_cmd->heredoc = 0;
 		new_cmd->append = 0;
 		new_cmd->fd_in = get_fds(new_cmd, cmds[i], '<');

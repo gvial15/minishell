@@ -78,13 +78,13 @@ void	create_fds(char **s, char **fds, int sign)
 	while (s[++i])
 	{
 		if (i != 0 && s[i - 1][0] == sign && ft_strlen(s[i - 1]) == 1)
-			fds[j++] = ft_strdup(s[i]);
+			fds[j++] = remove_quotes(ft_strdup(s[i]));
 		if (s[i][0] == sign && s[i][1] != sign && ft_strlen(s[i]) > 1)
-			fds[j++] = ft_strdup(&s[i][1]);
+			fds[j++] = remove_quotes(ft_strdup(&s[i][1]));
 		if (i != 0 && ft_strnstr(s[i - 1], dbl, 2) && ft_strlen(s[i - 1]) == 2)
-			fds[j++] = ft_strdup(s[i]);
+			fds[j++] = remove_quotes(ft_strdup(s[i]));
 		if (ft_strnstr(s[i], dbl, 2) && ft_strlen(s[i]) > 2)
-			fds[j++] = ft_strdup(&s[i][2]);
+			fds[j++] = remove_quotes(ft_strdup(&s[i][2]));
 	}
 }
 
