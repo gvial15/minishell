@@ -57,7 +57,7 @@ char	*remove_quotes(char *s)
 	while (s[++i])
 		if (!is_quote(s[i]))
 			new_s[++j] = s[i];
-	new_s[j] = 0;
+	new_s[++j] = 0;
 	free(s);
 	return (new_s);
 }
