@@ -28,6 +28,13 @@ int	have_dbl_redirec(char *s)
 	return (0);
 }
 
+int	is_quote(char c)
+{
+	if (c == '"' || c == 39)
+		return (1);
+	return (0);
+}
+
 t_cmd	*lst_last(t_cmd *head)
 {
 	if (!head)
@@ -35,21 +42,6 @@ t_cmd	*lst_last(t_cmd *head)
 	while (head->next != NULL)
 		head = head->next;
 	return (head);
-}
-
-int	lst_len(t_cmd *head)
-{
-	int	len;
-
-	if (!head)
-		return (0);
-	len = 1;
-	while (head && head->next != NULL)
-	{
-		len++;
-		head = head->next;
-	}
-	return (len);
 }
 
 void	free_cmds(t_cmd *cmd)

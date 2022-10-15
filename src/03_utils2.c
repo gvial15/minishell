@@ -26,3 +26,18 @@ void	free_dbl_ptr(void **ptr, int option)
 			free(ptr);
 	}
 }
+
+int	lst_len(t_cmd *head)
+{
+	int	len;
+
+	if (!head)
+		return (0);
+	len = 1;
+	while (head && head->next != NULL)
+	{
+		len++;
+		head = head->next;
+	}
+	return (len);
+}
