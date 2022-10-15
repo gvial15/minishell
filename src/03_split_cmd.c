@@ -79,7 +79,10 @@ char	**split_cmd(char *cmd)
 			i = next_space_i(cmd, i);
 		}
 		else if (i == 0 && cmd[i] != ' ')
+		{
 			cmd_split[j++] = ft_substr(cmd, i, next_space_i(cmd, i) - i);
+			i = next_space_i(cmd, i);
+		}
 	}
 	cmd_split[j] = 0;
 	return (cmd_split);
