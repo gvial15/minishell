@@ -12,7 +12,7 @@
 
 #include "../include/minishell.h"
 
-static int	get_fd_in_out_c(char **split, int sign)
+static int	get_fds_count(char **split, int sign)
 {
 	int	i;
 	int	fd_count;
@@ -30,7 +30,7 @@ static void	check_heredocs(t_cmd *new_cmd, char **split)
 	int		i;
 	int		j;
 
-	new_cmd->heredoc = malloc(sizeof(int) * get_fd_in_out_c(split, '<') + 1);
+	new_cmd->heredoc = malloc(sizeof(int) * get_fds_count(split, '<') + 1);
 	j = 0;
 	i = -1;
 	while (split[++i])
@@ -95,7 +95,7 @@ char	**get_fds(t_cmd *new_cmd, char *cmd, char sign)
 
 	new_cmd->append = 0;
 	split = ft_split(cmd, ' ');
-	fds = ft_calloc(get_fd_in_out_c(split, sign) + 1, sizeof(char *));
+	fds = ft_calloc(get_fds_count(split, sign) + 1, sizeof(char *));
 	create_fds(split, fds, sign);
 	if (sign == '>')
 		check_append(new_cmd, split);

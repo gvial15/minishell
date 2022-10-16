@@ -83,6 +83,5 @@ char	**split_cmd(char *cmd)
 			i = next_space_i(cmd, i);
 		}
 	}
-	cmd_split[j] = 0;
 	return (cmd_split);
 }
