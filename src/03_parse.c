@@ -82,8 +82,6 @@ static void	create_cmd_lst(t_ms *ms, char **cmds, char **envp)
 			ms->cmds = new_cmd;
 		else
 			lst_last(ms->cmds)->next = new_cmd;
-		if (!cmd)
-			free(cmd);
 	}
 }
 

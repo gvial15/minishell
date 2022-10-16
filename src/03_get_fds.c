@@ -63,7 +63,7 @@ static void	check_append(t_cmd *new_cmd, char **split)
 	}
 }
 
-void	create_fds(char **s, char **fds, int sign)
+static void	create_fds(char **s, char **fds, int sign)
 {
 	int		i;
 	int		j;

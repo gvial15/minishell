@@ -36,7 +36,7 @@ static int	next_space_i(char *cmd, int i)
 	return (i);
 }
 
-static int	get_cmd_split_count(char *cmd)
+static int	cmd_split_count(char *cmd)
 {
 	int	i;
 	int	count;
@@ -63,7 +63,7 @@ char	**split_cmd(char *cmd)
 	int		j;
 	char	**cmd_split;
 
-	cmd_split = ft_calloc(get_cmd_split_count(cmd) + 1, sizeof(char *));
+	cmd_split = ft_calloc(cmd_split_count(cmd) + 1, sizeof(char *));
 	j = 0;
 	i = -1;
 	while (cmd[++i])
