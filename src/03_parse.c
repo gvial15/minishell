@@ -73,8 +73,6 @@ static void	create_cmd_lst(t_ms *ms, char **cmds, char **envp)
 		new_cmd = ft_calloc(1, sizeof(t_cmd));
 		new_cmd->cmd_path = get_cmd_path(cmd, envp);
 		new_cmd->args = get_args(cmd);
-		new_cmd->heredoc = 0;
-		new_cmd->append = 0;
 		new_cmd->fd_in = get_fds(new_cmd, cmds[i], '<');
 		new_cmd->fd_out = get_fds(new_cmd, cmds[i], '>');
 		new_cmd->next = NULL;

@@ -90,12 +90,19 @@ static void	create_fds(char **s, char **fds, int sign)
 
 char	**get_fds(t_cmd *new_cmd, char *cmd, char sign)
 {
+	int		fds_count;
 	char	**fds;
 	char	**split;
 
 	new_cmd->append = 0;
 	split = ft_split(cmd, ' ');
-	fds = ft_calloc(get_fds_count(split, sign) + 1, sizeof(char *));
+	fds_count = get_fds_count(split, sign);
+	if (fds_count == 0)
+	{
+		free_split(split);
+		return (NULL);
+	}
+	fds = ft_calloc(fds_count + 1, sizeof(char *));
 	create_fds(split, fds, sign);
 	if (sign == '>')
 		check_append(new_cmd, split);

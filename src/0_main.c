@@ -17,7 +17,7 @@ int	print_heredoc(int *heredoc)
 {
 	int	i;
 
-	if (heredoc[0] == -1)
+	if (!heredoc || heredoc[0] == -1)
 		return (printf("heredoc: (null)\n"));
 	printf("heredoc: ");
 	i = -1;
