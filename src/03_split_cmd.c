@@ -77,7 +77,7 @@ char	**split_cmd(char *cmd)
 			i = new_i(cmd, i);
 		}
 		else if ((i != 0 && cmd[i] != ' ' && cmd[i - 1] == ' ')
-				|| (i == 0 && cmd[i] != ' '))
+			|| (i == 0 && cmd[i] != ' '))
 		{
 			cmd_split[j++] = ft_substr(cmd, i, next_space_i(cmd, i) - i);
 			i = next_space_i(cmd, i);

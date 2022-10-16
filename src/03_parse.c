@@ -12,7 +12,6 @@
 
 #include "../include/minishell.h"
 
-
 void	free_cmds(t_cmd *cmd)
 {
 	t_cmd	*tmp;
@@ -37,7 +36,7 @@ void	free_cmds(t_cmd *cmd)
 	}
 }
 
-static char	**get_args(char **cmd)
+char	**get_args(char **cmd)
 {
 	int		i;
 	int		j;
@@ -56,10 +55,16 @@ static char	**get_args(char **cmd)
 	i = find_cmd_i(cmd) - 1;
 	while (!have_redirec(cmd[++i]))
 		args[++j] = remove_quotes(ft_strdup(cmd[i]));
-	free_split(cmd);
 	return (args);
 }
 
+// export var=2
+// $var = 2
+// $"var" = var
+// "$var" = 2
+// "$"var = $var
+// echo grep$var = grep2
+// <test grep$var = bash: grep2: command not found
 static void	create_cmd_lst(t_ms *ms, char **cmds, char **envp)
 {
 	int		i;
@@ -70,6 +75,7 @@ static void	create_cmd_lst(t_ms *ms, char **cmds, char **envp)
 	while (cmds[++i])
 	{
 		cmd = split_cmd(cmds[i]);
+// 		manage $var
 		new_cmd = ft_calloc(1, sizeof(t_cmd));
 		new_cmd->cmd_path = get_cmd_path(cmd, envp);
 		new_cmd->args = get_args(cmd);
@@ -80,6 +86,7 @@ static void	create_cmd_lst(t_ms *ms, char **cmds, char **envp)
 			ms->cmds = new_cmd;
 		else
 			lst_last(ms->cmds)->next = new_cmd;
+		free(cmd);
 	}
 }
 

@@ -20,7 +20,7 @@ static int	unset_var_count(char **args, char **envp)
 	count = 0;
 	i = 0;
 	while (args[++i])
-		if (is_valid_unset(args[i], 1)
+		if (valid_unset(args[i], 1)
 			&& already_exist(args[i], envp) >= 0)
 			count++;
 	return (count);
@@ -73,7 +73,7 @@ static int	export_var_count(char **args, char **envp)
 	count = 0;
 	i = 0;
 	while (args[++i])
-		if (is_valid_export(args[i], 1) && already_exist(args[i], envp) == -1)
+		if (valid_export(args[i], 1) && already_exist(args[i], envp) == -1)
 			count++;
 	return (count);
 }
@@ -94,7 +94,7 @@ char	**export_env_var(char **envp, char **args)
 	i = split_len(new_envp);
 	j = 0;
 	while (args[++j])
-		if (is_valid_export(args[j], 0) && already_exist(args[j], new_envp) == -1)
+		if (valid_export(args[j], 0) && already_exist(args[j], new_envp) == -1)
 			new_envp[i++] = ft_strdup(args[j]);
 	free_split(envp);
 	return (new_envp);

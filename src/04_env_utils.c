@@ -52,7 +52,7 @@ int	already_exist(char *var, char **envp)
 	return (-1);
 }
 
-int		is_valid_unset(char *var, int err)
+int	valid_unset(char *var, int err)
 {
 	int	i;
 
@@ -69,7 +69,7 @@ int		is_valid_unset(char *var, int err)
 	return (1);
 }
 
-int	is_valid_export(char *var, int err)
+int	valid_export(char *var, int err)
 {
 	int		i;
 
