@@ -53,8 +53,6 @@ void	print_cmd_lst(t_cmd *head)
 
 static int	prompter(t_ms *ms)
 {
-	//if (ms->last_line)
-	//	free(ms->last_line);
 	ms->last_line = readline(ms->line_prompt);
 	while (ms->last_line && (ft_strlen(ms->last_line) == 0
 			|| ft_isallspace(ms->last_line)))
