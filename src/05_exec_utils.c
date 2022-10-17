@@ -6,7 +6,7 @@
 /*   By: mraymond <mraymond@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 13:21:46 by mraymond          #+#    #+#             */
-/*   Updated: 2022/10/17 08:58:32 by mraymond         ###   ########.fr       */
+/*   Updated: 2022/10/17 09:27:48 by mraymond         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,12 +17,9 @@ void	close_n_free_mspipe(t_ms *ms)
 {
 	int	i;
 
-	i = -1;
-	while (ms->pipe[++i])
-	{
-		if (ms->pipe[i] >= 3)
-			close_keep_errno(ms->pipe[i]);
-	}
+	i = 0;
+	while (++i <= (ms->nb_cmd - 1) * 2)
+		close_keep_errno(ms->pipe[i]);
 	free(ms->pipe);
 	ms->pipe = NULL;
 }
