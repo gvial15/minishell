@@ -6,7 +6,7 @@
 /*   By: mraymond <mraymond@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/29 18:27:32 by gvial             #+#    #+#             */
-/*   Updated: 2022/10/14 13:24:57 by mraymond         ###   ########.fr       */
+/*   Updated: 2022/10/17 08:58:39 by mraymond         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -179,11 +179,9 @@ int		print_open_err(char *filename, int error);
 int		redirection_out(t_cmd *cmd);
 
 //05_exec_utils.c
-int		child_process_to_index(t_ms *ms, int waitpid_return);
 void	close_n_free_mspipe(t_ms *ms);
 void	close_keep_errno(int fd);
 t_cmd	*cmd_lst_index(t_ms *ms, int cmd_index);
-void	free_ms(t_ms *ms, int with_lstcmds);
 
 //==============================================================================
 

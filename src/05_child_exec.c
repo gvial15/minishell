@@ -6,7 +6,7 @@
 /*   By: mraymond <mraymond@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 18:36:55 by mraymond          #+#    #+#             */
-/*   Updated: 2022/10/14 12:20:53 by mraymond         ###   ########.fr       */
+/*   Updated: 2022/10/17 08:57:50 by mraymond         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ void	exec_fail(t_ms *ms, t_cmd *cmd)
 {
 	close_keep_errno(cmd->fildes[0]);
 	close_keep_errno(cmd->fildes[1]);
-	free_ms(ms, 1);
-	exit(ms->child_id[ms->cmd_index]);
+	ms_reset(ms);
+	exit(0);
 }
 

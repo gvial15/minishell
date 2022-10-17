@@ -6,7 +6,7 @@
 /*   By: mraymond <mraymond@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/05 09:28:21 by mraymond          #+#    #+#             */
-/*   Updated: 2022/10/14 13:06:02 by mraymond         ###   ########.fr       */
+/*   Updated: 2022/10/17 08:53:56 by mraymond         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ void	fill_line_prompter(t_ms *ms, int init_workingpath)
 	int		i;
 	char	*path;
 
+	path = NULL;
 	ft_memset(ms->line_prompt, '\0', 200);
 	ft_strlcpy(ms->line_prompt, PROMPTER_TITLE, ft_strlen(PROMPTER_TITLE) + 1);
 	ms->line_path = &ms->line_prompt[ft_strlen(PROMPTER_TITLE)];
