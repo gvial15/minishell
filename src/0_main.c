@@ -63,7 +63,7 @@ static int	prompter(t_ms *ms)
 	if (ms->last_line == NULL)
 		history_clear_n_exit(ms);
 	if (ft_strnstr(ms->last_line, "exit", 4))
-		exit (0);
+		history_clear_n_exit(ms);
 	add_history(ms->last_line);
 	return (valid_line(ms->last_line));
 }

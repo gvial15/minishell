@@ -6,7 +6,7 @@
 /*   By: mraymond <mraymond@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/29 18:28:01 by gvial             #+#    #+#             */
-/*   Updated: 2022/10/17 08:56:43 by mraymond         ###   ########.fr       */
+/*   Updated: 2022/10/17 09:09:39 by mraymond         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,9 +88,10 @@ wait all child finish
 void	waiting_n_closefd(t_ms *ms)
 {
 	int		child_id;
+	int		status;
 
 	close_all_cmd_fdin_fdout(ms);
-	child_id = wait(0);
+	child_id = waitpid(0, &status, NULL);
 	while (child_id != -1)
-		child_id = wait(0);
+		child_id = waitpid(0, &status, NULL);
 }
