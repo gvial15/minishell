@@ -52,14 +52,16 @@ void	print_cmd_lst(t_cmd *head)
 
 static int	prompter(t_ms *ms)
 {
+	ms_reset(ms);
 	ms->last_line = readline(ms->line_prompt);
 	while (ms->last_line && (ft_strlen(ms->last_line) == 0
 			|| ft_isallspace(ms->last_line)))
+	{
+		ms_reset(ms);
 		ms->last_line = readline(ms->line_prompt);
-	if (ms->last_line == NULL)
+	}
+	if (ms->last_line == NULL || ft_strnstr(ms->last_line, "exit", 4))
 		history_clear_n_exit(ms);
-	if (ft_strnstr(ms->last_line, "exit", 4))
-		exit (0);
 	add_history(ms->last_line);
 	return (valid_line(ms->last_line));
 }
@@ -84,6 +86,7 @@ int	main(int ac, char **av, char **envp)
 		if (prompter(ms) == 0)
 		{
 			parse(envp, ms);
+			exec(ms);
 			free_cmds(ms);
 		}
 		ms->cmds = NULL;
@@ -93,12 +96,8 @@ int	main(int ac, char **av, char **envp)
 
 void	history_clear_n_exit(t_ms *ms)
 {
-	if (ms->last_line == NULL)
-		write(2, "exit\n", 5);
-	else
-		free(ms->last_line);
-	get_ms(1);
-	clear_history();
+	write(1, "exit\n", 5);
+	all_var_free(ms);
 	exit(0);
 }
 
@@ -107,3 +106,11 @@ void	history_clear_n_exit(t_ms *ms)
 // 	ms->envp = export_env_var(ms->envp, ms->cmds[0].args);
 // if (ft_strnstr(ms->cmds[0].cmd_path, "unset", 6)) // testing purpose only
 // 	ms->envp = unset_env_var(ms->envp, ms->cmds[0].args);
+
+void	all_var_free(t_ms *ms)
+{
+	ms_reset(ms);
+	//free(ms->envp); lorsque version envp malloc sera merge
+	get_ms(1);
+	clear_history();
+}

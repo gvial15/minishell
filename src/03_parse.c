@@ -51,6 +51,8 @@ char	**get_args(char **cmd)
 	if (find_cmd_i(cmd) == -1)
 		return (args);
 	i = find_cmd_i(cmd);
+	if (i == split_len(cmd))
+		return (NULL);
 	while (!have_redirec(cmd[++i]))
 		arg_count++;
 	args = ft_calloc((arg_count + 2), sizeof(char *));
@@ -95,4 +97,5 @@ void	parse(char **envp, t_ms *ms)
 	create_cmd_lst(ms, cmds, envp);
 	free_split(cmds);
 	free(ms->last_line);
+	ms->last_line = NULL;
 }

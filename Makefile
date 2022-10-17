@@ -19,8 +19,7 @@ UNAME_S		 	= 	$(shell uname -s)
 REL_PATH		=	$(shell pwd)
 LEAK_CMD		=	leaks --atExit --
 
-READLINEA		=	-lreadline
-LIBRARY			=	$(READLINEA) $(LIBFT)
+LIBRARY			=	$(LIBRD) -lcurses $(LIBFT)
 
 #DIRECTORIES--------------------------------------------------------------------
 
@@ -28,6 +27,8 @@ SRCS_DIR 		= 	./src
 OBJS_DIR		= 	./obj
 INCLUDE_DIR		=	./include
 LIBFT_DIR		= 	$(INCLUDE_DIR)/libft
+LIBRD_DIR		=	$(INCLUDE_DIR)/librd
+
 NAME_DSYM		=	./$(NAME).dSYM
 
 #FILES--------------------------------------------------------------------------
@@ -37,6 +38,7 @@ NAME_DSYM		=	./$(NAME).dSYM
 SRCS_FILES	 	= 	0_main.c \
 					01_init.c \
 					01_valid_line.c \
+					02_signal.c \
 					03_format_line.c \
 					03_get_cmd_path.c \
 					03_get_fds.c \
@@ -47,10 +49,17 @@ SRCS_FILES	 	= 	0_main.c \
 					04_env.c \
 					04_env_utils.c \
 					03_utils2.c \
+					05_child_exec.c \
+					05_exec.c \
+					05_exec_utils.c \
+					05_redirection.c \
 
 HEADERS_FILES	=	minishell.h
 
 LIBFT_FILES		= 	libft.a
+LIBRD_FILES		=	libreadline.a \
+					libhistory.a
+
 
 #FILES VAR----------------------------------------------------------------------
 SRCS 			= 	$(addprefix $(SRCS_DIR)/, $(SRCS_FILES))
@@ -61,8 +70,10 @@ OBJS 			= 	$(SRCS:$(SRCS_DIR)/%.c=$(OBJS_DIR)/%.o)
 OBJS_BONUS 		= 	$(SRCS_BONUS:$(SRCS_DIR_BONUS)/%.c=$(OBJS_DIR_BONUS)/%.o)
 
 LIBFT 			= 	$(addprefix $(LIBFT_DIR)/, $(LIBFT_FILES))
+LIBRD_MAKEFILE	=	$(addprefix $(LIBRD_DIR)/, Makefile)
+LIBRD			=	$(addprefix $(LIBRD_DIR)/, $(LIBRD_FILES))
 
-LIBFT_LINUX		=	-L$(REL_PATH)/libft -lft
+RD_CONFIG		=	include/librd/Makefile
 
 #SYSTEM RULES-------------------------------------------------------------------
 
@@ -71,18 +82,23 @@ $(OBJS_DIR)/%.o: $(SRCS_DIR)/%.c $(HEADERS)
 
 #COMPILING RULES------------------------------------------------------------------
 
-all : 				init $(NAME)
+all : 				init $(LIBRD_MAKEFILE) $(LIBRD) $(NAME)
+
+$(LIBRD): 			$(LIBRD_MAKEFILE)
+					@$(MAKE) -s -C $(LIBRD_DIR) --silent
+					@echo "$GReadline's libraries compiled$W"
+
+$(LIBRD_MAKEFILE):
+					@cd $(LIBRD_DIR) && ./configure --silent
+					@echo "$GReadline          configured$W"
 
 init:
 					@$(MAKE) -s -C $(LIBFT_DIR)
 					@mkdir -p $(OBJS_DIR)
+					
 
 $(NAME):			$(OBJS) 
-ifeq ($(UNAME_S),Linux)
-					@gcc $(CFLAGS) libft/*c $(SRCS) -o $(NAME) $(READLINEA)
-else
 					@$(CC) $(CFLAGS) -o $(NAME) $(OBJS) $(LIBRARY)
-endif
 					@echo "$G$(NAME)         compiled$W"
 					
 $(LIBFT):
@@ -95,15 +111,20 @@ clean:
 					@$(RM) $(OBJS_DIR)
 					@$(RM) $(OBJS_BONUS)
 					@$(RM) $(OBJS_DIR_BONUS)
-					@echo "$R$(NAME) objects deleted$W"
+					@echo "$R$ All objects       deleted$W"
 
 fclean: 			clean
-					@$(MAKE) -s fclean -C $(LIBFT_DIR)				
+					@$(MAKE) -s fclean -C $(LIBFT_DIR)
+					@$(MAKE) -s clean -C $(LIBRD_DIR)
 					@$(RM) $(NAME_DSYM)
 					@$(RM) $(NAME)
 					@$(RM) $(NAME_BONUS)
-					@echo "$R$(NAME)         deleted$W"
-	
+					@echo "$R$(NAME) & lib   deleted$W"
+
+reset:				fclean
+					@$(MAKE) -s distclean -C $(LIBRD_DIR)
+					@echo "$R$ readline lib      reseted$W"
+
 re: 				fclean all
 
 debug: $(LIBFT)
@@ -111,5 +132,5 @@ debug: $(LIBFT)
 
 #PHONY--------------------------------------------------------------------------
 
-.PHONY:				all clean fclean re init init_bonus debug
+.PHONY:				all clean fclean re init debug reset
 
