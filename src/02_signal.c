@@ -6,7 +6,7 @@
 /*   By: mraymond <mraymond@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/05 09:58:59 by mraymond          #+#    #+#             */
-/*   Updated: 2022/10/17 10:24:33 by mraymond         ###   ########.fr       */
+/*   Updated: 2022/10/17 14:39:04 by mraymond         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,19 +31,28 @@ void	fct_sigint(int sig)
 	t_ms	*ms;
 
 	sig = 0;
-	signal_init();
 	ms = get_ms(0);
-	if (ms->cmd_index >= ms->nb_cmd)
+	signal_init();
+	if (ms->nb_cmd == 0)
 	{
-		while (wait(0) != -1)
-			wait(0);
-		write(1, "\n", 1);
 		if (ms->nb_cmd == 0)
-		{
 			ms_reset(ms);
-			write(1, ms->line_prompt, ft_strlen(ms->line_prompt));
-		}
+		write(1, " \n", 2);
+		rl_on_new_line();
+		rl_redisplay();
 	}
-	else
+	else if (ms->cmd_index < ms->nb_cmd)
 		exec_fail(ms);
 }
+
+/*
+void	set_attribute(t_ms *ms)
+{
+	tcsetattr(STDIN_FILENO, TCSANOW, &ms->saved);
+	ms->attributes = ms->saved;
+	ms->attributes.c_lflag &= ~ECHO;
+	//ms->attributes.c_lflag ^= ECHO;
+	//tcsetattr(STDIN_FILENO, TCSANOW, &ms->attributes);
+	tcsetattr(STDIN_FILENO, TCSAFLUSH, &ms->attributes);
+}
+*/

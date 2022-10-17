@@ -6,7 +6,7 @@
 /*   By: mraymond <mraymond@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/29 18:27:32 by gvial             #+#    #+#             */
-/*   Updated: 2022/10/17 10:16:58 by mraymond         ###   ########.fr       */
+/*   Updated: 2022/10/17 14:03:28 by mraymond         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,9 @@
 # include <stdio.h>
 # include <unistd.h>
 # include "libft/libft.h"
-# include <readline/history.h>
-# include <readline/readline.h>
+# include "readline.h"
+# include "history.h"
+# include <termios.h>
 
 //==============================================================================
 
@@ -99,17 +100,18 @@ typedef struct s_cmd
 
 typedef struct s_ms
 {
-	char	*last_line;
-	char	**envp;
-	int		*pipe;
-	t_cmd	*cmds;
-	char	line_prompt[200];
-	char	*line_path;
-	char	working_path[1000];
-	int		cmd_index;
-	int		nb_cmd;
-	int		err_num;
-	int		signal;
+	char			*last_line;
+	char			**envp;
+	int				*pipe;
+	t_cmd			*cmds;
+	char			line_prompt[200];
+	char			*line_path;
+	char			working_path[1000];
+	int				cmd_index;
+	int				nb_cmd;
+	int				err_num;
+	struct termios	attributes;
+	struct termios	saved;
 }	t_ms;
 
 //==============================================================================
@@ -130,6 +132,7 @@ t_ms	*get_ms(int erase);
 void	signal_init(void);
 void	fct_sigquit(int sig);
 void	fct_sigint(int sig);
+void	set_attribute(t_ms *ms);
 
 //03_parsing
 int		have_redirec(char *s);

@@ -6,7 +6,7 @@
 /*   By: mraymond <mraymond@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/05 09:28:21 by mraymond          #+#    #+#             */
-/*   Updated: 2022/10/17 09:52:14 by mraymond         ###   ########.fr       */
+/*   Updated: 2022/10/17 12:52:39 by mraymond         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,6 @@ void	fill_line_prompter(t_ms *ms, int init_workingpath)
 	else
 		path = &ms->working_path[ft_strrchr_i(ms->working_path, '/') + 1];
 	ft_strlcpy(ms->working_path, path, ft_strlen(path) + 1);
-
 	set_prompter_path(ms);
 }
 
@@ -60,6 +59,7 @@ void	ms_init(t_ms *ms, char **envp)
 	ms->cmd_index = 0;
 	ms->nb_cmd = 0;
 	fill_line_prompter(ms, 1);
+	//tcgetattr(STDIN_FILENO, &ms->saved);
 	signal_init();
 }
 
@@ -92,3 +92,4 @@ t_ms	*get_ms(int erase)
 	}
 	return (ms);
 }
+

@@ -59,10 +59,11 @@ static int	prompter(t_ms *ms)
 	ms->last_line = readline(ms->line_prompt);
 	while (ms->last_line && (ft_strlen(ms->last_line) == 0
 			|| ft_isallspace(ms->last_line)))
+	{
+		ms_reset(ms);
 		ms->last_line = readline(ms->line_prompt);
-	if (ms->last_line == NULL)
-		history_clear_n_exit(ms);
-	if (ft_strnstr(ms->last_line, "exit", 4))
+	}
+	if (ms->last_line == NULL || ft_strnstr(ms->last_line, "exit", 4))
 		history_clear_n_exit(ms);
 	add_history(ms->last_line);
 	return (valid_line(ms->last_line));
@@ -91,8 +92,8 @@ int	main(int ac, char **av, char **envp)
 
 void	history_clear_n_exit(t_ms *ms)
 {
-	if (ms->last_line == NULL)
-		write(2, "exit\n", 5);
+	write(1, "exit\n", 5);
+		//write(1, "\b\b  \b\bexit\n", 11);
 	all_var_free(ms);
 	exit(0);
 }
