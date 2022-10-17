@@ -12,31 +12,31 @@
 
 #include "../include/minishell.h"
 
-int	find_cmd_i(char **split)
+void	free_cmds(t_ms *ms)
 {
-	int	i;
+	t_cmd	*tmp;
+	t_cmd	*cmd;
 
-	i = -1;
-	while (split[++i])
+	cmd = ms->cmds;
+	if (cmd == NULL)
+		return ;
+	while (cmd)
 	{
-		if (!have_redirec(split[i]))
-		{
-			if (i == 0)
-				break;
-			if (i > 1 && !have_redirec(split[i - 1]) && have_dbl_redirec(split[i - 2])
-				&& ft_strlen(split[i - 2]) == 2)
-				break ; // >> out cmd
-			if (i > 1 && !have_redirec(split[i - 1]) && have_redirec(split[i - 2])
-				&& ft_strlen(split[i - 2]) == 1)
-				break ; // > out cmd
-			if (have_redirec(split[i - 1]) && ft_strlen(split[i - 1]) > 1
-				&& !have_dbl_redirec(split[i - 1]))
-				break ; // >out cmd
-			if (have_dbl_redirec(split[i - 1]) && ft_strlen(split[i - 1]) > 2)
-				break ;	// >>out cmd
-		}
+		if (cmd->cmd_path)
+			free(cmd->cmd_path);
+		if (cmd->args)
+			free_split(cmd->args);
+		if (cmd->fd_in)
+			free_split(cmd->fd_in);
+		if (cmd->fd_out)
+			free_split(cmd->fd_out);
+		if (cmd->heredoc)
+			free(cmd->heredoc);
+		tmp = cmd;
+		cmd = cmd->next;
+		free(tmp);
 	}
-	return (i);
+	ms->cmds = NULL;
 }
 
 char	**parse_args(char *cmd)
@@ -88,7 +88,6 @@ static void	create_cmd_lst(t_ms *ms, char **split, char **envp)
 	}
 }
 
-// "<in" segfault
 void	parse(char **envp, t_ms *ms)
 {
 	char	**split;

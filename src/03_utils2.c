@@ -42,3 +42,27 @@ void	close_all_cmd_fdin_fdout(t_ms *ms)
 		cmd = cmd->next;
 	}
 }
+
+t_cmd	*lst_last(t_cmd *head)
+{
+	if (!head)
+		return (head);
+	while (head->next != NULL)
+		head = head->next;
+	return (head);
+}
+
+int	lst_len(t_cmd *head)
+{
+	int	len;
+
+	if (!head)
+		return (0);
+	len = 1;
+	while (head && head->next != NULL)
+	{
+		len++;
+		head = head->next;
+	}
+	return (len);
+}

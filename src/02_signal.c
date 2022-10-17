@@ -28,6 +28,7 @@ void	fct_sigquit(int sig)
 //ctrl-c -> SIGINT
 void	fct_sigint(int sig)
 {
+	(void) sig;
 	t_ms	*ms;
 
 	sig = 0;
