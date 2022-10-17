@@ -26,12 +26,15 @@ static int	contain_env_var(char *cmd)
 
 static char	*get_varname(char *cmd)
 {
-	
+	(void) cmd;
+	return (NULL);
 }
 
 static void	replace(char *cmd, char **envp)
 {
+	(void) envp;
 	char	*varname;
+	(void) varname;
 
 	varname = get_varname(cmd);
 }
