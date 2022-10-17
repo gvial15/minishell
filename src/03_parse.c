@@ -12,10 +12,12 @@
 
 #include "../include/minishell.h"
 
-void	free_cmds(t_cmd *cmd)
+void	free_cmds(t_ms *ms)
 {
 	t_cmd	*tmp;
+	t_cmd	*cmd;
 
+	cmd = ms->cmds;
 	if (cmd == NULL)
 		return ;
 	while (cmd)
@@ -34,6 +36,7 @@ void	free_cmds(t_cmd *cmd)
 		cmd = cmd->next;
 		free(tmp);
 	}
+	ms->cmds = NULL;
 }
 
 char	**get_args(char **cmd)
@@ -67,9 +70,8 @@ static void	create_cmd_lst(t_ms *ms, char **cmds, char **envp)
 	i = -1;
 	while (cmds[++i])
 	{
-// 		manage $var convert_env_var(cmd);
 		cmd = split_cmd(cmds[i]);
-		convert_env_var(cmd, envp);
+		// convert_env_var(cmd, envp);
 		new_cmd = ft_calloc(1, sizeof(t_cmd));
 		new_cmd->cmd_path = get_cmd_path(cmd, envp);
 		new_cmd->args = get_args(cmd);

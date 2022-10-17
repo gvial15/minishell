@@ -134,7 +134,7 @@ void	fct_sigabrt(int sig);
 int		is_quote(char c);
 int		have_redirec(char *s);
 char	**split_cmd(char *cmd);
-void	free_cmds(t_cmd *head);
+void	free_cmds(t_ms *ms);
 t_cmd	*lst_last(t_cmd *head);
 char	*remove_quotes(char *s);
 int		find_cmd_i(char **split);

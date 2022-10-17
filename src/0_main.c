@@ -84,8 +84,7 @@ int	main(int ac, char **av, char **envp)
 		if (prompter(ms) == 0)
 		{
 			parse(envp, ms);
-			print_cmd_lst(ms->cmds);
-			free_cmds(ms->cmds);
+			free_cmds(ms);
 		}
 		ms->cmds = NULL;
 	}
