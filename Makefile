@@ -43,9 +43,10 @@ SRCS_FILES	 	= 	0_main.c \
 					03_parse.c \
 					03_split_cmd.c \
 					03_parse_utils.c \
-					03_utils2.c \
+					03_convert_env_var.c \
 					04_env.c \
 					04_env_utils.c \
+					03_utils2.c \
 
 HEADERS_FILES	=	minishell.h
 

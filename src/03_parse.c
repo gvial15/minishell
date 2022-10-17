@@ -58,13 +58,6 @@ char	**get_args(char **cmd)
 	return (args);
 }
 
-// export var=2
-// $var = 2
-// $"var" = var
-// "$var" = 2
-// "$"var = $var
-// echo grep$var = grep2
-// <test grep$var = bash: grep2: command not found
 static void	create_cmd_lst(t_ms *ms, char **cmds, char **envp)
 {
 	int		i;
@@ -74,8 +67,9 @@ static void	create_cmd_lst(t_ms *ms, char **cmds, char **envp)
 	i = -1;
 	while (cmds[++i])
 	{
-		cmd = split_cmd(cmds[i]);
 // 		manage $var convert_env_var(cmd);
+		cmd = split_cmd(cmds[i]);
+		convert_env_var(cmd, envp);
 		new_cmd = ft_calloc(1, sizeof(t_cmd));
 		new_cmd->cmd_path = get_cmd_path(cmd, envp);
 		new_cmd->args = get_args(cmd);

@@ -142,6 +142,7 @@ int		have_dbl_redirec(char *s);
 void	parse(char **envp, t_ms *ms);
 char	*isolate_cmd(char *cmd_brut);
 char	*get_cmd_path(char **cmd, char **envp);
+void	convert_env_var(char **cmd, char **envp);
 char	*space_out_redirections(char *last_line);
 char	**get_fds(t_cmd *new_cmd, char *cmd, char sign);
 
