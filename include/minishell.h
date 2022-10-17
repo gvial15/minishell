@@ -6,7 +6,7 @@
 /*   By: mraymond <mraymond@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/29 18:27:32 by gvial             #+#    #+#             */
-/*   Updated: 2022/10/17 08:58:39 by mraymond         ###   ########.fr       */
+/*   Updated: 2022/10/17 10:16:58 by mraymond         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,7 +130,6 @@ t_ms	*get_ms(int erase);
 void	signal_init(void);
 void	fct_sigquit(int sig);
 void	fct_sigint(int sig);
-void	fct_sigabrt(int sig);
 
 //03_parsing
 int		have_redirec(char *s);
@@ -169,7 +168,7 @@ void	waiting_n_closefd(t_ms *ms);
 //05_child_exec.c
 void	child_execution(t_ms *ms);
 int		pipe_redirection(t_ms *ms, t_cmd *cmd);
-void	exec_fail(t_ms *ms, t_cmd *cmd);
+void	exec_fail(t_ms *ms);
 
 //05_redirection.c
 int		redirection_in(t_cmd *cmd);

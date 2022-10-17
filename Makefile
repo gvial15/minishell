@@ -37,6 +37,7 @@ NAME_DSYM		=	./$(NAME).dSYM
 SRCS_FILES	 	= 	0_main.c \
 					01_init.c \
 					01_valid_line.c \
+					02_signal.c \
 					03_format_line.c \
 					03_get_cmd_path.c \
 					03_get_fd_in_out.c \
@@ -47,7 +48,7 @@ SRCS_FILES	 	= 	0_main.c \
 					05_child_exec.c \
 					05_exec.c \
 					05_exec_utils.c \
-					05_redirection.c 
+					05_redirection.c \
 
 HEADERS_FILES	=	minishell.h
 

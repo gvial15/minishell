@@ -6,7 +6,7 @@
 /*   By: mraymond <mraymond@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/05 09:58:59 by mraymond          #+#    #+#             */
-/*   Updated: 2022/10/12 14:26:49 by mraymond         ###   ########.fr       */
+/*   Updated: 2022/10/17 10:24:33 by mraymond         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,15 +26,24 @@ void	fct_sigquit(int sig)
 }
 
 //ctrl-c -> SIGINT
-void	fct_sigint(int sig2)
+void	fct_sigint(int sig)
 {
 	t_ms	*ms;
 
-	(void)sig2;
+	sig = 0;
+	signal_init();
 	ms = get_ms(0);
-	if (ms->cmds && ms->cmd_index >= ms->nb_cmd)
-		//loop to send kill in each child
+	if (ms->cmd_index >= ms->nb_cmd)
+	{
+		while (wait(0) != -1)
+			wait(0);
+		write(1, "\n", 1);
+		if (ms->nb_cmd == 0)
+		{
+			ms_reset(ms);
+			write(1, ms->line_prompt, ft_strlen(ms->line_prompt));
+		}
+	}
 	else
-		//clear and exit process
+		exec_fail(ms);
 }
-

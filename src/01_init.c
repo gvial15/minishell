@@ -6,7 +6,7 @@
 /*   By: mraymond <mraymond@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/05 09:28:21 by mraymond          #+#    #+#             */
-/*   Updated: 2022/10/17 08:53:56 by mraymond         ###   ########.fr       */
+/*   Updated: 2022/10/17 09:52:14 by mraymond         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,7 @@ void	ms_init(t_ms *ms, char **envp)
 	ms->cmd_index = 0;
 	ms->nb_cmd = 0;
 	fill_line_prompter(ms, 1);
+	signal_init();
 }
 
 void	ms_reset(t_ms *ms)
