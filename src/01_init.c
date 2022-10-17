@@ -6,7 +6,7 @@
 /*   By: mraymond <mraymond@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/05 09:28:21 by mraymond          #+#    #+#             */
-/*   Updated: 2022/10/17 12:52:39 by mraymond         ###   ########.fr       */
+/*   Updated: 2022/10/17 14:42:13 by mraymond         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,6 @@ void	ms_init(t_ms *ms, char **envp)
 	ms->cmd_index = 0;
 	ms->nb_cmd = 0;
 	fill_line_prompter(ms, 1);
-	//tcgetattr(STDIN_FILENO, &ms->saved);
 	signal_init();
 }
 

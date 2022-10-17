@@ -93,7 +93,6 @@ int	main(int ac, char **av, char **envp)
 void	history_clear_n_exit(t_ms *ms)
 {
 	write(1, "exit\n", 5);
-		//write(1, "\b\b  \b\bexit\n", 11);
 	all_var_free(ms);
 	exit(0);
 }
