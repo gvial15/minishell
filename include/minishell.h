@@ -6,7 +6,7 @@
 /*   By: mraymond <mraymond@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/29 18:27:32 by gvial             #+#    #+#             */
-/*   Updated: 2022/10/12 13:27:27 by mraymond         ###   ########.fr       */
+/*   Updated: 2022/10/17 14:03:28 by mraymond         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,9 @@
 # include <stdio.h>
 # include <unistd.h>
 # include "libft/libft.h"
-# include <readline/history.h>
-# include <readline/readline.h>
+# include "readline.h"
+# include "history.h"
+# include <termios.h>
 
 //==============================================================================
 
@@ -77,7 +78,7 @@ enum e_line_err
 
 enum e_open_err
 {
-	openerr_nosuch,
+	openerr_nosuch = 1,
 	openerr_perm
 };
 
@@ -99,39 +100,44 @@ typedef struct s_cmd
 
 typedef struct s_ms
 {
-	char	*last_line;
-	char	**envp;
-	int		*pipe;
-	t_cmd	*cmds;
-	char	line_prompt[200];
-	char	*line_path;
-	char	working_path[1000];
-	int		cmd_index;
-	int		nb_cmd;
-	int		*child_id;
-	int		err_num;
+	char			*last_line;
+	char			**envp;
+	int				*pipe;
+	t_cmd			*cmds;
+	char			line_prompt[200];
+	char			*line_path;
+	char			working_path[1000];
+	int				cmd_index;
+	int				nb_cmd;
+	int				err_num;
+	struct termios	attributes;
+	struct termios	saved;
 }	t_ms;
 
 //==============================================================================
 
 //PROTOTYPES_FILES==============================================================
 //0_main.c
+void	history_clear_n_exit(t_ms *ms);
+void	all_var_free(t_ms *ms);
 
 //01_init.c
 void	set_prompter_path(t_ms *ms);
+void	fill_line_prompter(t_ms *ms, int init_workingpath);
 void	ms_init(t_ms *ms, char **envp);
-t_ms	*get_ms(void);
+void	ms_reset(t_ms *ms);
+t_ms	*get_ms(int erase);
 
 //02_signal.c
 void	signal_init(void);
 void	fct_sigquit(int sig);
 void	fct_sigint(int sig);
-void	fct_sigabrt(int sig);
+void	set_attribute(t_ms *ms);
 
 //03_parsing
 int		have_redirec(char *s);
 int		have_dbl_redirec(char *s);
-void	free_cmds(t_cmd *head);
+void	free_cmds(t_ms *ms);
 t_cmd	*lst_last(t_cmd *head);
 int		find_cmd_i(char **split);
 void	parse(char **envp, t_ms *ms);
@@ -152,6 +158,7 @@ int		lst_len(t_cmd *head);
 
 //utils2
 void	free_dbl_ptr(void **ptr, int option);
+void	close_all_cmd_fdin_fdout(t_ms *ms);
 
 //EXECUTION---------------------------------------------------------------------
 //05_exec.c
@@ -163,9 +170,8 @@ void	waiting_n_closefd(t_ms *ms);
 
 //05_child_exec.c
 void	child_execution(t_ms *ms);
-void	closing_pipe(t_ms *ms);
 int		pipe_redirection(t_ms *ms, t_cmd *cmd);
-void	exec_fail(t_ms *ms, t_cmd *cmd);
+void	exec_fail(t_ms *ms);
 
 //05_redirection.c
 int		redirection_in(t_cmd *cmd);
@@ -175,11 +181,9 @@ int		print_open_err(char *filename, int error);
 int		redirection_out(t_cmd *cmd);
 
 //05_exec_utils.c
-int		child_process_to_index(t_ms *ms, int waitpid_return);
-void	close_ms_pipe(t_ms *ms);
+void	close_n_free_mspipe(t_ms *ms);
 void	close_keep_errno(int fd);
 t_cmd	*cmd_lst_index(t_ms *ms, int cmd_index);
-void	free_ms(t_ms *ms, int with_lstcmds);
 
 //==============================================================================
 

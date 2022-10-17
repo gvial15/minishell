@@ -1,4 +1,5 @@
-/* ************************************************************************** */
+
+	/* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   0_main.c                                           :+:      :+:    :+:   */
@@ -6,7 +7,7 @@
 /*   By: mraymond <mraymond@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/29 18:27:46 by gvial             #+#    #+#             */
-/*   Updated: 2022/10/11 15:13:26 by mraymond         ###   ########.fr       */
+/*   Updated: 2022/10/13 10:18:52 by mraymond         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,12 +55,16 @@ void	print_cmd_lst(t_cmd *head)
 
 static int	prompter(t_ms *ms)
 {
+	ms_reset(ms);
 	ms->last_line = readline(ms->line_prompt);
 	while (ms->last_line && (ft_strlen(ms->last_line) == 0
 			|| ft_isallspace(ms->last_line)))
+	{
+		ms_reset(ms);
 		ms->last_line = readline(ms->line_prompt);
-	if (ft_strnstr(ms->last_line, "exit", 4))
-		exit (0);
+	}
+	if (ms->last_line == NULL || ft_strnstr(ms->last_line, "exit", 4))
+		history_clear_n_exit(ms);
 	add_history(ms->last_line);
 	return (valid_line(ms->last_line));
 }
@@ -70,7 +75,7 @@ int	main(int ac, char **av, char **envp)
 
 	(void) ac;
 	(void) av;
-	ms = get_ms();
+	ms = get_ms(0);
 	ms_init(ms, envp);
 	while (1)
 	{
@@ -79,9 +84,23 @@ int	main(int ac, char **av, char **envp)
 			parse(envp, ms);
 			print_cmd_lst(ms->cmds);
 			exec(ms);
-			free_cmds(ms->cmds);
+			free_cmds(ms);
 		}
 		ms->cmds = NULL;
 	}
-	free(ms);
+}
+
+void	history_clear_n_exit(t_ms *ms)
+{
+	write(1, "exit\n", 5);
+	all_var_free(ms);
+	exit(0);
+}
+
+void	all_var_free(t_ms *ms)
+{
+	ms_reset(ms);
+	//free(ms->envp); lorsque version envp malloc sera merge
+	get_ms(1);
+	clear_history();
 }

@@ -6,7 +6,7 @@
 /*   By: mraymond <mraymond@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/29 18:28:01 by gvial             #+#    #+#             */
-/*   Updated: 2022/10/12 13:16:01 by mraymond         ###   ########.fr       */
+/*   Updated: 2022/10/17 09:11:40 by mraymond         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 void	exec(t_ms *ms)
 {
 	ms->nb_cmd = lst_len(ms->cmds);
-	ms->child_id = (int *)ft_calloc(ms->nb_cmd, sizeof(int));
 	fd_allocation(ms);
 	fd_redirection(ms);
 	child_creation(ms);
@@ -59,7 +58,7 @@ void	fd_redirection(t_ms *ms)
 		}
 		cmd = cmd->next;
 	}
-	close_ms_pipe(ms);
+	close_n_free_mspipe(ms);
 }
 
 void	child_creation(t_ms *ms)
@@ -73,11 +72,7 @@ void	child_creation(t_ms *ms)
 	while (++ms->cmd_index < ms->nb_cmd && process_id != 0 && cmd)
 	{
 		if (cmd->fildes[0] != -1)
-		{
 			process_id = fork();
-			if (process_id != 0)
-				ms->child_id[ms->cmd_index] = process_id;
-		}
 		cmd = cmd->next;
 	}
 	if (process_id == 0)
@@ -87,29 +82,15 @@ void	child_creation(t_ms *ms)
 	}
 }
 
-/* main process wait for each child to finish
-Close both fd from precedent pipe
+/* close all fd
+wait all child finish
 */
 void	waiting_n_closefd(t_ms *ms)
 {
-	int		i;
 	int		child_id;
-	int		status;
-	int		child_index;
-	t_cmd	*cmd;
 
-	i = -1;
-	while (++i < ms->nb_cmd)
-	{
-		child_id = waitpid(0, &status, 0);
-		if (child_id != -1)
-		{
-			child_index = child_process_to_index(ms, child_id);
-			cmd = cmd_lst_index(ms, child_index);
-			close_keep_errno(cmd->fildes[0]);
-			close_keep_errno(cmd->fildes[1]);
-			if (child_index > 0)
-				close_keep_errno(cmd_lst_index(ms, child_index - 1)->fildes[1]);
-		}
-	}
+	close_all_cmd_fdin_fdout(ms);
+	child_id = wait(0);
+	while (child_id != -1)
+		child_id = wait(0);
 }

@@ -6,7 +6,7 @@
 /*   By: mraymond <mraymond@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/29 18:28:28 by gvial             #+#    #+#             */
-/*   Updated: 2022/10/07 17:36:57 by mraymond         ###   ########.fr       */
+/*   Updated: 2022/10/14 12:29:04 by mraymond         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,10 +52,12 @@ int	lst_len(t_cmd *head)
 	return (len);
 }
 
-void	free_cmds(t_cmd *cmd)
+void	free_cmds(t_ms *ms)
 {
 	t_cmd	*tmp;
+	t_cmd	*cmd;
 
+	cmd = ms->cmds;
 	if (cmd == NULL)
 		return ;
 	while (cmd)
@@ -74,4 +76,5 @@ void	free_cmds(t_cmd *cmd)
 		cmd = cmd->next;
 		free(tmp);
 	}
+	ms->cmds = NULL;
 }
