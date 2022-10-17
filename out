@@ -1,7 +1,0 @@
-Makefile
-include
-minishell
-obj
-out
-src
-temp
