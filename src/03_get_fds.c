@@ -95,6 +95,7 @@ char	**get_fds(t_cmd *new_cmd, char *cmd, char sign)
 	char	**split;
 
 	new_cmd->append = 0;
+	new_cmd->heredoc = 0;
 	split = ft_split(cmd, ' ');
 	fds_count = get_fds_count(split, sign);
 	if (fds_count == 0)

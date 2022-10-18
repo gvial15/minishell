@@ -135,9 +135,11 @@ void	fct_sigint(int sig);
 void	set_attribute(t_ms *ms);
 
 //03_parsing
+int		is_pipe(char *s);
 int		is_quote(char c);
 int		have_redirec(char *s);
-char	**split_cmd(char *cmd);
+char	**split_quotes(char *cmd);
+char	**split_cmds(char **cmd);
 int		have_dbl_redirec(char *s);
 void	free_cmds(t_ms *ms);
 t_cmd	*lst_last(t_cmd *head);
