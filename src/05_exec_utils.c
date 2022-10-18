@@ -6,7 +6,7 @@
 /*   By: mraymond <mraymond@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 13:21:46 by mraymond          #+#    #+#             */
-/*   Updated: 2022/10/17 09:27:48 by mraymond         ###   ########.fr       */
+/*   Updated: 2022/10/18 11:56:34 by mraymond         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,18 +19,20 @@ void	close_n_free_mspipe(t_ms *ms)
 
 	i = 0;
 	while (++i <= (ms->nb_cmd - 1) * 2)
-		close_keep_errno(ms->pipe[i]);
+		closefd_ifopen(ms->pipe[i]);
 	free(ms->pipe);
 	ms->pipe = NULL;
 }
 
-void	close_keep_errno(int fd)
+void	closefd_ifopen(int fd)
 {
-	int	temp_errno;
+	struct stat	stat_buffer;
+	int			temp_err;
 
-	temp_errno = errno;
-	close(fd);
-	errno = temp_errno;
+	temp_err = errno;
+	if (fstat(fd, &stat_buffer) != -1 && fd >= 3)
+		close(fd);
+	errno = temp_err;
 }
 
 t_cmd	*cmd_lst_index(t_ms *ms, int cmd_index)
@@ -43,4 +45,16 @@ t_cmd	*cmd_lst_index(t_ms *ms, int cmd_index)
 	while (++i < cmd_index && temp->next)
 		temp = temp->next;
 	return (temp);
+}
+
+int	child_process_to_index(t_ms *ms, int waitpid_return)
+{
+	int	i;
+
+	i = 0;
+	while (ms->child_id[i] && ms->child_id[i] != waitpid_return)
+		i++;
+	if (!ms->child_id[i])
+		return (-1);
+	return (i);
 }

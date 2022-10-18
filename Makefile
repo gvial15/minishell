@@ -34,21 +34,21 @@ NAME_DSYM		=	./$(NAME).dSYM
 #FILES--------------------------------------------------------------------------
 
 #  To make the list of all src, do this command in terminal in project folder
-#  find ./src -type f | cut -c7- | sed 's/$/ \\/'
+#  find ./src/*.c -type f | cut -c7- | sed 's/$/ \\/'
 SRCS_FILES	 	= 	0_main.c \
 					01_init.c \
 					01_valid_line.c \
 					02_signal.c \
+					03_convert_env_var.c \
 					03_format_line.c \
 					03_get_cmd_path.c \
 					03_get_fds.c \
 					03_parse.c \
-					03_split_cmd.c \
 					03_parse_utils.c \
-					03_convert_env_var.c \
+					03_split_cmd.c \
+					03_utils2.c \
 					04_env.c \
 					04_env_utils.c \
-					03_utils2.c \
 					05_child_exec.c \
 					05_exec.c \
 					05_exec_utils.c \

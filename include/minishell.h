@@ -6,7 +6,7 @@
 /*   By: mraymond <mraymond@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/29 18:27:32 by gvial             #+#    #+#             */
-/*   Updated: 2022/10/17 14:03:28 by mraymond         ###   ########.fr       */
+/*   Updated: 2022/10/18 12:37:11 by mraymond         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,8 @@
 # include "readline.h"
 # include "history.h"
 # include <termios.h>
+# include <sys/stat.h>
+# include <string.h>
 
 //==============================================================================
 
@@ -104,14 +106,14 @@ typedef struct s_ms
 	char			**envp;
 	int				*pipe;
 	t_cmd			*cmds;
+	int				*child_id;
 	char			line_prompt[200];
 	char			*line_path;
 	char			working_path[1000];
 	int				cmd_index;
 	int				nb_cmd;
-	int				err_num;
-	struct termios	attributes;
-	struct termios	saved;
+	int				err_last_child;
+	int				signal;
 }	t_ms;
 
 //==============================================================================
@@ -192,8 +194,9 @@ int		redirection_out(t_cmd *cmd);
 
 //05_exec_utils.c
 void	close_n_free_mspipe(t_ms *ms);
-void	close_keep_errno(int fd);
+void	closefd_ifopen(int fd);
 t_cmd	*cmd_lst_index(t_ms *ms, int cmd_index);
+int		child_process_to_index(t_ms *ms, int waitpid_return);
 
 //==============================================================================
 

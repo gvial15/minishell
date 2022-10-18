@@ -6,7 +6,7 @@
 /*   By: mraymond <mraymond@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/29 18:27:46 by gvial             #+#    #+#             */
-/*   Updated: 2022/10/13 10:18:52 by mraymond         ###   ########.fr       */
+/*   Updated: 2022/10/18 12:56:44 by mraymond         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,8 @@ static int	prompter(t_ms *ms)
 	}
 	if (ms->last_line == NULL || ft_strnstr(ms->last_line, "exit", 4))
 		history_clear_n_exit(ms);
+	ms->signal = 0;
+	printf("\n----------START STATUS:%d----------\n\n", ms->err_last_child);
 	add_history(ms->last_line);
 	return (valid_line(ms->last_line));
 }
