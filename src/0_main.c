@@ -66,13 +66,6 @@ static int	prompter(t_ms *ms)
 	return (valid_line(ms->last_line));
 }
 
-void	clear_ms(t_ms *ms)
-{
-	if (ms->envp)
-		free_split(ms->envp);
-	free(ms);
-}
-
 int	main(int ac, char **av, char **envp)
 {
 	t_ms	*ms;
@@ -91,7 +84,7 @@ int	main(int ac, char **av, char **envp)
 		}
 		ms->cmds = NULL;
 	}
-	clear_ms(ms);
+	history_clear_n_exit(ms);
 }
 
 void	history_clear_n_exit(t_ms *ms)
