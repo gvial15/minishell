@@ -48,7 +48,6 @@ char	**get_args(char **cmd)
 
 	args = NULL;
 	arg_count = 0;
-	print_split(cmd);
 	if (find_cmd_i(cmd) == -1)
 		return (args);
 	i = find_cmd_i(cmd);
@@ -75,12 +74,12 @@ static void	create_cmd_lst(t_ms *ms, char **cmds, char **envp)
 	while (cmds[++i])
 	{
 		cmd = split_quotes(cmds[i]);
-		// convert_env_var(cmds[i], envp);
+		// convert_env_var(cmd, envp);
 		new_cmd = ft_calloc(1, sizeof(t_cmd));
 		new_cmd->cmd_path = get_cmd_path(cmd, envp);
 		new_cmd->args = get_args(cmd);
-		new_cmd->fd_in = get_fds(new_cmd, cmds[i], '<');
-		new_cmd->fd_out = get_fds(new_cmd, cmds[i], '>');
+		new_cmd->fd_in = get_fds(new_cmd, cmd, '<');
+		new_cmd->fd_out = get_fds(new_cmd, cmd, '>');
 		new_cmd->next = NULL;
 		if (ms->cmds == NULL)
 			ms->cmds = new_cmd;

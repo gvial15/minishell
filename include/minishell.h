@@ -117,6 +117,9 @@ typedef struct s_ms
 //==============================================================================
 
 //PROTOTYPES_FILES==============================================================
+
+int	print_heredoc(int *heredoc);
+
 //0_main.c
 void	history_clear_n_exit(t_ms *ms);
 void	all_var_free(t_ms *ms);
@@ -151,7 +154,7 @@ char	*isolate_cmd(char *cmd_brut);
 char	*get_cmd_path(char **cmd, char **envp);
 void	convert_env_var(char **cmd, char **envp);
 char	*space_out_redirections(char *last_line);
-char	**get_fds(t_cmd *new_cmd, char *cmd, char sign);
+char	**get_fds(t_cmd *new_cmd, char **cmd, char sign);
 
 //04_builtins
 char	**export_env_var(char **envp, char **vars);
