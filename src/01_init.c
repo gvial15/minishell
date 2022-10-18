@@ -6,7 +6,7 @@
 /*   By: mraymond <mraymond@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/05 09:28:21 by mraymond          #+#    #+#             */
-/*   Updated: 2022/10/18 11:57:31 by mraymond         ###   ########.fr       */
+/*   Updated: 2022/10/18 13:38:34 by mraymond         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,7 @@ void	ms_reset(t_ms *ms)
 	ms->cmds = NULL;
 	ms->cmd_index = 0;
 	ms->nb_cmd = 0;
+	ms->skip_cmd = 0;
 }
 
 //put 1 in arg to erase;

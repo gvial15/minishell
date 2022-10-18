@@ -6,7 +6,7 @@
 /*   By: mraymond <mraymond@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/29 18:28:01 by gvial             #+#    #+#             */
-/*   Updated: 2022/10/18 12:57:12 by mraymond         ###   ########.fr       */
+/*   Updated: 2022/10/18 13:53:55 by mraymond         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,8 @@ void	fd_redirection(t_ms *ms)
 			if (cmd->fildes[1] == 0)
 				cmd->fildes[1] = dup(ms->pipe[(cmd_index * 2) + 1]);
 		}
+		else
+			ms->err_last_child = 1;
 		cmd = cmd->next;
 	}
 	close_n_free_mspipe(ms);
@@ -77,7 +79,11 @@ void	child_creation(t_ms *ms)
 			process_id = fork();
 			if (process_id != 0)
 				ms->child_id[ms->cmd_index] = process_id;
+			else
+				ms->child_id[ms->cmd_index] = -2;
 		}
+		else
+			ms->skip_cmd += 1;
 		cmd = cmd->next;
 	}
 	if (process_id == 0)
@@ -98,7 +104,7 @@ void	waiting_n_closefd(t_ms *ms)
 
 	close_all_cmd_fdin_fdout(ms);
 	i = -1;
-	while (++i < ms->nb_cmd)
+	while (++i < ms->nb_cmd - ms->skip_cmd)
 	{
 		child_id = waitpid(0, &status, 0);
 		if (child_id != -1)
@@ -109,8 +115,7 @@ void	waiting_n_closefd(t_ms *ms)
 		else
 			ms->err_last_child = WEXITSTATUS(status);
 	}
-	if (ms->signal != 0)
+	if (ms->signal != 0 && ms->nb_cmd == 1)
 		ms->err_last_child = 130;
 	ms->signal = 0;
-	printf("\n----------END STATUS:%d----------\n\n", ms->err_last_child);
 }

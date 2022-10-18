@@ -6,7 +6,7 @@
 /*   By: mraymond <mraymond@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 18:36:55 by mraymond          #+#    #+#             */
-/*   Updated: 2022/10/18 12:46:12 by mraymond         ###   ########.fr       */
+/*   Updated: 2022/10/18 13:55:44 by mraymond         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,6 @@ void	child_execution(t_ms *ms)
 	closefd_ifopen(1);
 	dup2(fd_stdout, 1);
 	printf("%s%s%s\n", ERR_FIRST, ERR_EXECVE, cmd->args[0]);
-	printf("child index:%d nb_cmd:%d\n", ms->cmd_index, ms->nb_cmd);
 	if (ms->cmd_index == ms->nb_cmd - 1)
 		ms->err_last_child = 127;
 	exec_fail(ms);

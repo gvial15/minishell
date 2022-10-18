@@ -99,7 +99,7 @@ init:
 
 $(NAME):			$(OBJS) 
 					@$(CC) $(CFLAGS) -o $(NAME) $(OBJS) $(LIBRARY)
-					@echo "$G$(NAME)         compiled$W"
+					@echo "$G$(NAME)            compiled$W"
 					
 $(LIBFT):
 					@cd $(LIBFT_DIR)/ && make

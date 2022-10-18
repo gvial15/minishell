@@ -6,7 +6,7 @@
 /*   By: mraymond <mraymond@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/29 18:27:32 by gvial             #+#    #+#             */
-/*   Updated: 2022/10/18 12:37:11 by mraymond         ###   ########.fr       */
+/*   Updated: 2022/10/18 14:09:27 by mraymond         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,6 +114,7 @@ typedef struct s_ms
 	int				nb_cmd;
 	int				err_last_child;
 	int				signal;
+	int				skip_cmd;
 }	t_ms;
 
 //==============================================================================
@@ -121,7 +122,6 @@ typedef struct s_ms
 //PROTOTYPES_FILES==============================================================
 //0_main.c
 void	history_clear_n_exit(t_ms *ms);
-void	all_var_free(t_ms *ms);
 
 //01_init.c
 void	set_prompter_path(t_ms *ms);
@@ -164,6 +164,7 @@ int		already_exist(char *var, char **envp);
 //01_valid_line
 int		valid_line(char *line);
 int		print_line_err(int error);
+int		valid_line_error_conversion(int valid_line_return);
 
 // utils
 int		lst_len(t_cmd *head);

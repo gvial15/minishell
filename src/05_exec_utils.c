@@ -6,7 +6,7 @@
 /*   By: mraymond <mraymond@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 13:21:46 by mraymond          #+#    #+#             */
-/*   Updated: 2022/10/18 11:56:34 by mraymond         ###   ########.fr       */
+/*   Updated: 2022/10/18 13:45:16 by mraymond         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,9 +52,9 @@ int	child_process_to_index(t_ms *ms, int waitpid_return)
 	int	i;
 
 	i = 0;
-	while (ms->child_id[i] && ms->child_id[i] != waitpid_return)
+	while (i < ms->nb_cmd && ms->child_id[i] != waitpid_return)
 		i++;
-	if (!ms->child_id[i])
+	if (i == ms->nb_cmd)
 		return (-1);
 	return (i);
 }
