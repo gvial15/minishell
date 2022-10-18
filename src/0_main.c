@@ -1,5 +1,4 @@
-
-	/* ************************************************************************** */
+/* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   0_main.c                                           :+:      :+:    :+:   */
@@ -17,7 +16,7 @@ int	print_heredoc(int *heredoc)
 {
 	int	i;
 
-	if (heredoc[0] == -1)
+	if (!heredoc || heredoc[0] == -1)
 		return (printf("heredoc: (null)\n"));
 	printf("heredoc: ");
 	i = -1;
@@ -31,8 +30,6 @@ void	print_cmd_lst(t_cmd *head)
 {
 	int	i;
 
-	if (!DEBUG)
-		return ;
 	i = 0;
 	while (head)
 	{
@@ -69,6 +66,13 @@ static int	prompter(t_ms *ms)
 	return (valid_line(ms->last_line));
 }
 
+void	clear_ms(t_ms *ms)
+{
+	if (ms->envp)
+		free_split(ms->envp);
+	free(ms);
+}
+
 int	main(int ac, char **av, char **envp)
 {
 	t_ms	*ms;
@@ -82,12 +86,12 @@ int	main(int ac, char **av, char **envp)
 		if (prompter(ms) == 0)
 		{
 			parse(envp, ms);
-			print_cmd_lst(ms->cmds);
 			exec(ms);
 			free_cmds(ms);
 		}
 		ms->cmds = NULL;
 	}
+	clear_ms(ms);
 }
 
 void	history_clear_n_exit(t_ms *ms)
@@ -96,6 +100,12 @@ void	history_clear_n_exit(t_ms *ms)
 	all_var_free(ms);
 	exit(0);
 }
+
+// export/unset testing:
+// if (ft_strnstr(ms->cmds[0].cmd_path, "export", 6)) // testing purpose only
+// 	ms->envp = export_env_var(ms->envp, ms->cmds[0].args);
+// if (ft_strnstr(ms->cmds[0].cmd_path, "unset", 6)) // testing purpose only
+// 	ms->envp = unset_env_var(ms->envp, ms->cmds[0].args);
 
 void	all_var_free(t_ms *ms)
 {

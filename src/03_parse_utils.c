@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   03_utils.c                                         :+:      :+:    :+:   */
+/*   03_parse_utils.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mraymond <mraymond@student.42quebec.com    +#+  +:+       +#+        */
+/*   By: gvial <marvin@42quebec.com>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/09/29 18:28:28 by gvial             #+#    #+#             */
-/*   Updated: 2022/10/14 12:29:04 by mraymond         ###   ########.fr       */
+/*   Created: 2022/09/29 18:28:19 by gvial             #+#    #+#             */
+/*   Updated: 2022/09/29 18:28:21 by gvial            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	have_redirec(char *s)
 {
-	if (s == NULL)
+	if (!s)
 		return (1);
 	if (s[0] == '<' || s[0] == '>')
 		return (1);
@@ -28,29 +28,65 @@ int	have_dbl_redirec(char *s)
 	return (0);
 }
 
-int	find_cmd_i(char **split)
+int	is_quote(char c)
+{
+	if (c == '"' || c == 39)
+		return (1);
+	return (0);
+}
+
+char	*remove_quotes(char *s)
+{
+	int		i;
+	int		j;
+	int		nb_quotes;
+	char	*new_s;
+
+	if (!s)
+		return (NULL);
+	nb_quotes = 0;
+	i = -1;
+	while (s[++i])
+		if (is_quote(s[i]))
+			nb_quotes++;
+	if (nb_quotes == 0)
+		return (s);
+	new_s = ft_calloc(ft_strlen(s) - (nb_quotes), sizeof(char));
+	j = -1;
+	i = -1;
+	while (s[++i])
+		if (!is_quote(s[i]))
+			new_s[++j] = s[i];
+	new_s[++j] = 0;
+	free(s);
+	return (new_s);
+}
+
+int	find_cmd_i(char **s)
 {
 	int	i;
 
 	i = -1;
-	while (split[++i])
+	while (s[++i])
 	{
-		if (!have_redirec(split[i]))
+		if (!have_redirec(s[i]))
 		{
 			if (i == 0)
-				break;
-			if (i > 1 && !have_redirec(split[i - 1]) && have_dbl_redirec(split[i - 2])
-				&& ft_strlen(split[i - 2]) == 2)
-				break ; // >> out cmd
-			if (i > 1 && !have_redirec(split[i - 1]) && have_redirec(split[i - 2])
-				&& ft_strlen(split[i - 2]) == 1)
-				break ; // > out cmd
-			if (have_redirec(split[i - 1]) && ft_strlen(split[i - 1]) > 1
-				&& !have_dbl_redirec(split[i - 1]))
-				break ; // >out cmd
-			if (have_dbl_redirec(split[i - 1]) && ft_strlen(split[i - 1]) > 2)
-				break ;	// >>out cmd
+				break ;
+			if (i > 1 && !have_redirec(s[i - 1]) && have_dbl_redirec(s[i - 2])
+				&& ft_strlen(s[i - 2]) == 2)
+				break ;
+			if (i > 1 && !have_redirec(s[i - 1]) && have_redirec(s[i - 2])
+				&& ft_strlen(s[i - 2]) == 1)
+				break ;
+			if (have_redirec(s[i - 1]) && ft_strlen(s[i - 1]) > 1
+				&& !have_dbl_redirec(s[i - 1]))
+				break ;
+			if (have_dbl_redirec(s[i - 1]) && ft_strlen(s[i - 1]) > 2)
+				break ;
 		}
+		if (i == (int)ft_strlen(s[i]))
+			i = -1;
 	}
 	return (i);
 }

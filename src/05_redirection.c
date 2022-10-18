@@ -17,6 +17,8 @@ int	redirection_in(t_cmd *cmd)
 	int	i;
 	int	new_fd_in;
 
+	if (!cmd->fd_in)
+		return (0);
 	i = -1;
 	new_fd_in = 0;
 	while (cmd->fd_in[++i] && new_fd_in != -1)
@@ -79,6 +81,8 @@ int	redirection_out(t_cmd *cmd)
 	int	i;
 	int	new_fd_out;
 
+	if (!cmd->fd_in)
+		return (0);
 	i = -1;
 	new_fd_out = 0;
 	while (cmd->fd_out[++i] && new_fd_out != -1)

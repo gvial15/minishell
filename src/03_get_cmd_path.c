@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_cmd_path.c                                     :+:      :+:    :+:   */
+/*   03_get_cmd_path.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gvial <marvin@42quebec.com>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -38,31 +38,22 @@ static char	**get_paths(char **envp)
 	return (paths);
 }
 
-char	*isolate_cmd(char *cmd_brut)
-{
-	char	*cmd;
-	char	**split;
-
-	split = ft_split(cmd_brut, ' ');
-	if (split_count(cmd_brut, ' ') == 1
-		&& (*split[0] == '<' || *split[0] == '>'))
-		cmd =  NULL;
-	else
-		cmd = ft_strdup(split[find_cmd_i(split)]);
-	free_split(split);
-	return (cmd);
-}
-
-char	*get_cmd_path(char *cmd, char **envp)
+char	*get_cmd_path(char **cmd, char **envp)
 {
 	int		i;
+	int		cmd_i;
 	char	*path;
 	char	**paths;
 	char	*cmd_without_args;
 
 	i = -1;
+	cmd_i = find_cmd_i(cmd);
+	path = NULL;
+	if (cmd_i == -1)
+		return (NULL);
 	paths = get_paths(envp);
-	cmd_without_args = isolate_cmd(cmd);
+	cmd_without_args = ft_strdup(cmd[cmd_i]);
+	cmd_without_args = remove_quotes(cmd_without_args);
 	while (paths[++i])
 	{
 		if (cmd_without_args == NULL)

@@ -135,19 +135,29 @@ void	fct_sigint(int sig);
 void	set_attribute(t_ms *ms);
 
 //03_parsing
+int		is_quote(char c);
 int		have_redirec(char *s);
+char	**split_cmd(char *cmd);
 int		have_dbl_redirec(char *s);
 void	free_cmds(t_ms *ms);
 t_cmd	*lst_last(t_cmd *head);
+char	*remove_quotes(char *s);
 int		find_cmd_i(char **split);
+int		have_dbl_redirec(char *s);
 void	parse(char **envp, t_ms *ms);
 char	*isolate_cmd(char *cmd_brut);
-char	*get_cmd_path(char *cmd, char **envp);
-char	**get_fd_in_out(t_cmd *new_cmd, char *cmd, char sign);
+char	*get_cmd_path(char **cmd, char **envp);
+void	convert_env_var(char **cmd, char **envp);
 char	*space_out_redirections(char *last_line);
+char	**get_fds(t_cmd *new_cmd, char *cmd, char sign);
 
 //04_builtins
-char	**add_env_var(char **envp, char **vars);
+char	**export_env_var(char **envp, char **vars);
+char	**unset_env_var(char **envp, char **args);
+//04_env_utils.c
+int		valid_unset(char *var, int err);
+int		valid_export(char *var, int err);
+int		already_exist(char *var, char **envp);
 
 //01_valid_line
 int		valid_line(char *line);
