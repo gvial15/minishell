@@ -6,7 +6,7 @@
 /*   By: mraymond <mraymond@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/29 18:28:01 by gvial             #+#    #+#             */
-/*   Updated: 2022/10/17 09:11:40 by mraymond         ###   ########.fr       */
+/*   Updated: 2022/10/18 13:53:55 by mraymond         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 void	exec(t_ms *ms)
 {
 	ms->nb_cmd = lst_len(ms->cmds);
+	ms->child_id = (int *)ft_calloc(ms->nb_cmd, sizeof(int));
 	fd_allocation(ms);
 	fd_redirection(ms);
 	child_creation(ms);
@@ -56,6 +57,8 @@ void	fd_redirection(t_ms *ms)
 			if (cmd->fildes[1] == 0)
 				cmd->fildes[1] = dup(ms->pipe[(cmd_index * 2) + 1]);
 		}
+		else
+			ms->err_last_child = 1;
 		cmd = cmd->next;
 	}
 	close_n_free_mspipe(ms);
@@ -72,7 +75,15 @@ void	child_creation(t_ms *ms)
 	while (++ms->cmd_index < ms->nb_cmd && process_id != 0 && cmd)
 	{
 		if (cmd->fildes[0] != -1)
+		{
 			process_id = fork();
+			if (process_id != 0)
+				ms->child_id[ms->cmd_index] = process_id;
+			else
+				ms->child_id[ms->cmd_index] = -2;
+		}
+		else
+			ms->skip_cmd += 1;
 		cmd = cmd->next;
 	}
 	if (process_id == 0)
@@ -87,10 +98,24 @@ wait all child finish
 */
 void	waiting_n_closefd(t_ms *ms)
 {
-	int		child_id;
+	int	i;
+	int	child_id;
+	int	status;
 
 	close_all_cmd_fdin_fdout(ms);
-	child_id = wait(0);
-	while (child_id != -1)
-		child_id = wait(0);
+	i = -1;
+	while (++i < ms->nb_cmd - ms->skip_cmd)
+	{
+		child_id = waitpid(0, &status, 0);
+		if (child_id != -1)
+		{
+			if (child_process_to_index(ms, child_id) == ms->nb_cmd - 1)
+				ms->err_last_child = WEXITSTATUS(status);
+		}
+		else
+			ms->err_last_child = WEXITSTATUS(status);
+	}
+	if (ms->signal != 0 && ms->nb_cmd == 1)
+		ms->err_last_child = 130;
+	ms->signal = 0;
 }

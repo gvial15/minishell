@@ -6,7 +6,7 @@
 /*   By: mraymond <mraymond@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/29 18:27:46 by gvial             #+#    #+#             */
-/*   Updated: 2022/10/13 10:18:52 by mraymond         ###   ########.fr       */
+/*   Updated: 2022/10/18 14:50:33 by mraymond         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,7 @@ static int	prompter(t_ms *ms)
 	}
 	if (ms->last_line == NULL || ft_strnstr(ms->last_line, "exit", 4))
 		history_clear_n_exit(ms);
+	ms->signal = 0;
 	add_history(ms->last_line);
 	return (valid_line(ms->last_line));
 }
@@ -69,6 +70,7 @@ static int	prompter(t_ms *ms)
 int	main(int ac, char **av, char **envp)
 {
 	t_ms	*ms;
+	int		line_err;
 
 	(void) ac;
 	(void) av;
@@ -76,25 +78,31 @@ int	main(int ac, char **av, char **envp)
 	ms_init(ms, envp);
 	while (1)
 	{
-		if (prompter(ms) == 0)
+		line_err = prompter(ms);
+		if (line_err == 0)
 		{
 			parse(envp, ms);
 			exec(ms);
 			free_cmds(ms);
 		}
+		else
+			ms->err_last_child = valid_line_error_conversion(line_err);
 		ms->cmds = NULL;
 	}
 	history_clear_n_exit(ms);
+	return (0);
 }
 
 void	history_clear_n_exit(t_ms *ms)
 {
 	write(1, "exit\n", 5);
-	all_var_free(ms);
+	ms_reset(ms);
+	//if (ms->envp)
+	//	free_split(ms->envp);
+	get_ms(1);
+	clear_history();
 	exit(0);
 }
-
-// export/unset testing:
 
 void	all_var_free(t_ms *ms)
 {
@@ -103,3 +111,9 @@ void	all_var_free(t_ms *ms)
 	get_ms(1);
 	clear_history();
 }
+
+// export/unset testing:
+// if (ft_strnstr(ms->cmds[0].cmd_path, "export", 6)) // testing purpose only
+// 	ms->envp = export_env_var(ms->envp, ms->cmds[0].args);
+// if (ft_strnstr(ms->cmds[0].cmd_path, "unset", 6)) // testing purpose only
+// 	ms->envp = unset_env_var(ms->envp, ms->cmds[0].args);

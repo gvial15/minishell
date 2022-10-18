@@ -6,7 +6,7 @@
 /*   By: mraymond <mraymond@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/05 15:00:25 by mraymond          #+#    #+#             */
-/*   Updated: 2022/10/07 13:46:32 by mraymond         ###   ########.fr       */
+/*   Updated: 2022/10/18 14:44:15 by mraymond         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,4 +116,14 @@ int	print_line_err(int error)
 		}
 	}
 	return (error);
+}
+
+int	valid_line_error_conversion(int valid_line_return)
+{
+	if (valid_line_return == lineerr_quote)
+		return (1);
+	else if (valid_line_return == lineerr_nocmd)
+		return (0);
+	else
+		return (258);
 }

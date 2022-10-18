@@ -6,7 +6,7 @@
 /*   By: mraymond <mraymond@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/05 09:28:21 by mraymond          #+#    #+#             */
-/*   Updated: 2022/10/17 14:42:13 by mraymond         ###   ########.fr       */
+/*   Updated: 2022/10/18 13:38:34 by mraymond         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,7 @@ void	ms_init(t_ms *ms, char **envp)
 	ms->cmds = NULL;
 	ms->cmd_index = 0;
 	ms->nb_cmd = 0;
+	ms->err_last_child = 0;
 	fill_line_prompter(ms, 1);
 	signal_init();
 }
@@ -71,10 +72,16 @@ void	ms_reset(t_ms *ms)
 		free_cmds(ms);
 	if (ms->pipe)
 		close_n_free_mspipe(ms);
+	if (ms->child_id)
+	{
+		free(ms->child_id);
+		ms->child_id = NULL;
+	}
 	fill_line_prompter(ms, 0);
 	ms->cmds = NULL;
 	ms->cmd_index = 0;
 	ms->nb_cmd = 0;
+	ms->skip_cmd = 0;
 }
 
 //put 1 in arg to erase;
