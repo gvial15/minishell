@@ -6,7 +6,7 @@
 /*   By: mraymond <mraymond@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/29 18:28:01 by gvial             #+#    #+#             */
-/*   Updated: 2022/10/18 13:53:55 by mraymond         ###   ########.fr       */
+/*   Updated: 2022/10/18 15:13:24 by mraymond         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ void	exec(t_ms *ms)
 	ms->child_id = (int *)ft_calloc(ms->nb_cmd, sizeof(int));
 	fd_allocation(ms);
 	fd_redirection(ms);
+	//builtin checker
 	child_creation(ms);
 	waiting_n_closefd(ms);
 }
@@ -79,8 +80,6 @@ void	child_creation(t_ms *ms)
 			process_id = fork();
 			if (process_id != 0)
 				ms->child_id[ms->cmd_index] = process_id;
-			else
-				ms->child_id[ms->cmd_index] = -2;
 		}
 		else
 			ms->skip_cmd += 1;
