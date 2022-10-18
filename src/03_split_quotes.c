@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   03_split_cmd.c                                     :+:      :+:    :+:   */
+/*   03_split_quotes.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gvial <marvin@42quebec.com>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -57,7 +57,7 @@ static int	cmd_split_count(char *cmd)
 	return (count);
 }
 
-char	**split_cmd(char *cmd)
+char	**split_quotes(char *cmd)
 {
 	int		i;
 	int		j;
