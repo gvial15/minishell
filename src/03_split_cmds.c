@@ -38,8 +38,6 @@ char	**split_cmds(char **cmds)
 	int		j;
 	char	**splitted_cmds;
 
-	if (get_cmds_count(cmds) == 1)
-		return (cmds);
 	splitted_cmds = ft_calloc(get_cmds_count(cmds) + 1, sizeof(char *));
 	j = 0;
 	i = -1;
