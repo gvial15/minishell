@@ -6,7 +6,7 @@
 /*   By: mraymond <mraymond@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/05 09:58:59 by mraymond          #+#    #+#             */
-/*   Updated: 2022/10/17 14:39:04 by mraymond         ###   ########.fr       */
+/*   Updated: 2022/10/18 13:55:56 by mraymond         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,16 +28,16 @@ void	fct_sigquit(int sig)
 //ctrl-c -> SIGINT
 void	fct_sigint(int sig)
 {
-	(void) sig;
 	t_ms	*ms;
 
-	sig = 0;
+	(void) sig;
 	ms = get_ms(0);
 	signal_init();
+	ms->signal = sig;
 	if (ms->nb_cmd == 0)
 	{
-		if (ms->nb_cmd == 0)
-			ms_reset(ms);
+		ms->err_last_child = 130;
+		ms_reset(ms);
 		write(1, " \n", 2);
 		rl_on_new_line();
 		rl_redisplay();

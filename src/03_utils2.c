@@ -6,7 +6,7 @@
 /*   By: mraymond <mraymond@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 17:37:15 by mraymond          #+#    #+#             */
-/*   Updated: 2022/10/14 13:09:15 by mraymond         ###   ########.fr       */
+/*   Updated: 2022/10/18 10:37:41 by mraymond         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,8 @@ void	close_all_cmd_fdin_fdout(t_ms *ms)
 	{
 		if (cmd->fildes[0] != -1)
 		{
-			close_keep_errno(cmd->fildes[0]);
-			close_keep_errno(cmd->fildes[1]);
+			closefd_ifopen(cmd->fildes[0]);
+			closefd_ifopen(cmd->fildes[1]);
 		}
 		cmd = cmd->next;
 	}
