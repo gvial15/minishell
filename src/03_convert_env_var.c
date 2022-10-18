@@ -26,17 +26,31 @@ static int	contain_env_var(char *cmd)
 
 static char	*get_varname(char *cmd)
 {
-	(void) cmd;
-	return (NULL);
+	int		i;
+	char	*varname;
+	
+	i = -1;
+	while (cmd[++i])
+		if (cmd[i] == '=')
+			break ;
+	varname = ft_calloc(i, sizeof(char));
+	i = -1;
+	while (cmd[++i])
+	{
+		if (cmd[i] == '=')
+			break ;
+		varname[i] = cmd[i];
+	}
+	return (varname);
 }
 
 static void	replace(char *cmd, char **envp)
 {
 	(void) envp;
 	char	*varname;
-	(void) varname;
 
 	varname = get_varname(cmd);
+	printf("%s\n", varname);
 }
 
 // export var=2
