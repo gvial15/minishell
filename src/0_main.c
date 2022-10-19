@@ -6,7 +6,7 @@
 /*   By: mraymond <mraymond@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/29 18:27:46 by gvial             #+#    #+#             */
-/*   Updated: 2022/10/19 10:41:50 by mraymond         ###   ########.fr       */
+/*   Updated: 2022/10/19 11:47:00 by mraymond         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,8 +73,9 @@ int	main(int ac, char **av, char **envp)
 	int		line_err;
 
 	(void) ac;
+	(void) av;
 	ms = get_ms(0);
-	ms_init(ms, envp, av);
+	ms_init(ms, envp);
 	while (1)
 	{
 		line_err = prompter(ms);

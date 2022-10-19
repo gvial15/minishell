@@ -6,7 +6,7 @@
 /*   By: mraymond <mraymond@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/05 09:28:21 by mraymond          #+#    #+#             */
-/*   Updated: 2022/10/19 10:49:10 by mraymond         ###   ########.fr       */
+/*   Updated: 2022/10/19 11:47:10 by mraymond         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ void	fill_line_prompter(t_ms *ms, int init_workingpath)
 	set_prompter_path(ms);
 }
 
-void	ms_init(t_ms *ms, char **envp, char **argv)
+void	ms_init(t_ms *ms, char **envp)
 {
 	ms->envp = splitdup(envp);
 	ms->cmds = NULL;
@@ -61,7 +61,6 @@ void	ms_init(t_ms *ms, char **envp, char **argv)
 	ms->err_last_child = 0;
 	fill_line_prompter(ms, 1);
 	signal_init();
-	set_program_path(ms, argv[0]);
 }
 
 void	ms_reset(t_ms *ms)

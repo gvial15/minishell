@@ -6,7 +6,7 @@
 /*   By: mraymond <mraymond@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 18:36:55 by mraymond          #+#    #+#             */
-/*   Updated: 2022/10/19 10:37:15 by mraymond         ###   ########.fr       */
+/*   Updated: 2022/10/19 12:02:30 by mraymond         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,18 +18,17 @@ void	child_execution(t_ms *ms)
 	int		fd_stdout;
 
 	cmd = cmd_lst_index(ms, ms->cmd_index);
-	//if (builtin check == 1)
-	//	//execute builtin
-	//else
-	//{
-		fd_stdout = pipe_redirection(ms, cmd);
+	fd_stdout = pipe_redirection(ms, cmd);
+	if (builtin_checker(cmd) == 1)
+		builtin_exec(ms, cmd);
+	else
+	{
 		execve(cmd->cmd_path, cmd->args, ms->envp);
-		closefd_ifopen(1);
-		dup2(fd_stdout, 1);
 		printf("%s%s%s\n", ERR_FIRST, ERR_EXECVE, cmd->args[0]);
-		if (ms->cmd_index == ms->nb_cmd - 1)
-			ms->err_last_child = 127;
-	//}
+		ms->err_last_child = 127;
+	}
+	closefd_ifopen(1);
+	dup2(fd_stdout, 1);
 	child_exit(ms);
 }
 

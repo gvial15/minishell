@@ -6,7 +6,7 @@
 /*   By: mraymond <mraymond@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/29 18:27:32 by gvial             #+#    #+#             */
-/*   Updated: 2022/10/19 10:48:51 by mraymond         ###   ########.fr       */
+/*   Updated: 2022/10/19 11:56:07 by mraymond         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,14 +115,13 @@ typedef struct s_ms
 	int				err_last_child;
 	int				signal;
 	int				skip_cmd;
-	char			program_path[1000];
 }	t_ms;
 
 //==============================================================================
 
 //PROTOTYPES_FILES==============================================================
 
-int	print_heredoc(int *heredoc);
+int		print_heredoc(int *heredoc);
 
 //0_main.c
 void	history_clear_n_exit(t_ms *ms);
@@ -130,7 +129,7 @@ void	history_clear_n_exit(t_ms *ms);
 //01_init.c
 void	set_prompter_path(t_ms *ms);
 void	fill_line_prompter(t_ms *ms, int init_workingpath);
-void	ms_init(t_ms *ms, char **envp, char **argv);
+void	ms_init(t_ms *ms, char **envp);
 void	ms_reset(t_ms *ms);
 t_ms	*get_ms(int erase);
 
@@ -166,7 +165,8 @@ char	**get_fds(t_cmd *new_cmd, char **cmd, char sign);
 
 //BUILTINS----------------------------------------------------------------------
 //04_builtin_frame.c
-void	set_program_path(t_ms *ms, char *arg0);
+int		builtin_checker(t_cmd *cmd);
+void	builtin_exec(t_ms *ms, t_cmd *cmd);
 
 //04_builtins
 char	**export_env_var(char **envp, char **vars);
