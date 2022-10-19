@@ -36,9 +36,9 @@ void	builtin_exec(t_ms *ms, t_cmd *cmd)
 	else if (ft_strncmp(cmd->args[0], "pwd", ft_strlen("pwd") + 1) == 0)
 		printf("call builtin function %s\n", cmd->args[0]);
 	else if (ft_strncmp(cmd->args[0], "export", ft_strlen("export") + 1) == 0)
-		printf("call builtin function %s\n", cmd->args[0]);
+		ms->envp = export_env_var(ms->envp, cmd->args);
 	else if (ft_strncmp(cmd->args[0], "unset", ft_strlen("unset") + 1) == 0)
-		printf("call builtin function %s\n", cmd->args[0]);
+		ms->envp = unset_env_var(ms->envp, cmd->args);
 	else if (ft_strncmp(cmd->args[0], "env", ft_strlen("env") + 1) == 0)
 		printf("call builtin function %s\n", cmd->args[0]);
 	else if (ft_strncmp(cmd->args[0], "exit", ft_strlen("exit") + 1) == 0)
