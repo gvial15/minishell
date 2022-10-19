@@ -6,7 +6,7 @@
 /*   By: mraymond <mraymond@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 08:57:42 by mraymond          #+#    #+#             */
-/*   Updated: 2022/10/19 10:54:31 by mraymond         ###   ########.fr       */
+/*   Updated: 2022/10/19 11:20:18 by mraymond         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,7 @@ void	set_program_path(t_ms *ms, char *arg0)
 int	builtin_checker(t_ms *ms, int cmd_index)
 {
 	t_cmd	*cmd;
-	char	*path_name;
-	char	*filename;
+	char	*
 
 	cmd = cmd_lst_index(ms, cmd_index);
 	path_name = ft_strjoin("")
