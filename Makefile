@@ -44,13 +44,14 @@ SRCS_FILES	 	= 	0_main.c \
 					03_get_cmd_path.c \
 					03_get_fds.c \
 					03_parse.c \
+					03_parse_utils.c \
 					03_split_cmds.c \
 					03_split_quotes.c \
-					03_parse_utils.c \
 					03_utils2.c \
 					04_builtin_frame.c \
 					04_env.c \
 					04_env_utils.c \
+					04_pwd.c \
 					05_child_exec.c \
 					05_exec.c \
 					05_exec_utils.c \
