@@ -6,7 +6,7 @@
 /*   By: mraymond <mraymond@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/29 18:28:01 by gvial             #+#    #+#             */
-/*   Updated: 2022/10/18 15:13:24 by mraymond         ###   ########.fr       */
+/*   Updated: 2022/10/19 10:41:24 by mraymond         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,14 @@ void	exec(t_ms *ms)
 	ms->child_id = (int *)ft_calloc(ms->nb_cmd, sizeof(int));
 	fd_allocation(ms);
 	fd_redirection(ms);
-	//builtin checker
-	child_creation(ms);
-	waiting_n_closefd(ms);
+	//builtin checker + if only one cmd (execute)
+	//if (ms->nb_cmd == 1 && builtin checker)
+		//builtin exec
+	//else
+	//{
+		child_creation(ms);
+		waiting_n_closefd(ms);
+	//}
 }
 
 void	fd_allocation(t_ms *ms)
