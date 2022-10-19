@@ -26,21 +26,9 @@ static int	contain_env_var(char *cmd)
 
 static char	*get_varname(char *cmd)
 {
-	int		i;
-	char	*varname;
-	
-	i = -1;
-	while (cmd[++i])
-		if (cmd[i] == '=')
-			break ;
-	varname = ft_calloc(i, sizeof(char));
-	i = -1;
-	while (cmd[++i])
-	{
-		if (cmd[i] == '=')
-			break ;
-		varname[i] = cmd[i];
-	}
+	(void) cmd;
+	char	*varname = NULL;
+
 	return (varname);
 }
 
