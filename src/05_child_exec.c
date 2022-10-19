@@ -6,7 +6,7 @@
 /*   By: mraymond <mraymond@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 18:36:55 by mraymond          #+#    #+#             */
-/*   Updated: 2022/10/19 12:02:30 by mraymond         ###   ########.fr       */
+/*   Updated: 2022/10/19 12:27:33 by mraymond         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,11 +24,11 @@ void	child_execution(t_ms *ms)
 	else
 	{
 		execve(cmd->cmd_path, cmd->args, ms->envp);
+		dup2(fd_stdout, 1);
 		printf("%s%s%s\n", ERR_FIRST, ERR_EXECVE, cmd->args[0]);
 		ms->err_last_child = 127;
 	}
 	closefd_ifopen(1);
-	dup2(fd_stdout, 1);
 	child_exit(ms);
 }
 
