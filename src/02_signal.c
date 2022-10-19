@@ -6,7 +6,7 @@
 /*   By: mraymond <mraymond@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/05 09:58:59 by mraymond          #+#    #+#             */
-/*   Updated: 2022/10/18 13:55:56 by mraymond         ###   ########.fr       */
+/*   Updated: 2022/10/19 08:52:49 by mraymond         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ void	fct_sigint(int sig)
 		rl_redisplay();
 	}
 	else if (ms->cmd_index < ms->nb_cmd)
-		exec_fail(ms);
+		child_exit(ms);
 }
 
 /*

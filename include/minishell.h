@@ -6,7 +6,7 @@
 /*   By: mraymond <mraymond@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/29 18:27:32 by gvial             #+#    #+#             */
-/*   Updated: 2022/10/18 14:09:27 by mraymond         ###   ########.fr       */
+/*   Updated: 2022/10/19 11:56:07 by mraymond         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,7 +121,7 @@ typedef struct s_ms
 
 //PROTOTYPES_FILES==============================================================
 
-int	print_heredoc(int *heredoc);
+int		print_heredoc(int *heredoc);
 
 //0_main.c
 void	history_clear_n_exit(t_ms *ms);
@@ -132,6 +132,11 @@ void	fill_line_prompter(t_ms *ms, int init_workingpath);
 void	ms_init(t_ms *ms, char **envp);
 void	ms_reset(t_ms *ms);
 t_ms	*get_ms(int erase);
+
+//01_valid_line
+int		valid_line(char *line);
+int		print_line_err(int error);
+int		valid_line_error_conversion(int valid_line_return);
 
 //02_signal.c
 void	signal_init(void);
@@ -158,18 +163,19 @@ void	convert_env_var(char **cmd, char **envp);
 char	*space_out_redirections(char *last_line);
 char	**get_fds(t_cmd *new_cmd, char **cmd, char sign);
 
+//BUILTINS----------------------------------------------------------------------
+//04_builtin_frame.c
+int		builtin_checker(t_cmd *cmd);
+void	builtin_exec(t_ms *ms, t_cmd *cmd);
+
 //04_builtins
 char	**export_env_var(char **envp, char **vars);
 char	**unset_env_var(char **envp, char **args);
+
 //04_env_utils.c
 int		valid_unset(char *var, int err);
 int		valid_export(char *var, int err);
 int		already_exist(char *var, char **envp);
-
-//01_valid_line
-int		valid_line(char *line);
-int		print_line_err(int error);
-int		valid_line_error_conversion(int valid_line_return);
 
 // utils
 int		lst_len(t_cmd *head);
@@ -189,7 +195,7 @@ void	waiting_n_closefd(t_ms *ms);
 //05_child_exec.c
 void	child_execution(t_ms *ms);
 int		pipe_redirection(t_ms *ms, t_cmd *cmd);
-void	exec_fail(t_ms *ms);
+void	child_exit(t_ms *ms);
 
 //05_redirection.c
 int		redirection_in(t_cmd *cmd);
