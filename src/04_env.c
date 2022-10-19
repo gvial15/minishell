@@ -85,8 +85,11 @@ char	**export_env_var(char **envp, char **args)
 	char	**new_envp;
 	int		var_count;
 
-	if (!args)
+	if (split_len(args) == 1)
+	{
+		print_split(envp);
 		return (envp);
+	}
 	var_count = export_var_count(args, envp);
 	new_envp = ft_calloc((var_count + split_len(envp) + 1), sizeof(char *));
 	split_cpy(envp, new_envp);
