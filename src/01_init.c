@@ -50,7 +50,7 @@ void	fill_line_prompter(t_ms *ms, int init_workingpath)
 
 void	ms_init(t_ms *ms, char **envp, char **argv)
 {
-	ms->envp = envp;
+	ms->envp = splitdup(envp);
 	ms->cmds = NULL;
 	ms->last_line = NULL;
 	ms->line_path = NULL;

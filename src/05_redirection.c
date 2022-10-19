@@ -81,7 +81,7 @@ int	redirection_out(t_cmd *cmd)
 	int	i;
 	int	new_fd_out;
 
-	if (!cmd->fd_in)
+	if (!cmd->fd_out)
 		return (0);
 	i = -1;
 	new_fd_out = 0;

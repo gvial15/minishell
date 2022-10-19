@@ -103,6 +103,14 @@ void	history_clear_n_exit(t_ms *ms)
 	exit(0);
 }
 
+void	all_var_free(t_ms *ms)
+{
+	ms_reset(ms);
+	//free(ms->envp); lorsque version envp malloc sera merge
+	get_ms(1);
+	clear_history();
+}
+
 // export/unset testing:
 // if (ft_strnstr(ms->cmds[0].cmd_path, "export", 6)) // testing purpose only
 // 	ms->envp = export_env_var(ms->envp, ms->cmds[0].args);
