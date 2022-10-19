@@ -85,7 +85,7 @@ char	**export_env_var(char **envp, char **args)
 	char	**new_envp;
 	int		var_count;
 
-	if (!args || split_len(args) == 1)
+	if (split_len(args) == 1)
 	{
 		print_split(envp);
 		return (envp);
