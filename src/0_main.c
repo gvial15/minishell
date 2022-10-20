@@ -67,6 +67,8 @@ static int	prompter(t_ms *ms)
 	return (valid_line(ms->last_line));
 }
 
+
+// exit fd fd | allo
 int	main(int ac, char **av, char **envp)
 {
 	t_ms	*ms;
@@ -81,7 +83,7 @@ int	main(int ac, char **av, char **envp)
 		line_err = prompter(ms);
 		if (!line_err)
 		{
-			parse(envp, ms);
+			parse(ms);
 			exec(ms);
 			free_cmds(ms);
 		}

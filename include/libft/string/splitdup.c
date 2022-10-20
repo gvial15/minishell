@@ -23,6 +23,6 @@ char	**splitdup(char **split)
 	i = -1;
 	while (split[++i])
 		new_split[i] = ft_strdup(split[i]);
-	split[i] = 0;
+	new_split[i] = 0;
 	return (new_split);
 }

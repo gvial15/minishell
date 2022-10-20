@@ -11,7 +11,7 @@
 /* ************************************************************************** */
 #include "../include/minishell.h"
 
-char	*get_varname_dollar(char *cmd)
+static char	*get_env_varname(char *cmd)
 {
 	int		i;
 	char	*varname;
@@ -21,6 +21,7 @@ char	*get_varname_dollar(char *cmd)
 		if (cmd[i] == '$')
 			break ;
 	varname = ft_substr(cmd, i + 1, ft_strlen(cmd) - i - 1);
+	varname = remove_quotes(varname);
 	return (varname);
 }
 
@@ -35,35 +36,43 @@ static int	get_dollar_i(char *cmd)
 	return (i);
 }
 
-static int	contain_env_var(char *cmd)
+static char	*get_var_value(char *var)
 {
-	int	i;
+	int		i;
+	char	*value;
 
-	i = -1;
-	while (cmd[++i])
-		if (cmd[i] == '$' && !is_quote(cmd[i + 1])
-			&& cmd[i + 1] != ' ')
-			return (1);
-	return (0);
+	i= -1;
+	while (var[++i])
+		if (var[i] == '=')
+			break ;
+	if (var[i + 1] == 0)
+		return (NULL);;
+	value = ft_substr(var, i + 1, ft_strlen(var) - i);
+	return (value);
 }
 
+// export t=2
+// "hello$t yoo"
 static char	*replace(char *cmd, char **env)
 {
 	int		i;
 	int		alr_exist;
-	char	*str;
+	char	*varname;
+	char	*s;
 	char	*new_cmd;
 
 	new_cmd = NULL;
-	str = get_varname_dollar(cmd);
 	i = get_dollar_i(cmd);
-	alr_exist = already_exist(str, env);
+	if (i > 0)
+		new_cmd = ft_substr(cmd, 0, i); // hello
+	varname = get_env_varname(cmd); // = t
+	alr_exist = already_exist(varname, env);
 	if (alr_exist != -1)
 	{
-		// replace $var with it's value
+		s = get_var_value(env[alr_exist]);
+		new_cmd = ft_strjoin_gnl(new_cmd, s); // hello2
+		free(s);
 	}
-	else
-	 	new_cmd = ft_substr(cmd, 0, i);
 	return (new_cmd);
 }
 
@@ -77,9 +86,16 @@ static char	*replace(char *cmd, char **env)
 void	convert_env_var(char **cmd, char **envp)
 {
 	int		i;
+	int		j;
 
+	j = -1;
 	i = -1;
 	while (cmd[++i])
-		if (contain_env_var(cmd[i]))
-			cmd[i] = replace(cmd[i], envp);
+	{
+		while (cmd[i][++j])
+			if (cmd[i][j] == '$' && !is_quote(cmd[i][j + 1])
+				&& cmd[i][j + 1] != ' ')
+				cmd[i] = replace(cmd[i], envp);
+		j = -1;
+	}
 }

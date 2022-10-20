@@ -52,7 +52,7 @@ char	**get_args(char **cmd)
 		return (args);
 	i = find_cmd_i(cmd);
 	if (i == split_len(cmd))
-		return (NULL);
+		return (&cmd[find_cmd_i(cmd)]);
 	while (!have_redirec(cmd[++i]))
 		arg_count++;
 	args = ft_calloc((arg_count + 2), sizeof(char *));
@@ -63,7 +63,7 @@ char	**get_args(char **cmd)
 	return (args);
 }
 
-static void	create_cmd_lst(t_ms *ms, char **cmds, char **envp)
+static void	create_cmd_lst(t_ms *ms, char **cmds)
 {
 	int		i;
 	t_cmd	*new_cmd;
@@ -76,7 +76,7 @@ static void	create_cmd_lst(t_ms *ms, char **cmds, char **envp)
 		cmd = split_quotes(cmds[i]);
 		convert_env_var(cmd, ms->envp);
 		new_cmd = ft_calloc(1, sizeof(t_cmd));
-		new_cmd->cmd_path = get_cmd_path(cmd, envp);
+		new_cmd->cmd_path = get_cmd_path(cmd, ms->envp);
 		new_cmd->args = get_args(cmd);
 		new_cmd->fd_in = get_fds(new_cmd, cmd, '<');
 		new_cmd->fd_out = get_fds(new_cmd, cmd, '>');
@@ -89,14 +89,14 @@ static void	create_cmd_lst(t_ms *ms, char **cmds, char **envp)
 	}
 }
 
-void	parse(char **envp, t_ms *ms)
+void	parse(t_ms *ms)
 {
 	char	**cmds;
 
 	ms->last_line = space_out_redirections(ms->last_line);
 	cmds = split_quotes(ms->last_line);
 	cmds = split_cmds(cmds);
-	create_cmd_lst(ms, cmds, envp);
+	create_cmd_lst(ms, cmds);
 	free_split(cmds);
 	free(ms->last_line);
 	ms->last_line = NULL;
