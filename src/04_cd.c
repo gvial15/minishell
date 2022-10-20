@@ -6,18 +6,18 @@
 /*   By: mraymond <mraymond@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 14:48:08 by mraymond          #+#    #+#             */
-/*   Updated: 2022/10/20 10:50:59 by mraymond         ###   ########.fr       */
+/*   Updated: 2022/10/20 14:22:39 by mraymond         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-static void	access_n_cd(t_ms *ms, t_cmd *cmd, char *newpath, int std_fd[2])
+static void	access_n_cd(t_ms *ms, t_cmd *cmd, char *newpath)
 {
 	if (access(newpath, X_OK) == -1)
 	{
 		ms->err_last_child = 1;
-		dup2(std_fd[1], 1);
+		dup2(ms->std_fd[1], 1);
 		if (access(newpath, F_OK) == -1)
 			printf("%s%s%s%s\n", cmd->args[0], ERR_OPEN_NOSUCH, ": ", newpath);
 		else
@@ -27,7 +27,7 @@ static void	access_n_cd(t_ms *ms, t_cmd *cmd, char *newpath, int std_fd[2])
 		chdir(newpath);
 }
 
-static void	cd_2args(t_ms *ms, t_cmd *cmd, int std_fd[2])
+static void	cd_2args(t_ms *ms, t_cmd *cmd)
 {
 	char	pwdbuf[1000];
 	char	*wheretochange;
@@ -49,11 +49,11 @@ static void	cd_2args(t_ms *ms, t_cmd *cmd, int std_fd[2])
 		ft_strlcat(newpath, pwdbuf, 1000);
 		ft_strlcat(newpath, cmd->args[2], 1000);
 		ft_strlcat(newpath, pwdend, 1000);
-		access_n_cd(ms, cmd, newpath, std_fd);
+		access_n_cd(ms, cmd, newpath);
 	}
 }
 
-static void	cd_0arg(t_ms *ms, t_cmd *cmd, int std_fd[2])
+static void	cd_0arg(t_ms *ms, t_cmd *cmd)
 {
 	char	*homepath;
 	int		i;
@@ -65,13 +65,13 @@ static void	cd_0arg(t_ms *ms, t_cmd *cmd, int std_fd[2])
 	if (ms->envp[i])
 	{	
 		homepath = &ms->envp[i][5];
-		access_n_cd(ms, cmd, homepath, std_fd);
+		access_n_cd(ms, cmd, homepath);
 	}
 	else
-		access_n_cd(ms, cmd, "/Users", std_fd);
+		access_n_cd(ms, cmd, "/Users");
 }
 
-void	builtin_cd(t_ms *ms, t_cmd *cmd, int std_fd[2])
+void	builtin_cd(t_ms *ms, t_cmd *cmd)
 {	
 	int	nb_args;
 
@@ -82,14 +82,14 @@ void	builtin_cd(t_ms *ms, t_cmd *cmd, int std_fd[2])
 	if (nb_args > 3)
 	{
 		ms->err_last_child = 1;
-		dup2(std_fd[1], 1);
+		dup2(ms->std_fd[1], 1);
 		printf("%s%s\n", cmd->args[0], ERR_BUILT_TOOMANYARGS);
 	}
 	else if (nb_args == 3)
-		cd_2args(ms, cmd, std_fd);
+		cd_2args(ms, cmd);
 	else if (nb_args == 1)
-		cd_0arg(ms, cmd, std_fd);
+		cd_0arg(ms, cmd);
 	else
-		access_n_cd(ms, cmd, cmd->args[1], std_fd);
+		access_n_cd(ms, cmd, cmd->args[1]);
 }
 

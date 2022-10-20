@@ -6,7 +6,7 @@
 /*   By: mraymond <mraymond@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/29 18:27:32 by gvial             #+#    #+#             */
-/*   Updated: 2022/10/20 10:29:58 by mraymond         ###   ########.fr       */
+/*   Updated: 2022/10/20 15:21:19 by mraymond         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,7 @@
 //builtin error
 # define ERR_BUILT_TOOMANYARGS ": too many arguments"
 # define ERR_BUILT_NOTINPWD ": string not in pwd: "
+# define ERR_BUILT_PDFRULES	": not covered according to subject"
 
 //==============================================================================
 
@@ -119,6 +120,7 @@ typedef struct s_ms
 	int				err_last_child;
 	int				signal;
 	int				skip_cmd;
+	int				std_fd[2];
 }	t_ms;
 
 //==============================================================================
@@ -172,10 +174,16 @@ int		builtin_checker(t_cmd *cmd);
 void	builtin_exec(t_ms *ms, t_cmd *cmd);
 
 //04_pwd.c
-void	builtin_pwd(t_ms *ms, t_cmd *cmd, int std_fd[2]);
+void	builtin_pwd(t_ms *ms, t_cmd *cmd);
 
 //04_cd.c
-void	builtin_cd(t_ms *ms, t_cmd *cmd, int std_fd[2]);
+void	builtin_cd(t_ms *ms, t_cmd *cmd);
+
+//04_echo.c
+void	builtin_echo(t_ms *ms, t_cmd *cmd);
+
+//04_exit.c
+void	builtin_exit(t_ms *ms, t_cmd *cmd);
 
 //04_builtins
 char	**export_env_var(char **envp, char **args, t_ms *ms);
