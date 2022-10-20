@@ -6,7 +6,7 @@
 /*   By: mraymond <mraymond@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 18:36:55 by mraymond          #+#    #+#             */
-/*   Updated: 2022/10/19 12:27:33 by mraymond         ###   ########.fr       */
+/*   Updated: 2022/10/20 15:13:34 by mraymond         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,9 @@ void	child_exit(t_ms *ms)
 	close_all_cmd_fdin_fdout(ms);
 	closefd_ifopen(0);
 	closefd_ifopen(1);
+	closefd_ifopen(ms->std_fd[0]);
+	closefd_ifopen(ms->std_fd[1]);
+	clear_history();
 	if (ms->cmd_index == ms->nb_cmd - 1)
 	{
 		ms_reset(ms);
@@ -56,3 +59,19 @@ void	child_exit(t_ms *ms)
 	ms_reset(ms);
 	exit(0);
 }
+
+/*
+void	child_exit(t_ms *ms)
+{
+	close_all_cmd_fdin_fdout(ms);
+	closefd_ifopen(0);
+	closefd_ifopen(1);
+	if (ms->cmd_index == ms->nb_cmd - 1)
+	{
+		ms_reset(ms);
+		exit(ms->err_last_child);
+	}
+	ms_reset(ms);
+	exit(0);
+}
+*/

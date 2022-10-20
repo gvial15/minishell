@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   04_env.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gvial <marvin@42quebec.com>                +#+  +:+       +#+        */
+/*   By: mraymond <mraymond@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/29 18:28:19 by gvial             #+#    #+#             */
-/*   Updated: 2022/09/29 18:28:21 by gvial            ###   ########.fr       */
+/*   Updated: 2022/10/20 15:03:49 by mraymond         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,10 +48,12 @@ char	**unset_env_var(char **envp, char **args, t_ms *ms)
 		if (already_exist(get_varname_equal(envp[i]), args) == -1)
 			new_envp[++j] = ft_strdup(envp[i]);
 	free_split(envp);
+	envp = NULL;
 	return (new_envp);
 }
 
-static void	reassign(char **new_envp, char **args)
+static void	reassign(
+	char **new_envp, char **args)
 {
 	int		i;
 	int		arg_i;
@@ -104,5 +106,6 @@ char	**export_env_var(char **envp, char **args, t_ms *ms)
 		if (valid_export(args[j], 0) && already_exist(get_varname_equal(args[j]), new_envp) == -1)
 			new_envp[i++] = ft_strdup(args[j]);
 	free_split(envp);
+	envp = NULL;
 	return (new_envp);
 }

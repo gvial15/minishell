@@ -1,28 +1,38 @@
+
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   splitdup.c                                         :+:      :+:    :+:   */
+/*   04_echo.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mraymond <mraymond@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/10/05 09:28:21 by mraymond          #+#    #+#             */
-/*   Updated: 2022/10/20 14:53:14 by mraymond         ###   ########.fr       */
+/*   Created: 2022/10/20 12:03:18 by mraymond          #+#    #+#             */
+/*   Updated: 2022/10/20 12:47:50 by mraymond         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../libft.h"
+#include "../include/minishell.h"
 
-char	**splitdup(char **split)
+void	builtin_echo(t_ms *ms, t_cmd *cmd)
 {
-	int		i;
-	char	**new_split;
-
-	if (!split)
-		return (NULL);
-	new_split = malloc(sizeof(char *) * split_len(split) + 1);
-	i = -1;
-	while (split[++i])
-		new_split[i] = ft_strdup(split[i]);
-	new_split[i] = 0;
-	return (new_split);
+	int	no_skipline;
+	int	i;
+	
+	ms->err_last_child = 0;
+	no_skipline = 0;
+	i = 0;
+	if (ft_strncmp(cmd->args[1], "-n", 3) == 0)
+	{
+		no_skipline = 1;
+		i += 1;
+	}
+	while (cmd->args[++i])
+	{
+		if (cmd->args[i + 1])
+			printf("%s ", cmd->args[i]);
+		else
+			printf("%s", cmd->args[i]);
+	}
+	if (no_skipline == 0)
+		printf("\n");
 }
