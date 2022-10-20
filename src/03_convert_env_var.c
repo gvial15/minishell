@@ -52,9 +52,9 @@ static char	*replace(char *cmd, char **env)
 	int		i;
 	int		alr_exist;
 	char	*str;
-	char	*var_value;
 	char	*new_cmd;
 
+	new_cmd = NULL;
 	str = get_varname_dollar(cmd);
 	i = get_dollar_i(cmd);
 	alr_exist = already_exist(str, env);
