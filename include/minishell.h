@@ -6,7 +6,7 @@
 /*   By: mraymond <mraymond@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/29 18:27:32 by gvial             #+#    #+#             */
-/*   Updated: 2022/10/19 15:27:00 by mraymond         ###   ########.fr       */
+/*   Updated: 2022/10/20 10:29:58 by mraymond         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,15 +57,16 @@
 # define ERR_LINE_4OUT "`>>'"
 # define ERR_LINE_NEWLINE "`newline'"
 
-//open_err
+//access_err
 # define ERR_OPEN_NOSUCH ": No such file or directory"
 # define ERR_OPEN_PERM ": Permission denied"
 
+//execve err
 # define ERR_EXECVE "command not found: "
 
 //builtin error
 # define ERR_BUILT_TOOMANYARGS ": too many arguments"
-
+# define ERR_BUILT_NOTINPWD ": string not in pwd: "
 
 //==============================================================================
 
@@ -172,6 +173,9 @@ void	builtin_exec(t_ms *ms, t_cmd *cmd);
 
 //04_pwd.c
 void	builtin_pwd(t_ms *ms, t_cmd *cmd, int std_fd[2]);
+
+//04_cd.c
+void	builtin_cd(t_ms *ms, t_cmd *cmd, int std_fd[2]);
 
 //04_builtins
 char	**export_env_var(char **envp, char **vars);
