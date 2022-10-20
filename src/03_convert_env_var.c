@@ -51,8 +51,6 @@ static char	*get_var_value(char *var)
 	return (value);
 }
 
-// export t=2
-// "hello$t yoo"
 static char	*replace(char *cmd, char **env)
 {
 	int		i;
