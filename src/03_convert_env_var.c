@@ -64,25 +64,18 @@ static char	*replace(char *cmd, char **env)
 	new_cmd = NULL;
 	i = get_dollar_i(cmd);
 	if (i > 0)
-		new_cmd = ft_substr(cmd, 0, i); // hello
-	varname = get_env_varname(cmd); // = t
+		new_cmd = ft_substr(cmd, 0, i);
+	varname = get_env_varname(cmd);
 	alr_exist = already_exist(varname, env);
 	if (alr_exist != -1)
 	{
 		s = get_var_value(env[alr_exist]);
-		new_cmd = ft_strjoin_gnl(new_cmd, s); // hello2
+		new_cmd = ft_strjoin_gnl(new_cmd, s);
 		free(s);
 	}
 	return (new_cmd);
 }
 
-// export var=2
-// $var = 2
-// $"var" = var
-// "$var" = 2
-// "$"var = $var
-// echo grep$var = grep2
-// <test grep$var = bash: grep2: command not found
 void	convert_env_var(char **cmd, char **envp)
 {
 	int		i;
