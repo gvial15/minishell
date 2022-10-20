@@ -86,7 +86,9 @@ int	main(int ac, char **av, char **envp)
 			free_cmds(ms);
 		}
 		else
+		{
 			ms->err_last_child = valid_line_error_conversion(line_err);
+		}
 		ms->cmds = NULL;
 	}
 	history_clear_n_exit(ms);

@@ -62,7 +62,7 @@ int	valid_unset(char *var, int err)
 		if (var[i] == '=' || (i == 0 && ft_isdigit(var[i])))
 		{
 			if (err)
-				printf("unset: `%s': not a valid identifier", var);
+				printf("unset: `%s': not a valid identifier\n", var);
 			return (0);
 		}
 	}

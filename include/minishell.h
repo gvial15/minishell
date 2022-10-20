@@ -169,8 +169,8 @@ int		builtin_checker(t_cmd *cmd);
 void	builtin_exec(t_ms *ms, t_cmd *cmd);
 
 //04_builtins
-char	**export_env_var(char **envp, char **vars);
-char	**unset_env_var(char **envp, char **args);
+char	**export_env_var(char **envp, char **args, t_ms *ms);
+char	**unset_env_var(char **envp, char **args, t_ms *ms);
 
 //04_env_utils.c
 int		valid_unset(char *var, int err);
