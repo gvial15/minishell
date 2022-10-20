@@ -6,7 +6,7 @@
 /*   By: mraymond <mraymond@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/29 18:27:32 by gvial             #+#    #+#             */
-/*   Updated: 2022/10/19 11:56:07 by mraymond         ###   ########.fr       */
+/*   Updated: 2022/10/20 10:29:58 by mraymond         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,11 +57,16 @@
 # define ERR_LINE_4OUT "`>>'"
 # define ERR_LINE_NEWLINE "`newline'"
 
-//open_err
+//access_err
 # define ERR_OPEN_NOSUCH ": No such file or directory"
 # define ERR_OPEN_PERM ": Permission denied"
 
+//execve err
 # define ERR_EXECVE "command not found: "
+
+//builtin error
+# define ERR_BUILT_TOOMANYARGS ": too many arguments"
+# define ERR_BUILT_NOTINPWD ": string not in pwd: "
 
 //==============================================================================
 
@@ -109,7 +114,6 @@ typedef struct s_ms
 	int				*child_id;
 	char			line_prompt[200];
 	char			*line_path;
-	char			working_path[1000];
 	int				cmd_index;
 	int				nb_cmd;
 	int				err_last_child;
@@ -127,8 +131,7 @@ int		print_heredoc(int *heredoc);
 void	history_clear_n_exit(t_ms *ms);
 
 //01_init.c
-void	set_prompter_path(t_ms *ms);
-void	fill_line_prompter(t_ms *ms, int init_workingpath);
+void	fill_line_prompter(t_ms *ms);
 void	ms_init(t_ms *ms, char **envp);
 void	ms_reset(t_ms *ms);
 t_ms	*get_ms(int erase);
@@ -167,6 +170,12 @@ char	**get_fds(t_cmd *new_cmd, char **cmd, char sign);
 //04_builtin_frame.c
 int		builtin_checker(t_cmd *cmd);
 void	builtin_exec(t_ms *ms, t_cmd *cmd);
+
+//04_pwd.c
+void	builtin_pwd(t_ms *ms, t_cmd *cmd, int std_fd[2]);
+
+//04_cd.c
+void	builtin_cd(t_ms *ms, t_cmd *cmd, int std_fd[2]);
 
 //04_builtins
 char	**export_env_var(char **envp, char **args, t_ms *ms);
