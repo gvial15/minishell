@@ -97,17 +97,9 @@ void	history_clear_n_exit(t_ms *ms)
 {
 	write(1, "exit\n", 5);
 	ms_reset(ms);
-	//if (ms->envp)
-	//	free_split(ms->envp);
+	if (ms->envp)
+		free_split(ms->envp);
 	get_ms(1);
 	clear_history();
 	exit(0);
-}
-
-void	all_var_free(t_ms *ms)
-{
-	ms_reset(ms);
-	//free(ms->envp); lorsque version envp malloc sera merge
-	get_ms(1);
-	clear_history();
 }
