@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   03_split_quotes.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gvial <marvin@42quebec.com>                +#+  +:+       +#+        */
+/*   By: mraymond <mraymond@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/29 18:28:19 by gvial             #+#    #+#             */
-/*   Updated: 2022/09/29 18:28:21 by gvial            ###   ########.fr       */
+/*   Updated: 2022/10/20 15:29:19 by mraymond         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,5 +83,6 @@ char	**split_quotes(char *cmd)
 			i = next_space_i(cmd, i);
 		}
 	}
+	cmd_split[j] = NULL;
 	return (cmd_split);
 }

@@ -6,7 +6,7 @@
 /*   By: mraymond <mraymond@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/05 09:28:21 by mraymond          #+#    #+#             */
-/*   Updated: 2022/10/19 14:40:16 by mraymond         ###   ########.fr       */
+/*   Updated: 2022/10/20 15:21:35 by mraymond         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,29 +37,32 @@ void	ms_init(t_ms *ms, char **envp)
 	ms->line_path = NULL;
 	ms->pipe = NULL;
 	ms->cmds = NULL;
+	ms->child_id = NULL;
 	ms->cmd_index = 0;
 	ms->nb_cmd = 0;
 	ms->err_last_child = 0;
 	fill_line_prompter(ms);
 	signal_init();
+	ms->std_fd[0] = dup(0);
+	ms->std_fd[1] = dup(1);
 }
 
 void	ms_reset(t_ms *ms)
 {
+	//close_all_cmd_fdin_fdout(ms);
 	if (ms->last_line)
 		free(ms->last_line);
 	ms->last_line = NULL;
 	if (ms->cmds)
 		free_cmds(ms);
+	ms->cmds = NULL;
 	if (ms->pipe)
 		close_n_free_mspipe(ms);
+	ms->pipe = NULL;
 	if (ms->child_id)
-	{
 		free(ms->child_id);
-		ms->child_id = NULL;
-	}
+	ms->child_id = NULL;
 	fill_line_prompter(ms);
-	ms->cmds = NULL;
 	ms->cmd_index = 0;
 	ms->nb_cmd = 0;
 	ms->skip_cmd = 0;

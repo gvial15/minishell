@@ -50,8 +50,10 @@ SRCS_FILES	 	= 	0_main.c \
 					03_utils2.c \
 					04_builtin_frame.c \
 					04_cd.c \
+					04_echo.c \
 					04_env.c \
 					04_env_utils.c \
+					04_exit.c \
 					04_pwd.c \
 					05_child_exec.c \
 					05_exec.c \
