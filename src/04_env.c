@@ -26,15 +26,18 @@ static int	unset_var_count(char **args, char **envp)
 	return (count);
 }
 
-char	**unset_env_var(char **envp, char **args)
+char	**unset_env_var(char **envp, char **args, t_ms *ms)
 {
 	int		i;
 	int		j;
 	int		var_count;
 	char	**new_envp;
 
-	if (!args)
-		return (NULL);
+	if (split_len(args) == 1)
+	{
+		ms->err_last_child = 1;
+		return (envp);
+	}
 	var_count = unset_var_count(args, envp);
 	if (var_count == 0)
 		return (envp);
@@ -78,7 +81,7 @@ static int	export_var_count(char **args, char **envp)
 	return (count);
 }
 
-char	**export_env_var(char **envp, char **args)
+char	**export_env_var(char **envp, char **args, t_ms *ms)
 {
 	int		i;
 	int		j;
@@ -87,6 +90,7 @@ char	**export_env_var(char **envp, char **args)
 
 	if (split_len(args) == 1)
 	{
+		ms->err_last_child = 1;
 		print_split(envp);
 		return (envp);
 	}
