@@ -178,13 +178,15 @@ void	builtin_pwd(t_ms *ms, t_cmd *cmd, int std_fd[2]);
 void	builtin_cd(t_ms *ms, t_cmd *cmd, int std_fd[2]);
 
 //04_builtins
-char	**export_env_var(char **envp, char **vars);
-char	**unset_env_var(char **envp, char **args);
+char	**export_env_var(char **envp, char **args, t_ms *ms);
+char	**unset_env_var(char **envp, char **args, t_ms *ms);
 
 //04_env_utils.c
+char	*get_varname_equal(char *var);
+char	*get_varname_dollar(char *var);
 int		valid_unset(char *var, int err);
 int		valid_export(char *var, int err);
-int		already_exist(char *var, char **envp);
+int		already_exist(char *varname, char **envp);
 
 // utils
 int		lst_len(t_cmd *head);

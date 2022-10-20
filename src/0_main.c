@@ -86,7 +86,9 @@ int	main(int ac, char **av, char **envp)
 			free_cmds(ms);
 		}
 		else
+		{
 			ms->err_last_child = valid_line_error_conversion(line_err);
+		}
 		ms->cmds = NULL;
 	}
 	history_clear_n_exit(ms);
@@ -111,9 +113,3 @@ void	all_var_free(t_ms *ms)
 	get_ms(1);
 	clear_history();
 }
-
-// export/unset testing:
-// if (ft_strnstr(ms->cmds[0].cmd_path, "export", 6)) // testing purpose only
-// 	ms->envp = export_env_var(ms->envp, ms->cmds[0].args);
-// if (ft_strnstr(ms->cmds[0].cmd_path, "unset", 6)) // testing purpose only
-// 	ms->envp = unset_env_var(ms->envp, ms->cmds[0].args);

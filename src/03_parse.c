@@ -74,7 +74,7 @@ static void	create_cmd_lst(t_ms *ms, char **cmds, char **envp)
 	while (cmds[++i])
 	{
 		cmd = split_quotes(cmds[i]);
-		// convert_env_var(cmd, envp);
+		// convert_env_var(cmd, ms->envp);
 		new_cmd = ft_calloc(1, sizeof(t_cmd));
 		new_cmd->cmd_path = get_cmd_path(cmd, envp);
 		new_cmd->args = get_args(cmd);

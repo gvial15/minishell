@@ -12,7 +12,7 @@
 
 #include "../include/minishell.h"
 
-static char	*get_varname(char *var)
+char	*get_varname_equal(char *var)
 {
 	int		i;
 	int		j;
@@ -28,17 +28,15 @@ static char	*get_varname(char *var)
 	return (varname);
 }
 
-int	already_exist(char *var, char **envp)
+int	already_exist(char *varname, char **envp)
 {
 	int		i;
-	char	*varname;
 	char	*get_var_name_;
 
-	varname = get_varname(var);
 	i = -1;
 	while (envp[++i])
 	{
-		get_var_name_ = get_varname(envp[i]);
+		get_var_name_ = get_varname_equal(envp[i]);
 		if (ft_strnstr(envp[i], varname, ft_strlen(varname))
 			&& ft_strlen(get_var_name_) == ft_strlen(varname))
 		{
@@ -48,7 +46,8 @@ int	already_exist(char *var, char **envp)
 		}
 		free(get_var_name_);
 	}
-	free(varname);
+	if (varname)
+		free(varname);
 	return (-1);
 }
 
@@ -62,7 +61,7 @@ int	valid_unset(char *var, int err)
 		if (var[i] == '=' || (i == 0 && ft_isdigit(var[i])))
 		{
 			if (err)
-				printf("unset: `%s': not a valid identifier", var);
+				printf("unset: `%s': not a valid identifier\n", var);
 			return (0);
 		}
 	}
