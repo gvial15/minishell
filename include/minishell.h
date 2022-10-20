@@ -161,7 +161,7 @@ t_cmd	*lst_last(t_cmd *head);
 char	*remove_quotes(char *s);
 int		find_cmd_i(char **split);
 int		have_dbl_redirec(char *s);
-void	parse(char **envp, t_ms *ms);
+void	parse(t_ms *ms);
 char	*isolate_cmd(char *cmd_brut);
 char	*get_cmd_path(char **cmd, char **envp);
 void	convert_env_var(char **cmd, char **envp);
@@ -191,7 +191,6 @@ char	**unset_env_var(char **envp, char **args, t_ms *ms);
 
 //04_env_utils.c
 char	*get_varname_equal(char *var);
-char	*get_varname_dollar(char *var);
 int		valid_unset(char *var, int err);
 int		valid_export(char *var, int err);
 int		already_exist(char *varname, char **envp);
