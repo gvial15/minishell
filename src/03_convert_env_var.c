@@ -8,21 +8,8 @@
 /*   Created: 2022/09/29 18:28:19 by gvial             #+#    #+#             */
 /*   Updated: 2022/09/29 18:28:21 by gvial            ###   ########.fr       */
 /*                                                                            */
-/* ************************************************************************** */\
-
+/* ************************************************************************** */
 #include "../include/minishell.h"
-
-static int	contain_env_var(char *cmd)
-{
-	int	i;
-
-	i = -1;
-	while (cmd[++i])
-		if (cmd[i] == '$' && !is_quote(cmd[i + 1])
-			&& cmd[i + 1] != ' ')
-			return (1);
-	return (0);
-}
 
 char	*get_varname_dollar(char *cmd)
 {
@@ -37,13 +24,47 @@ char	*get_varname_dollar(char *cmd)
 	return (varname);
 }
 
-static void	replace(char *cmd, char **envp)
+static int	get_dollar_i(char *cmd)
 {
-	(void) envp;
-	char	*varname;
+	int	i;
 
-	varname = get_varname_dollar(cmd);
-	printf("%s\n", varname);
+	i = -1;
+	while (cmd[++i])
+		if (cmd[i] == '$')
+		break ;
+	return (i);
+}
+
+static int	contain_env_var(char *cmd)
+{
+	int	i;
+
+	i = -1;
+	while (cmd[++i])
+		if (cmd[i] == '$' && !is_quote(cmd[i + 1])
+			&& cmd[i + 1] != ' ')
+			return (1);
+	return (0);
+}
+
+static char	*replace(char *cmd, char **env)
+{
+	int		i;
+	int		alr_exist;
+	char	*str;
+	char	*var_value;
+	char	*new_cmd;
+
+	str = get_varname_dollar(cmd);
+	i = get_dollar_i(cmd);
+	alr_exist = already_exist(str, env);
+	if (alr_exist != -1)
+	{
+		// replace $var with it's value
+	}
+	else
+	 	new_cmd = ft_substr(cmd, 0, i);
+	return (new_cmd);
 }
 
 // export var=2
@@ -60,5 +81,5 @@ void	convert_env_var(char **cmd, char **envp)
 	i = -1;
 	while (cmd[++i])
 		if (contain_env_var(cmd[i]))
-			replace(cmd[i], envp);
+			cmd[i] = replace(cmd[i], envp);
 }

@@ -28,7 +28,7 @@ char	*get_varname_equal(char *var)
 	return (varname);
 }
 
-int	already_exist(char *varname, char **envp, int sign)
+int	already_exist(char *varname, char **envp)
 {
 	int		i;
 	char	*get_var_name_;
@@ -36,10 +36,7 @@ int	already_exist(char *varname, char **envp, int sign)
 	i = -1;
 	while (envp[++i])
 	{
-		if (sign == 1)
-			get_var_name_ = get_varname_equal(envp[i]);
-		if (sign == 0)
-			get_var_name_ = get_varname_dollar(envp[i]);
+		get_var_name_ = get_varname_equal(envp[i]);
 		if (ft_strnstr(envp[i], varname, ft_strlen(varname))
 			&& ft_strlen(get_var_name_) == ft_strlen(varname))
 		{

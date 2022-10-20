@@ -21,7 +21,7 @@ static int	unset_var_count(char **args, char **envp)
 	i = 0;
 	while (args[++i])
 		if (valid_unset(args[i], 1)
-			&& already_exist(get_varname_equal(args[i]), envp, 1) >= 0)
+			&& already_exist(get_varname_equal(args[i]), envp) >= 0)
 			count++;
 	return (count);
 }
@@ -45,7 +45,7 @@ char	**unset_env_var(char **envp, char **args, t_ms *ms)
 	j = -1;
 	i = -1;
 	while (envp[++i])
-		if (already_exist(get_varname_equal(envp[i]), args, 1) == -1)
+		if (already_exist(get_varname_equal(envp[i]), args) == -1)
 			new_envp[++j] = ft_strdup(envp[i]);
 	free_split(envp);
 	return (new_envp);
@@ -59,7 +59,7 @@ static void	reassign(char **new_envp, char **args)
 	i = 0;
 	while (args[++i])
 	{
-		arg_i = already_exist(get_varname_equal(args[i]), new_envp, 1);
+		arg_i = already_exist(get_varname_equal(args[i]), new_envp);
 		if (arg_i != -1)
 		{
 			free(new_envp[arg_i]);
@@ -76,7 +76,7 @@ static int	export_var_count(char **args, char **envp)
 	count = 0;
 	i = 0;
 	while (args[++i])
-		if (valid_export(args[i], 1) && already_exist(get_varname_equal(args[i]), envp, 1) == -1)
+		if (valid_export(args[i], 1) && already_exist(get_varname_equal(args[i]), envp) == -1)
 			count++;
 	return (count);
 }
@@ -101,7 +101,7 @@ char	**export_env_var(char **envp, char **args, t_ms *ms)
 	i = split_len(new_envp);
 	j = 0;
 	while (args[++j])
-		if (valid_export(args[j], 0) && already_exist(get_varname_equal(args[j]), new_envp, 1) == -1)
+		if (valid_export(args[j], 0) && already_exist(get_varname_equal(args[j]), new_envp) == -1)
 			new_envp[i++] = ft_strdup(args[j]);
 	free_split(envp);
 	return (new_envp);
