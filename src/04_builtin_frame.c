@@ -6,7 +6,7 @@
 /*   By: mraymond <mraymond@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 08:57:42 by mraymond          #+#    #+#             */
-/*   Updated: 2022/10/20 10:32:39 by mraymond         ###   ########.fr       */
+/*   Updated: 2022/10/20 10:59:41 by mraymond         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ void	builtin_exec(t_ms *ms, t_cmd *cmd)
 	else if (ft_strncmp(cmd->args[0], "export", ft_strlen("export") + 1) == 0)
 		ms->envp = export_env_var(ms->envp, cmd->args);
 	else if (ft_strncmp(cmd->args[0], "unset", ft_strlen("unset") + 1) == 0)
-		unset_env_var(ms->envp, cmd->args);
+		ms->envp = unset_env_var(ms->envp, cmd->args);
 	else if (ft_strncmp(cmd->args[0], "env", ft_strlen("env") + 1) == 0)
 		printf("call builtin function %s\n", cmd->args[0]);
 	else if (ft_strncmp(cmd->args[0], "exit", ft_strlen("exit") + 1) == 0)
