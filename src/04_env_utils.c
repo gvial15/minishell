@@ -12,7 +12,7 @@
 
 #include "../include/minishell.h"
 
-static char	*get_varname(char *var)
+char	*get_varname_equal(char *var)
 {
 	int		i;
 	int		j;
@@ -28,17 +28,18 @@ static char	*get_varname(char *var)
 	return (varname);
 }
 
-int	already_exist(char *var, char **envp)
+int	already_exist(char *varname, char **envp, int sign)
 {
 	int		i;
-	char	*varname;
 	char	*get_var_name_;
 
-	varname = get_varname(var);
 	i = -1;
 	while (envp[++i])
 	{
-		get_var_name_ = get_varname(envp[i]);
+		if (sign == 1)
+			get_var_name_ = get_varname_equal(envp[i]);
+		if (sign == 0)
+			get_var_name_ = get_varname_dollar(envp[i]);
 		if (ft_strnstr(envp[i], varname, ft_strlen(varname))
 			&& ft_strlen(get_var_name_) == ft_strlen(varname))
 		{
@@ -48,7 +49,8 @@ int	already_exist(char *var, char **envp)
 		}
 		free(get_var_name_);
 	}
-	free(varname);
+	if (varname)
+		free(varname);
 	return (-1);
 }
 

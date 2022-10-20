@@ -24,11 +24,16 @@ static int	contain_env_var(char *cmd)
 	return (0);
 }
 
-static char	*get_varname(char *cmd)
+char	*get_varname_dollar(char *cmd)
 {
-	(void) cmd;
-	char	*varname = NULL;
+	int		i;
+	char	*varname;
 
+	i = -1;
+	while (cmd[++i])
+		if (cmd[i] == '$')
+			break ;
+	varname = ft_substr(cmd, i + 1, ft_strlen(cmd) - i - 1);
 	return (varname);
 }
 
@@ -37,7 +42,7 @@ static void	replace(char *cmd, char **envp)
 	(void) envp;
 	char	*varname;
 
-	varname = get_varname(cmd);
+	varname = get_varname_dollar(cmd);
 	printf("%s\n", varname);
 }
 
