@@ -113,9 +113,3 @@ void	all_var_free(t_ms *ms)
 	get_ms(1);
 	clear_history();
 }
-
-// export/unset testing:
-// if (ft_strnstr(ms->cmds[0].cmd_path, "export", 6)) // testing purpose only
-// 	ms->envp = export_env_var(ms->envp, ms->cmds[0].args);
-// if (ft_strnstr(ms->cmds[0].cmd_path, "unset", 6)) // testing purpose only
-// 	ms->envp = unset_env_var(ms->envp, ms->cmds[0].args);
