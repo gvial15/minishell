@@ -6,7 +6,7 @@
 /*   By: mraymond <mraymond@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/29 18:27:32 by gvial             #+#    #+#             */
-/*   Updated: 2022/10/20 15:21:19 by mraymond         ###   ########.fr       */
+/*   Updated: 2022/10/21 13:25:05 by mraymond         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,8 @@
 //builtin error
 # define ERR_BUILT_TOOMANYARGS ": too many arguments"
 # define ERR_BUILT_NOTINPWD ": string not in pwd: "
-# define ERR_BUILT_PDFRULES	": not covered according to subject"
+# define ERR_BUILT_PDFRULES ": not covered according to subject"
+# define ERR_BUILT_NONNUM ": numeric argument required"
 
 //==============================================================================
 

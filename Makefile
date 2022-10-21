@@ -86,15 +86,19 @@ RD_CONFIG		=	include/librd/Makefile
 $(OBJS_DIR)/%.o: $(SRCS_DIR)/%.c $(HEADERS)
 	@$(CC) $(CFLAGS) -c $< -o $@
 
+#$(V).SILENT:
+
 #COMPILING RULES------------------------------------------------------------------
 
 all : 				init $(LIBRD_MAKEFILE) $(LIBRD) $(NAME)
 
 $(LIBRD): 			$(LIBRD_MAKEFILE)
-					@$(MAKE) -s -C $(LIBRD_DIR) --silent
+					@echo "$ZReadline's libraries compiling$W"
+					@$(MAKE) -s -C $(LIBRD_DIR)
 					@echo "$GReadline's libraries compiled$W"
 
 $(LIBRD_MAKEFILE):
+					@echo "$ZReadline          configuring$W"
 					@cd $(LIBRD_DIR) && ./configure --silent
 					@echo "$GReadline          configured$W"
 
