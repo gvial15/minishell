@@ -6,7 +6,7 @@
 /*   By: mraymond <mraymond@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/29 18:27:46 by gvial             #+#    #+#             */
-/*   Updated: 2022/10/21 11:19:16 by mraymond         ###   ########.fr       */
+/*   Updated: 2022/10/21 12:32:29 by mraymond         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,9 +82,7 @@ int	main(int ac, char **av, char **envp)
 		line_err = prompter(ms);
 		if (line_err == 0)
 		{
-			printf("avant\n");
 			parse(envp, ms);
-			printf("apres\n");
 			exec(ms);
 			free_cmds(ms);
 		}
