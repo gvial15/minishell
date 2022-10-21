@@ -6,7 +6,7 @@
 /*   By: mraymond <mraymond@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/29 18:27:46 by gvial             #+#    #+#             */
-/*   Updated: 2022/10/20 15:24:55 by mraymond         ###   ########.fr       */
+/*   Updated: 2022/10/21 15:07:26 by mraymond         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,6 @@ static int	prompter(t_ms *ms)
 		ms_reset(ms);
 		ms->last_line = readline(ms->line_prompt);
 	}
-	//if (ms->last_line == NULL || ft_strnstr(ms->last_line, "exit", 4))
 	if (ms->last_line == NULL)
 		history_clear_n_exit(ms);
 	ms->signal = 0;
@@ -99,6 +98,9 @@ int	main(int ac, char **av, char **envp)
 
 void	history_clear_n_exit(t_ms *ms)
 {
+	int	status;
+
+	status = ms->err_last_child;
 	write(1, "exit\n", 5);
 	close_all_cmd_fdin_fdout(ms);
 	closefd_ifopen(ms->std_fd[0]);
@@ -108,5 +110,5 @@ void	history_clear_n_exit(t_ms *ms)
 		free_split(ms->envp);
 	get_ms(1);
 	clear_history();
-	exit(0);
+	exit(status);
 }
