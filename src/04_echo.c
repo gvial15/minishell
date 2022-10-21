@@ -13,6 +13,27 @@
 
 #include "../include/minishell.h"
 
+//return 0 if flag and 1 if not
+static int	is_flag_n(char *arg)
+{
+	int	i;
+	int	val_line;
+	
+	val_line = 1;
+	if (ft_strncmp(arg, "-n", 2) == 0)
+	{
+		i = 1;
+		val_line = 0;
+		while (arg[++i] && val_line == 0)
+		{
+			if (arg[i] != 'n')
+				val_line = 1;
+		}
+	}
+	return (val_line);
+}
+
+
 void	builtin_echo(t_ms *ms, t_cmd *cmd)
 {
 	int	no_skipline;
@@ -36,3 +57,4 @@ void	builtin_echo(t_ms *ms, t_cmd *cmd)
 	if (no_skipline == 0)
 		printf("\n");
 }
+
