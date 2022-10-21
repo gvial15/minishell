@@ -71,6 +71,8 @@ static char	*replace(char *cmd, char **env)
 		new_cmd = ft_strjoin_gnl(new_cmd, s);
 		free(s);
 	}
+	else
+		new_cmd = ft_calloc(1, sizeof(char *));
 	return (new_cmd);
 }
 
@@ -84,9 +86,11 @@ void	convert_env_var(char **cmd, char **envp)
 	while (cmd[++i])
 	{
 		while (cmd[i][++j])
+		{
 			if (cmd[i][j] == '$' && !is_quote(cmd[i][j + 1])
 				&& cmd[i][j + 1] != ' ')
 				cmd[i] = replace(cmd[i], envp);
+		}
 		j = -1;
 	}
 }
