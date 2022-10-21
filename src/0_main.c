@@ -69,7 +69,7 @@ static int	prompter(t_ms *ms)
 }
 
 
-// exit fd fd | allo
+// dmfd d | dgf fe | s
 int	main(int ac, char **av, char **envp)
 {
 	t_ms	*ms;
@@ -85,6 +85,7 @@ int	main(int ac, char **av, char **envp)
 		if (!line_err)
 		{
 			parse(ms);
+			print_cmd_lst(ms->cmds);
 			exec(ms);
 			free_cmds(ms);
 		}
