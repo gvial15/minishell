@@ -15,6 +15,8 @@
 //check if its a builtin
 int	builtin_checker(t_cmd *cmd)
 {
+	if (!cmd->args)
+		return (0);
 	if (ft_strncmp(cmd->args[0], "echo", ft_strlen("echo") + 1) == 0
 		|| ft_strncmp(cmd->args[0], "cd", ft_strlen("cd") + 1) == 0
 		|| ft_strncmp(cmd->args[0], "pwd", ft_strlen("pwd") + 1) == 0
