@@ -47,12 +47,12 @@ char	**get_args(char **cmd)
 	char	**args;
 
 	args = NULL;
-	arg_count = 0;
-	if (find_cmd_i(cmd) == -1)
-		return (args);
 	i = find_cmd_i(cmd);
+	if (i == -1)
+		return (NULL);
 	if (i == split_len(cmd))
-		return (&cmd[find_cmd_i(cmd)]);
+		return (&cmd[i - 1]);
+	arg_count = 0;
 	while (!have_redirec(cmd[++i]))
 		arg_count++;
 	args = ft_calloc((arg_count + 2), sizeof(char *));

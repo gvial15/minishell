@@ -84,7 +84,6 @@ int	main(int ac, char **av, char **envp)
 		if (!line_err)
 		{
 			parse(ms);
-			print_cmd_lst(ms->cmds);
 			exec(ms);
 			free_cmds(ms);
 		}
