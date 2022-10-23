@@ -191,7 +191,7 @@ char	**export_env_var(char **envp, char **args, t_ms *ms);
 char	**unset_env_var(char **envp, char **args, t_ms *ms);
 
 //04_env_utils.c
-char	*get_varname_equal(char *var);
+char	*get_varname(char *var);
 int		valid_unset(char *var, int err);
 int		valid_export(char *var, int err);
 int		already_exist(char *varname, char **envp);
