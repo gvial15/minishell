@@ -6,7 +6,7 @@
 /*   By: mraymond <mraymond@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/29 18:28:01 by gvial             #+#    #+#             */
-/*   Updated: 2022/10/20 13:33:35 by mraymond         ###   ########.fr       */
+/*   Updated: 2022/10/24 11:20:30 by mraymond         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,15 +16,19 @@ void	exec(t_ms *ms)
 {
 	ms->nb_cmd = lst_len(ms->cmds);
 	ms->child_id = (int *)ft_calloc(ms->nb_cmd, sizeof(int));
+	signal_init(1);
 	fd_allocation(ms);
 	fd_redirection(ms);
-	if (ms->nb_cmd == 1 && ms->cmds->fildes[0] != -1
-		&& builtin_checker(ms->cmds) == 1)
-		builtin_exec(ms, ms->cmds);
-	else
+	if (ms->signal == 0)
 	{
-		child_creation(ms);
-		waiting_n_closefd(ms);
+		if (ms->nb_cmd == 1 && ms->cmds->fildes[0] != -1
+			&& builtin_checker(ms->cmds) == 1)
+			builtin_exec(ms, ms->cmds);
+		else
+		{
+			child_creation(ms);
+			waiting_n_closefd(ms);
+		}
 	}
 }
 
@@ -54,7 +58,7 @@ void	fd_redirection(t_ms *ms)
 	cmd_index = -1;
 	while (++cmd_index < ms->nb_cmd && cmd)
 	{
-		cmd->fildes[0] = redirection_in(cmd);
+		cmd->fildes[0] = redirection_in(ms, cmd);
 		if (cmd->fildes[0] != -1)
 		{
 			cmd->fildes[1] = redirection_out(cmd);
@@ -121,5 +125,4 @@ void	waiting_n_closefd(t_ms *ms)
 	}
 	if (ms->signal != 0 && ms->nb_cmd == 1)
 		ms->err_last_child = 130;
-	ms->signal = 0;
 }
