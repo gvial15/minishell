@@ -6,7 +6,7 @@
 /*   By: mraymond <mraymond@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 18:29:35 by mraymond          #+#    #+#             */
-/*   Updated: 2022/10/17 14:42:56 by mraymond         ###   ########.fr       */
+/*   Updated: 2022/10/24 09:34:10 by mraymond         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,13 +40,21 @@ int	here_doc(char *str_eof)
 
 	pipe(fd_pipe);
 	line = readline("> ");
-	while (ft_strncmp(line, str_eof, ft_strlen(line)))
+	while (line && ft_strncmp(line, str_eof, ft_strlen(line)))
 	{
 		write(fd_pipe[1], line, ft_strlen(line));
 		write(fd_pipe[1], "\n", 1);
+		free(line);
 		line = readline("> ");
 	}
+	if (line)
+		free(line);
 	close(fd_pipe[1]);
+	if (!line)
+	{
+		close(fd_pipe[1]);
+		return (-1);
+	}
 	return (fd_pipe[0]);
 }
 
