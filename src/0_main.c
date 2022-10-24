@@ -6,7 +6,7 @@
 /*   By: mraymond <mraymond@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/29 18:27:46 by gvial             #+#    #+#             */
-/*   Updated: 2022/10/21 15:07:26 by mraymond         ###   ########.fr       */
+/*   Updated: 2022/10/24 11:56:21 by mraymond         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,9 @@ void	print_cmd_lst(t_cmd *head)
 
 static int	prompter(t_ms *ms)
 {
+	ms->signal = 0;
 	ms_reset(ms);
+	signal_init(0);
 	ms->last_line = readline(ms->line_prompt);
 	while (ms->last_line && (ft_strlen(ms->last_line) == 0
 			|| ft_isallspace(ms->last_line)))

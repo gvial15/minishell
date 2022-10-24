@@ -6,13 +6,13 @@
 /*   By: mraymond <mraymond@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 18:29:35 by mraymond          #+#    #+#             */
-/*   Updated: 2022/10/17 14:42:56 by mraymond         ###   ########.fr       */
+/*   Updated: 2022/10/24 11:11:36 by mraymond         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-int	redirection_in(t_cmd *cmd)
+int	redirection_in(t_ms *ms, t_cmd *cmd)
 {
 	int	i;
 	int	new_fd_in;
@@ -24,30 +24,13 @@ int	redirection_in(t_cmd *cmd)
 	while (cmd->fd_in[++i] && new_fd_in != -1)
 	{
 		if (cmd->heredoc[i] == 1)
-			new_fd_in = here_doc(cmd->fd_in[i]);
+			new_fd_in = here_doc(ms, cmd->fd_in[i]);
 		else
 			new_fd_in = open_fd_in(cmd->fd_in[i]);
 		if (new_fd_in != -1 && cmd->fd_in[i + 1])
 			close(new_fd_in);
 	}
 	return (new_fd_in);
-}
-
-int	here_doc(char *str_eof)
-{
-	int		fd_pipe[2];
-	char	*line;
-
-	pipe(fd_pipe);
-	line = readline("> ");
-	while (ft_strncmp(line, str_eof, ft_strlen(line)))
-	{
-		write(fd_pipe[1], line, ft_strlen(line));
-		write(fd_pipe[1], "\n", 1);
-		line = readline("> ");
-	}
-	close(fd_pipe[1]);
-	return (fd_pipe[0]);
 }
 
 int	open_fd_in(char *filename)
