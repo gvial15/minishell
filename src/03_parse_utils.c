@@ -66,8 +66,8 @@ int	find_cmd_i(char **s)
 {
 	int	i;
 
-	i = -1;
-	while (s[++i])
+	i = 0;
+	while (s[i])
 	{
 		if (!have_redirec(s[i]))
 		{
@@ -85,8 +85,12 @@ int	find_cmd_i(char **s)
 			if (have_dbl_redirec(s[i - 1]) && ft_strlen(s[i - 1]) > 2)
 				break ;
 		}
-		if (i == (int)ft_strlen(s[i]))
+		if (s[i + 1] == 0)
+		{
 			i = -1;
+			break ;
+		}
+		i++;
 	}
 	return (i);
 }
