@@ -6,7 +6,7 @@
 /*   By: mraymond <mraymond@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/29 18:27:32 by gvial             #+#    #+#             */
-/*   Updated: 2022/10/21 13:25:05 by mraymond         ###   ########.fr       */
+/*   Updated: 2022/10/24 11:04:33 by mraymond         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,6 +93,15 @@ enum e_open_err
 
 //==============================================================================
 
+//ENUM_SIGNAL
+
+enum e_signal_sit
+{
+	sit_prompter,
+	sit_exec,
+	sit_here_doc
+};
+
 //STRUCTS=======================================================================
 
 typedef struct s_cmd
@@ -122,6 +131,7 @@ typedef struct s_ms
 	int				signal;
 	int				skip_cmd;
 	int				std_fd[2];
+	int				here_doc_id;
 }	t_ms;
 
 //==============================================================================
@@ -145,10 +155,11 @@ int		print_line_err(int error);
 int		valid_line_error_conversion(int valid_line_return);
 
 //02_signal.c
-void	signal_init(void);
+void	signal_init(int situation);
 void	fct_sigquit(int sig);
 void	fct_sigint(int sig);
-void	set_attribute(t_ms *ms);
+void	fct_sigint_prompter(int sig);
+void	fct_sigint_here_doc(int sig);
 
 //03_parsing
 int		is_pipe(char *s);
@@ -217,11 +228,13 @@ int		pipe_redirection(t_ms *ms, t_cmd *cmd);
 void	child_exit(t_ms *ms);
 
 //05_redirection.c
-int		redirection_in(t_cmd *cmd);
-int		here_doc(char *str_eof);
+int		redirection_in(t_ms *ms, t_cmd *cmd);
 int		open_fd_in(char *filename);
 int		print_open_err(char *filename, int error);
 int		redirection_out(t_cmd *cmd);
+
+//05_here_doc.c
+int		here_doc(t_ms *ms, char *str_eof);
 
 //05_exec_utils.c
 void	close_n_free_mspipe(t_ms *ms);
