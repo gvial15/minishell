@@ -6,7 +6,7 @@
 /*   By: mraymond <mraymond@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/29 18:28:01 by gvial             #+#    #+#             */
-/*   Updated: 2022/10/24 11:20:30 by mraymond         ###   ########.fr       */
+/*   Updated: 2022/10/25 11:10:48 by mraymond         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ void	exec(t_ms *ms)
 	if (ms->signal == 0)
 	{
 		if (ms->nb_cmd == 1 && ms->cmds->fildes[0] != -1
+			&& ms->cmds->fildes[1] != -1
 			&& builtin_checker(ms->cmds) == 1)
 			builtin_exec(ms, ms->cmds);
 		else
@@ -62,12 +63,15 @@ void	fd_redirection(t_ms *ms)
 		if (cmd->fildes[0] != -1)
 		{
 			cmd->fildes[1] = redirection_out(cmd);
-			if (cmd->fildes[0] == 0)
-				cmd->fildes[0] = dup(ms->pipe[cmd_index * 2]);
-			if (cmd->fildes[1] == 0)
-				cmd->fildes[1] = dup(ms->pipe[(cmd_index * 2) + 1]);
+			if (cmd->fildes[1] != -1)
+			{
+				if (cmd->fildes[0] == 0)
+					cmd->fildes[0] = dup(ms->pipe[cmd_index * 2]);
+				if (cmd->fildes[1] == 0)
+					cmd->fildes[1] = dup(ms->pipe[(cmd_index * 2) + 1]);
+			}
 		}
-		else
+		if (cmd->fildes[0] == -1 || cmd->fildes[1] == -1)
 			ms->err_last_child = 1;
 		cmd = cmd->next;
 	}
@@ -84,7 +88,7 @@ void	child_creation(t_ms *ms)
 	process_id = 1;
 	while (++ms->cmd_index < ms->nb_cmd && process_id != 0 && cmd)
 	{
-		if (cmd->fildes[0] != -1)
+		if (cmd->fildes[0] != -1 && cmd->fildes[1] != -1)
 		{
 			process_id = fork();
 			if (process_id != 0)
