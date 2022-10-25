@@ -83,6 +83,6 @@ char	**split_quotes(char *cmd)
 			i = next_space_i(cmd, i);
 		}
 	}
-	cmd_split[j] = NULL;
+	cmd_split[cmd_split_count(cmd)] = NULL;
 	return (cmd_split);
 } 
