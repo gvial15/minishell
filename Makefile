@@ -40,6 +40,7 @@ SRCS_FILES	 	= 	0_main.c \
 					01_valid_line.c \
 					02_signal.c \
 					03_convert_env_var.c \
+					03_conv_env_var_utils.c \
 					03_format_line.c \
 					03_get_cmd_path.c \
 					03_get_fds.c \
