@@ -53,13 +53,17 @@ char	**get_args(char **cmd)
 	if (i == split_len(cmd))
 		return (&cmd[i - 1]);
 	arg_count = 0;
-	while (!have_redirec(cmd[++i]))
+	while (cmd[++i] && !have_redirec(cmd[i]))
 		arg_count++;
-	args = ft_calloc((arg_count + 2), sizeof(char *));
+	if (arg_count > 0)
+		args = ft_calloc((arg_count + 2), sizeof(char *));
+	else
+		args = ft_calloc((arg_count + 1), sizeof(char *));
 	j = -1;
 	i = find_cmd_i(cmd) - 1;
-	while (!have_redirec(cmd[++i]))
+	while (cmd[++i] && !have_redirec(cmd[i]))
 		args[++j] = remove_quotes(ft_strdup(cmd[i]));
+	args[++j] = 0;
 	return (args);
 }
 
