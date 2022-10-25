@@ -76,6 +76,10 @@ static char	*replace(char *cmd, char **env)
 	return (new_cmd);
 }
 
+// conv_en_var:
+//	- $?
+//	- save_this $var doesnt_save_this
+// e.g: echo "test $t test"
 void	convert_env_var(char **cmd, char **envp)
 {
 	int		i;

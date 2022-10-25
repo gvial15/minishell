@@ -31,20 +31,16 @@ char	*get_varname(char *var)
 int	already_exist(char *varname, char **envp)
 {
 	int		i;
-	char	*get_var_name_;
 
 	i = -1;
 	while (envp[++i])
 	{
-		get_var_name_ = get_varname(envp[i]);
 		if (ft_strnstr(envp[i], varname, ft_strlen(varname))
-			&& ft_strlen(get_var_name_) == ft_strlen(varname))
+			&& ft_strlen(varname) == ft_strlen(varname))
 		{
-			free(get_var_name_);
 			free(varname);
 			return (i);
 		}
-		free(get_var_name_);
 	}
 	if (varname)
 		free(varname);

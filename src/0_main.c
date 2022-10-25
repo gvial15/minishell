@@ -69,9 +69,6 @@ static int	prompter(t_ms *ms)
 	return (valid_line(ms->last_line));
 }
 
-// conv_en_var:
-//	- $?
-//	- save_this $var doesnt_save_this
 int	main(int ac, char **av, char **envp)
 {
 	t_ms	*ms;
