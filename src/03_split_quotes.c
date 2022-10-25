@@ -6,7 +6,7 @@
 /*   By: mraymond <mraymond@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/29 18:28:19 by gvial             #+#    #+#             */
-/*   Updated: 2022/10/21 08:38:51 by mraymond         ###   ########.fr       */
+/*   Updated: 2022/10/25 13:16:30 by mraymond         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,4 +85,4 @@ char	**split_quotes(char *cmd)
 	}
 	cmd_split[j] = NULL;
 	return (cmd_split);
-} 
+}
