@@ -6,7 +6,7 @@
 /*   By: mraymond <mraymond@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 18:29:35 by mraymond          #+#    #+#             */
-/*   Updated: 2022/10/24 11:11:36 by mraymond         ###   ########.fr       */
+/*   Updated: 2022/10/25 11:02:25 by mraymond         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,10 @@ int	redirection_out(t_cmd *cmd)
 	new_fd_out = 0;
 	while (cmd->fd_out[++i] && new_fd_out != -1)
 	{
-		if (cmd->append == 1)
+		if (access(cmd->fd_out[i], F_OK) != -1
+			&& access(cmd->fd_out[i], W_OK) == -1)
+			new_fd_out = print_open_err(cmd->fd_out[i], openerr_perm);
+		else if (cmd->append == 1)
 			new_fd_out = open(cmd->fd_out[i], O_WRONLY | O_CREAT | O_APPEND,
 					0644);
 		else
