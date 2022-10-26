@@ -1,4 +1,3 @@
-
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
@@ -7,7 +6,7 @@
 /*   By: mraymond <mraymond@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 12:03:18 by mraymond          #+#    #+#             */
-/*   Updated: 2022/10/20 12:47:50 by mraymond         ###   ########.fr       */
+/*   Updated: 2022/10/25 12:11:34 by mraymond         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +18,7 @@ static int	is_flag_n(char *arg)
 {
 	int	i;
 	int	val_line;
-	
+
 	val_line = 1;
 	if (ft_strncmp(arg, "-n", 2) == 0)
 	{
@@ -62,4 +61,3 @@ void	builtin_echo(t_ms *ms, t_cmd *cmd)
 	if (no_skipline == 0)
 		printf("\n");
 }
-
