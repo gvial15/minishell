@@ -30,6 +30,7 @@ char	**unset_env_var(char **args, t_ms *ms)
 {
 	int		i;
 	int		j;
+	char	*varname;
 	int		var_count;
 	char	**new_envp;
 
@@ -45,8 +46,11 @@ char	**unset_env_var(char **args, t_ms *ms)
 	j = -1;
 	i = -1;
 	while (ms->envp[++i])
-		if (already_exist(get_varname(ms->envp[i]), args) == -1)
+	{
+		varname = get_varname(ms->envp[i]);
+		if (already_exist(varname, &args[1]) == -1)
 			new_envp[++j] = ft_strdup(ms->envp[i]);
+	}
 	free_split(ms->envp);
 	ms->envp = NULL;
 	new_envp[++j] = 0;
