@@ -26,7 +26,7 @@ static int	unset_var_count(char **args, char **envp)
 	return (count);
 }
 
-char	**unset_env_var(char **envp, char **args, t_ms *ms)
+char	**unset_env_var(char **args, t_ms *ms)
 {
 	int		i;
 	int		j;
@@ -36,19 +36,20 @@ char	**unset_env_var(char **envp, char **args, t_ms *ms)
 	if (split_len(args) == 1)
 	{
 		ms->err_last_child = 1;
-		return (envp);
+		return (ms->envp);
 	}
-	var_count = unset_var_count(args, envp);
+	var_count = unset_var_count(args, ms->envp);
 	if (var_count == 0)
-		return (envp);
-	new_envp = ft_calloc(split_len(envp) - var_count + 1, sizeof(char *));
+		return (ms->envp);
+	new_envp = ft_calloc(split_len(ms->envp) - var_count + 1, sizeof(char *));
 	j = -1;
 	i = -1;
-	while (envp[++i])
-		if (already_exist(get_varname(envp[i]), args) == -1)
-			new_envp[++j] = ft_strdup(envp[i]);
-	free_split(envp);
-	envp = NULL;
+	while (ms->envp[++i])
+		if (already_exist(get_varname(ms->envp[i]), args) == -1)
+			new_envp[++j] = ft_strdup(ms->envp[i]);
+	free_split(ms->envp);
+	ms->envp = NULL;
+	new_envp[++j] = 0;
 	return (new_envp);
 }
 
@@ -83,7 +84,7 @@ static int	export_var_count(char **args, char **envp)
 	return (count);
 }
 
-char	**export_env_var(char **envp, char **args, t_ms *ms)
+char	**export_env_var(char **args, t_ms *ms)
 {
 	int		i;
 	int		j;
@@ -93,19 +94,19 @@ char	**export_env_var(char **envp, char **args, t_ms *ms)
 	if (split_len(args) == 1)
 	{
 		ms->err_last_child = 1;
-		print_split(envp);
-		return (envp);
+		print_split(ms->envp);
+		return (ms->envp);
 	}
-	var_count = export_var_count(args, envp);
-	new_envp = ft_calloc((var_count + split_len(envp) + 1), sizeof(char *));
-	split_cpy(envp, new_envp);
+	var_count = export_var_count(args, ms->envp);
+	new_envp = ft_calloc((var_count + split_len(ms->envp) + 1), sizeof(char *));
+	split_cpy(ms->envp, new_envp);
 	reassign(new_envp, args);
 	i = split_len(new_envp);
 	j = 0;
 	while (args[++j])
 		if (valid_export(args[j], 0) && already_exist(get_varname(args[j]), new_envp) == -1)
 			new_envp[i++] = ft_strdup(args[j]);
-	free_split(envp);
-	envp = NULL;
+	free_split(ms->envp);
+	ms->envp = NULL;
 	return (new_envp);
 }

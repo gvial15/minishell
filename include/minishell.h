@@ -201,8 +201,8 @@ void	builtin_echo(t_ms *ms, t_cmd *cmd);
 void	builtin_exit(t_ms *ms, t_cmd *cmd);
 
 //04_env
-char	**export_env_var(char **envp, char **args, t_ms *ms);
-char	**unset_env_var(char **envp, char **args, t_ms *ms);
+char	**export_env_var(char **args, t_ms *ms);
+char	**unset_env_var(char **args, t_ms *ms);
 
 //04_env_utils.c
 char	*get_varname(char *var);
