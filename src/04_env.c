@@ -83,7 +83,6 @@ static int	export_var_count(char **args, char **envp)
 	return (count);
 }
 
-// ***for env.c: export var name cant contain "?"
 char	**export_env_var(char **envp, char **args, t_ms *ms)
 {
 	int		i;
