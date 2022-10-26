@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
+#include <stdlib.h>
 
 void	free_cmds(t_ms *ms)
 {
@@ -89,7 +90,7 @@ static void	create_cmd_lst(t_ms *ms, char **cmds)
 			ms->cmds = new_cmd;
 		else
 			lst_last(ms->cmds)->next = new_cmd;
-		free(cmd);
+		free_split(cmd);
 	}
 }
 
