@@ -32,6 +32,16 @@ static char	*replace(char *cmd, char **env, t_ms *ms)
 	return (new_cmd);
 }
 
+
+// have to manage double quotes and single quotes differently like the real bash
+//
+// bash $> echo "$PAT"H
+// H
+//
+// bash $> echo "$PATH"
+// /Users/gvial/.brew/bin:/usr/local/bin:/usr.......
+// bash $> echo '$PATH'
+// $PATH
 void	conv_env_var(char **cmd, char **envp, t_ms *ms)
 {
 	int		i;
