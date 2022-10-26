@@ -11,72 +11,28 @@
 /* ************************************************************************** */
 #include "../include/minishell.h"
 
-static char	*get_env_varname(char *cmd)
+static char	*replace(char *cmd, char **env, t_ms *ms)
 {
-	int		i;
-	char	*varname;
-
-	i = -1;
-	while (cmd[++i])
-		if (cmd[i] == '$')
-			break ;
-	varname = ft_substr(cmd, i + 1, ft_strlen(cmd) - i - 1);
-	varname = remove_quotes(varname);
-	return (varname);
-}
-
-static int	get_dollar_i(char *cmd)
-{
-	int	i;
-
-	i = -1;
-	while (cmd[++i])
-		if (cmd[i] == '$')
-		break ;
-	return (i);
-}
-
-static char	*get_var_value(char *var)
-{
-	int		i;
-	char	*value;
-
-	i= -1;
-	while (var[++i])
-		if (var[i] == '=')
-			break ;
-	if (var[i + 1] == 0)
-		return (NULL);;
-	value = ft_substr(var, i + 1, ft_strlen(var) - i);
-	return (value);
-}
-
-static char	*replace(char *cmd, char **env)
-{
-	int		i;
-	int		alr_exist;
-	char	*varname;
-	char	*s;
 	char	*new_cmd;
+	char	*varname;
+	char	*replace_value;
+	int		alr_exist;
 
-	new_cmd = NULL;
-	i = get_dollar_i(cmd);
-	if (i > 0)
-		new_cmd = ft_substr(cmd, 0, i);
+	replace_value = NULL;
+	new_cmd = ft_substr(cmd, 0, get_dollar_i(cmd));
 	varname = get_env_varname(cmd);
+	if (ft_strnstr(varname, "?", 1))
+		replace_value = ft_itoa(ms->err_last_child);
 	alr_exist = already_exist(varname, env);
 	if (alr_exist != -1)
-	{
-		s = get_var_value(env[alr_exist]);
-		new_cmd = ft_strjoin_gnl(new_cmd, s);
-		free(s);
-	}
-	else
-		new_cmd = ft_calloc(1, sizeof(char *));
+	 	replace_value = get_var_value(env[alr_exist]);
+	new_cmd = ft_strjoin_gnl(new_cmd, replace_value);
+	if (replace_value)
+		free(replace_value);
 	return (new_cmd);
 }
 
-void	convert_env_var(char **cmd, char **envp)
+void	conv_env_var(char **cmd, char **envp, t_ms *ms)
 {
 	int		i;
 	int		j;
@@ -88,8 +44,8 @@ void	convert_env_var(char **cmd, char **envp)
 		while (cmd[i][++j])
 		{
 			if (cmd[i][j] == '$' && !is_quote(cmd[i][j + 1])
-				&& cmd[i][j + 1] != ' ')
-				cmd[i] = replace(cmd[i], envp);
+				&& cmd[i][j + 1] != ' ' && cmd[i][j + 1])
+				cmd[i] = replace(cmd[i], envp, ms);
 		}
 		j = -1;
 	}

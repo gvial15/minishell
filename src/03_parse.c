@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
+#include <stdlib.h>
 
 void	free_cmds(t_ms *ms)
 {
@@ -78,7 +79,7 @@ static void	create_cmd_lst(t_ms *ms, char **cmds)
 	while (cmds[++i])
 	{
 		cmd = split_quotes(cmds[i]);
-		convert_env_var(cmd, ms->envp);
+		conv_env_var(cmd, ms->envp, ms);
 		new_cmd = ft_calloc(1, sizeof(t_cmd));
 		new_cmd->cmd_path = get_cmd_path(cmd, ms->envp);
 		new_cmd->args = get_args(cmd);
@@ -89,7 +90,7 @@ static void	create_cmd_lst(t_ms *ms, char **cmds)
 			ms->cmds = new_cmd;
 		else
 			lst_last(ms->cmds)->next = new_cmd;
-		free(cmd);
+		free_split(cmd);
 	}
 }
 

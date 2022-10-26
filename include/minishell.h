@@ -164,10 +164,10 @@ void	fct_sigint_here_doc(int sig);
 //03_parsing
 int		is_pipe(char *s);
 int		is_quote(char c);
+int		have_dbl_redirec(char *s);
 int		have_redirec(char *s);
 char	**split_quotes(char *cmd);
 char	**split_cmds(char **cmd);
-int		have_dbl_redirec(char *s);
 void	free_cmds(t_ms *ms);
 t_cmd	*lst_last(t_cmd *head);
 char	*remove_quotes(char *s);
@@ -176,7 +176,10 @@ int		have_dbl_redirec(char *s);
 void	parse(t_ms *ms);
 char	*isolate_cmd(char *cmd_brut);
 char	*get_cmd_path(char **cmd, char **envp);
-void	convert_env_var(char **cmd, char **envp);
+void	conv_env_var(char **cmd, char **envp, t_ms *ms);
+int		get_dollar_i(char *cmd);
+char	*get_var_value(char *var);
+char	*get_env_varname(char *cmd);
 char	*space_out_redirections(char *last_line);
 char	**get_fds(t_cmd *new_cmd, char **cmd, char sign);
 
@@ -197,9 +200,9 @@ void	builtin_echo(t_ms *ms, t_cmd *cmd);
 //04_exit.c
 void	builtin_exit(t_ms *ms, t_cmd *cmd);
 
-//04_builtins
-char	**export_env_var(char **envp, char **args, t_ms *ms);
-char	**unset_env_var(char **envp, char **args, t_ms *ms);
+//04_env
+char	**export_env_var(char **args, t_ms *ms);
+char	**unset_env_var(char **args, t_ms *ms);
 
 //04_env_utils.c
 char	*get_varname(char *var);
