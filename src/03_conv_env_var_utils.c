@@ -46,7 +46,7 @@ char	*get_var_value(char *var)
 		if (var[i] == '=')
 			break ;
 	if (var[i + 1] == 0)
-		return (NULL);;
+		return (NULL);
 	value = ft_substr(var, i + 1, ft_strlen(var) - i);
 	return (value);
 }
