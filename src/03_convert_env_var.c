@@ -32,14 +32,15 @@ static char	*replace(char *cmd, char **env, t_ms *ms)
 	return (new_cmd);
 }
 
-
 // have to manage double quotes and single quotes differently like the real bash
-//
+
+// doubles quotes: convert the $var then remove quotes
 // bash $> echo "$PAT"H
 // H
-//
 // bash $> echo "$PATH"
 // /Users/gvial/.brew/bin:/usr/local/bin:/usr.......
+
+// single quotes: just remove the quotes
 // bash $> echo '$PATH'
 // $PATH
 // bash $> echo '$PAT'H
