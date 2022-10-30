@@ -176,10 +176,7 @@ int		have_dbl_redirec(char *s);
 void	parse(t_ms *ms);
 char	*isolate_cmd(char *cmd_brut);
 char	*get_cmd_path(char **cmd, char **envp);
-void	conv_env_var(char **cmd, char **envp, t_ms *ms);
-int		get_dollar_i(char *cmd);
-char	*get_var_value(char *var);
-char	*get_env_varname(char *cmd);
+void	conv_env_var(char **cmd, t_ms *ms);
 char	*space_out_redirections(char *last_line);
 char	**get_fds(t_cmd *new_cmd, char **cmd, char sign);
 
