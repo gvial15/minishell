@@ -42,6 +42,8 @@ static char	*replace(char *cmd, char **env, t_ms *ms)
 // /Users/gvial/.brew/bin:/usr/local/bin:/usr.......
 // bash $> echo '$PATH'
 // $PATH
+// bash $> echo '$PAT'H
+// $PATH
 void	conv_env_var(char **cmd, char **envp, t_ms *ms)
 {
 	int		i;
