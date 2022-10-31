@@ -28,29 +28,45 @@ int	have_dbl_redirec(char *s)
 	return (0);
 }
 
+static int	get_nb_quote(char *s)
+{
+	int	i;
+	int	nb_quote;
+
+	nb_quote = 0;
+	i = -1;
+	while (s[++i])
+	{
+		if (is_quote(s[i]))
+		{
+			i = new_i(s, i) - 1;
+			nb_quote++;
+		}
+	}
+	return (nb_quote);
+}
+
 char	*remove_quotes(char *s)
 {
 	int		i;
 	int		j;
-	int		nb_quotes;
+	int		nb_quote;
+	char	first_quote;
 	char	*new_s;
 
-	if (!s)
-		return (NULL);
-	nb_quotes = 0;
-	i = -1;
-	while (s[++i])
-		if (is_quote(s[i]))
-			nb_quotes++;
-	if (nb_quotes == 0)
+	nb_quote = get_nb_quote(s);
+	if (!nb_quote)
 		return (s);
-	new_s = ft_calloc(ft_strlen(s) - (nb_quotes), sizeof(char));
+	i = 0;
+	while (!is_quote(s[i]))
+		i++;
+	first_quote = s[i];
+	new_s = ft_calloc(ft_strlen(s) - nb_quote + 1, sizeof(char));
 	j = -1;
 	i = -1;
 	while (s[++i])
-		if (!is_quote(s[i]))
+		if (s[i] != first_quote)
 			new_s[++j] = s[i];
-	new_s[++j] = 0;
 	free(s);
 	return (new_s);
 }
