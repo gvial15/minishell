@@ -17,9 +17,9 @@ static char	*get_var_name(char *var)
 	char	*varname;
 
 	i = 0;
-	while (var[i] && var[i] != ' ' && !is_quote(var[i]))
+	while (var[i] && var[i] != ' ' && !is_quote(var[i]) && var[i] != '$')
 		i++;
-	varname = ft_substr(var, 1, i - 1);
+	varname = ft_substr(var, 0, i);
 	return (varname);
 }
 
@@ -65,7 +65,7 @@ static char	*replace(char *cmd, int var_i, t_ms *ms)
 	int		varname_len;
 
 	new_cmd = ft_substr(cmd, 0, var_i);
-	varname = get_var_name(&cmd[var_i]);
+	varname = get_var_name(&cmd[var_i + 1]);
 	varname_len = ft_strlen(varname);
 	alr_exist = already_exist(varname, ms->envp);
 	if (alr_exist != -1)
@@ -80,8 +80,6 @@ static char	*replace(char *cmd, int var_i, t_ms *ms)
 	return (new_cmd);
 }
 
-// fix this: echo $t1$t2$t3
-// when env var arent spaced out they dont display
 void	conv_env_var(char **cmd, t_ms *ms)
 {
 	int		i;
