@@ -163,7 +163,6 @@ void	fct_sigint_here_doc(int sig);
 
 //03_parsing
 int		is_pipe(char *s);
-int		is_quote(char c);
 int		have_dbl_redirec(char *s);
 int		have_redirec(char *s);
 char	**split_quotes(char *cmd);
