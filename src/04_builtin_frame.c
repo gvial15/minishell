@@ -56,7 +56,7 @@ void	builtin_exec(t_ms *ms, t_cmd *cmd)
 	else if (ft_strncmp(cmd->args[0], "unset", ft_strlen("unset") + 1) == 0)
 		ms->envp = unset_env_var(cmd->args, ms);
 	else if (ft_strncmp(cmd->args[0], "env", ft_strlen("env") + 1) == 0)
-		printf("call builtin function %s\n", cmd->args[0]);
+		print_split(ms->envp);
 	else if (ft_strncmp(cmd->args[0], "exit", ft_strlen("exit") + 1) == 0)
 		builtin_exit(ms, cmd);
 	builtin_redirection(ms, cmd, 1);
