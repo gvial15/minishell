@@ -24,13 +24,21 @@ static int	need_space(char *last_line, int i)
 static int	get_space_count(char *last_line)
 {
 	int	i;
+	int	in_quote;
 	int	space_count;
 
+	in_quote = -1;
 	space_count = 0;
 	i = -1;
 	while (last_line[++i])
-		if (need_space(last_line, i))
+	{
+		if (is_quote(last_line[i]) && in_quote == -1)
+			in_quote = last_line[i];
+		else if (last_line[i] == in_quote && in_quote != -1)
+			in_quote = -1;
+		if (need_space(last_line, i) && in_quote == -1)
 			space_count++;
+	}
 	return (space_count);
 }
 
@@ -39,9 +47,11 @@ char	*space_out_redirections(char *last_line)
 {
 	int		i;
 	int		j;
+	int		in_quote;
 	int		space_count;
 	char	*n_last_line;
 
+	in_quote = -1;
 	space_count = get_space_count(last_line);
 	if (space_count == 0)
 		return (last_line);
@@ -50,7 +60,11 @@ char	*space_out_redirections(char *last_line)
 	i = -1;
 	while (last_line[++i])
 	{
-		if (need_space(last_line, i))
+		if (is_quote(last_line[i]) && in_quote == -1)
+			in_quote = last_line[i];
+		else if (last_line[i] == in_quote && in_quote != -1)
+			in_quote = -1;
+		if (need_space(last_line, i) && in_quote == -1)
 		{
 			n_last_line[j++] = ' ';
 			n_last_line[j++] = last_line[i];
