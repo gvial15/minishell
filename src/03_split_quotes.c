@@ -12,14 +12,16 @@
 
 #include "../include/minishell.h"
 
-static int	new_i(char *cmd, int i)
+int	new_i(char *cmd, int i)
 {
-	int	quote_nb;
+	int		quote_nb;
+	char	quote_type;
 
+	quote_type = cmd[i];
 	quote_nb = 1;
 	while (cmd[++i])
 	{
-		if (is_quote(cmd[i]))
+		if (cmd[i] == quote_type)
 			quote_nb++;
 		if ((quote_nb % 2 == 0 && cmd[i] == ' ')
 			|| cmd[i + 1] == '\0')
