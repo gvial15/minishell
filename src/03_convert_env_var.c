@@ -62,7 +62,6 @@ static char	*replace(char *cmd, int var_i, t_ms *ms)
 	char	*vname;
 	char	*varvalue;
 	int		alr_exist;
-	int		varname_len;
 
 	varvalue = NULL;
 	new_cmd = ft_substr(cmd, 0, var_i);
