@@ -80,9 +80,9 @@ int	valid_line(char *line)
 	else if (ft_strnstr(line, "<<<<", ft_strlen(line)))
 		error = lineerr_3in;
 	else if (ft_strnstr(line, ">>>>", ft_strlen(line)))
-		error = lineerr_4in;
+		error = lineerr_4out;
 	else if (ft_strnstr(line, ">>>", ft_strlen(line)))
-		error = lineerr_3in;
+		error = lineerr_3out;
 	else if (valid_cmd(line) != 0
 		&& ft_strnstr(line, "|", ft_strlen(line)) != NULL)
 		error = lineerr_pipe;
