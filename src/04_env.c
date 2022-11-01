@@ -97,7 +97,7 @@ char	**export_env_var(char **args, t_ms *ms)
 	if (split_len(args) == 1)
 	{
 		ms->err_last_child = 1;
-		print_split(ms->envp);
+		export_print(ms->envp);
 		return (ms->envp);
 	}
 	var_count = export_var_count(args, ms->envp);
