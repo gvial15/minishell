@@ -55,10 +55,7 @@ char	**get_args(char **cmd)
 	arg_count = 0;
 	while (cmd[++i] && !have_redirec(cmd[i]))
 		arg_count++;
-	if (arg_count > 0)
-		args = ft_calloc((arg_count + 2), sizeof(char *));
-	else
-		args = ft_calloc((arg_count + 1), sizeof(char *));
+	args = ft_calloc((arg_count + 2), sizeof(char *));
 	j = -1;
 	i = find_cmd_i(cmd) - 1;
 	while (cmd[++i] && !have_redirec(cmd[i]))
