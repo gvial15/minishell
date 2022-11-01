@@ -82,8 +82,8 @@ static void	fill_new_line(char *n_last_line, char *last_line)
 	}
 }
 
-// space out the redirections if needed ex: ">out>>out2" = ">out >>out2"
-// space out the pipes if needed ex: "cat|cat|ls" = "cat | cat | ls"
+// space out the redirections if needed ex: >out>>out2 = >out >>out2
+// space out the pipes if needed ex: cat|cat|ls = cat | cat | ls
 char	*format_line(char *last_line)
 {
 	int		space_count;
