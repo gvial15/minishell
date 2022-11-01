@@ -166,6 +166,7 @@ int		is_pipe(char *s);
 int		have_dbl_redirec(char *s);
 int		have_redirec(char *s);
 char	**split_quotes(char *cmd);
+int		new_i(char *cmd, int i);
 char	**split_cmds(char **cmd);
 void	free_cmds(t_ms *ms);
 t_cmd	*lst_last(t_cmd *head);
@@ -199,8 +200,8 @@ void	builtin_exit(t_ms *ms, t_cmd *cmd);
 //04_env
 char	**export_env_var(char **args, t_ms *ms);
 char	**unset_env_var(char **args, t_ms *ms);
-
-//04_env_utils.c
+void	export_print(char **envp);
+char	*get_varvalue(char *var);
 char	*get_varname(char *var);
 int		valid_unset(char *var, int err);
 int		valid_export(char *var, int err);

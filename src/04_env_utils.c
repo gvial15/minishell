@@ -11,7 +11,23 @@
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
-#include <stdlib.h>
+
+void	export_print(char **envp)
+{
+	int		i;
+	char	*varname;
+	char	*varvalue;
+
+	i = -1;
+	while (envp[++i])
+	{
+		varname = get_varname(envp[i]);
+		varvalue = get_varvalue(envp[i]);
+		printf("declare -x %s=\"%s\"\n", varname, varvalue);
+		free(varname);
+		free(varvalue);
+	}
+}
 
 char	*get_varname(char *var)
 {

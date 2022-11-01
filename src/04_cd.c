@@ -12,8 +12,22 @@
 
 #include "../include/minishell.h"
 
+static char	**create_args(void)
+{
+	char	path[1000];
+	char	**args;
+
+	args = ft_calloc(3, sizeof(char *));
+	args[0] = ft_strdup("export");
+	args[1] = ft_strjoin_gnl(ft_strdup("PWD="), getcwd(path, 1000));
+	args[2] = 0;
+	return (args);
+}
+
 static void	access_n_cd(t_ms *ms, t_cmd *cmd, char *newpath)
 {
+	char	**args;
+
 	if (access(newpath, X_OK) == -1)
 	{
 		ms->err_last_child = 1;
@@ -26,7 +40,12 @@ static void	access_n_cd(t_ms *ms, t_cmd *cmd, char *newpath)
 				ERR_OPEN_PERM);
 	}
 	else
+	{
 		chdir(newpath);
+		args = create_args();
+		ms->envp = export_env_var(args, ms);
+		free_split(args);
+	}
 }
 
 static void	cd_0arg(t_ms *ms, t_cmd *cmd)

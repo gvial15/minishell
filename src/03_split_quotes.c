@@ -12,27 +12,21 @@
 
 #include "../include/minishell.h"
 
-static int	new_i(char *cmd, int i)
+int	new_i(char *cmd, int i)
 {
-	int	quote_nb;
+	int		quote_nb;
+	char	quote_type;
 
+	quote_type = cmd[i];
 	quote_nb = 1;
 	while (cmd[++i])
 	{
-		if (is_quote(cmd[i]))
+		if (cmd[i] == quote_type)
 			quote_nb++;
 		if ((quote_nb % 2 == 0 && cmd[i] == ' ')
 			|| cmd[i + 1] == '\0')
 			break ;
 	}
-	return (i);
-}
-
-static int	next_space_i(char *cmd, int i)
-{
-	while (cmd[++i])
-		if (cmd[i] == ' ')
-			break ;
 	return (i);
 }
 
@@ -57,6 +51,31 @@ static int	cmd_split_count(char *cmd)
 	return (count);
 }
 
+static int	parse_block(char **new_cmd, char *cmd, int i)
+{
+	char	in_quote;
+	int		start;
+	int		new_i;
+
+	start = i;
+	in_quote = -1;
+	while (cmd[i])
+	{
+		new_i = i;
+		if (cmd[i] == in_quote)
+			in_quote = -1;
+		else if (is_quote(cmd[i]) && in_quote == -1)
+			in_quote = cmd[i];
+		if (in_quote == -1 && (cmd[i + 1] == ' ' || cmd[i + 1] == '\0'))
+		{
+			*new_cmd = ft_substr(cmd, start, i - start + 1);
+			break ;
+		}
+		i++;
+	}
+	return (new_i);
+}
+
 char	**split_quotes(char *cmd)
 {
 	int		i;
@@ -78,10 +97,7 @@ char	**split_quotes(char *cmd)
 		}
 		else if ((i != 0 && cmd[i] != ' ' && cmd[i - 1] == ' ')
 			|| (i == 0 && cmd[i] != ' '))
-		{
-			cmd_split[j++] = ft_substr(cmd, i, next_space_i(cmd, i) - i);
-			i = next_space_i(cmd, i);
-		}
+				i = parse_block(&cmd_split[j++], cmd, i);
 	}
 	cmd_split[cmd_split_count(cmd)] = NULL;
 	return (cmd_split);

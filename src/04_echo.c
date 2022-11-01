@@ -11,7 +11,6 @@
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
-#include <stdio.h>
 
 //return 0 if flag and 1 if not
 static int	is_flag_n(char *arg)
@@ -46,7 +45,7 @@ void	builtin_echo(t_ms *ms, t_cmd *cmd)
 		return ;
 	}
 	i = 1;
-	while (is_flag_n(cmd->args[i]) != 1)
+	while (cmd->args[i] && is_flag_n(cmd->args[i]) != 1)
 		i++;
 	if (i > 1)
 		no_skipline = 1;

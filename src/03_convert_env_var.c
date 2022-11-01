@@ -11,24 +11,12 @@
 /* ************************************************************************** */
 #include "../include/minishell.h"
 
-static char	*get_var_name(char *var)
-{
-	int		i;
-	char	*varname;
-
-	i = 0;
-	while (var[i] && var[i] != ' ' && !is_quote(var[i]))
-		i++;
-	varname = ft_substr(var, 1, i - 1);	
-	return (varname);
-}
-
-static char	*get_var_value(char *var)
+char	*get_varvalue(char *var)
 {
 	int		i;
 	char	*value;
 
-	i= -1;
+	i = -1;
 	while (var[++i])
 		if (var[i] == '=')
 			break ;
@@ -36,6 +24,18 @@ static char	*get_var_value(char *var)
 		return (NULL);
 	value = ft_substr(var, i + 1, ft_strlen(var) - i);
 	return (value);
+}
+
+static char	*get_var_name(char *var)
+{
+	int		i;
+	char	*varname;
+
+	i = 0;
+	while (var[i] && var[i] != ' ' && !is_quote(var[i]) && var[i] != '$')
+		i++;
+	varname = ft_substr(var, 0, i);
+	return (varname);
 }
 
 static int	env_var_i(char *cmd)
@@ -65,13 +65,13 @@ static char	*replace(char *cmd, int var_i, t_ms *ms)
 	int		varname_len;
 
 	new_cmd = ft_substr(cmd, 0, var_i);
-	varname = get_var_name(&cmd[var_i]);
+	varname = get_var_name(&cmd[var_i + 1]);
 	varname_len = ft_strlen(varname);
 	alr_exist = already_exist(varname, ms->envp);
 	if (alr_exist != -1)
-		varvalue = get_var_value(ms->envp[alr_exist]);
+		varvalue = get_varvalue(ms->envp[alr_exist]);
 	else
-	 	varvalue = NULL;
+		varvalue = NULL;
 	new_cmd = ft_strjoin_gnl(new_cmd, varvalue);
 	if (varvalue)
 		free(varvalue);
