@@ -59,23 +59,22 @@ static int	env_var_i(char *cmd)
 static char	*replace(char *cmd, int var_i, t_ms *ms)
 {
 	char	*new_cmd;
-	char	*varname;
+	char	*vname;
 	char	*varvalue;
 	int		alr_exist;
-	int		varname_len;
 
+	varvalue = NULL;
 	new_cmd = ft_substr(cmd, 0, var_i);
-	varname = get_var_name(&cmd[var_i + 1]);
-	varname_len = ft_strlen(varname);
-	alr_exist = already_exist(varname, ms->envp);
+	vname = get_var_name(&cmd[var_i + 1]);
+	if (vname[0] == '?' && ft_strlen(vname) == 1)
+		varvalue = ft_itoa(ms->err_last_child);
+	alr_exist = already_exist(vname, ms->envp);
 	if (alr_exist != -1)
 		varvalue = get_varvalue(ms->envp[alr_exist]);
-	else
-		varvalue = NULL;
 	new_cmd = ft_strjoin_gnl(new_cmd, varvalue);
 	if (varvalue)
 		free(varvalue);
-	new_cmd = ft_strjoin_gnl(new_cmd, &cmd[var_i + varname_len + 1]);
+	new_cmd = ft_strjoin_gnl(new_cmd, &cmd[var_i + ft_strlen(vname) + 1]);
 	free(cmd);
 	return (new_cmd);
 }
