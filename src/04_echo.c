@@ -11,7 +11,6 @@
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
-#include <stdio.h>
 
 //return 0 if flag and 1 if not
 static int	is_flag_n(char *arg)
