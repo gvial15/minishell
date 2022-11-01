@@ -62,11 +62,13 @@ static char	*replace(char *cmd, int var_i, t_ms *ms)
 	char	*vname;
 	char	*varvalue;
 	int		alr_exist;
+	int		vlen;
 
 	varvalue = NULL;
 	new_cmd = ft_substr(cmd, 0, var_i);
 	vname = get_var_name(&cmd[var_i + 1]);
-	if (vname[0] == '?' && ft_strlen(vname) == 1)
+	vlen = ft_strlen(vname);
+	if (vname[0] == '?' && vlen == 1)
 		varvalue = ft_itoa(ms->err_last_child);
 	alr_exist = already_exist(vname, ms->envp);
 	if (alr_exist != -1)
@@ -74,7 +76,7 @@ static char	*replace(char *cmd, int var_i, t_ms *ms)
 	new_cmd = ft_strjoin_gnl(new_cmd, varvalue);
 	if (varvalue)
 		free(varvalue);
-	new_cmd = ft_strjoin_gnl(new_cmd, &cmd[var_i + ft_strlen(vname) + 1]);
+	new_cmd = ft_strjoin_gnl(new_cmd, &cmd[var_i + vlen + 1]);
 	free(cmd);
 	return (new_cmd);
 }
