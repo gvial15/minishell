@@ -12,7 +12,6 @@
 
 #include "../include/minishell.h"
 
-
 static char	**create_args(void)
 {
 	char	path[1000];

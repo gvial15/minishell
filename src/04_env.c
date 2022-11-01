@@ -57,8 +57,7 @@ char	**unset_env_var(char **args, t_ms *ms)
 	return (new_envp);
 }
 
-static void	reassign(
-	char **new_envp, char **args)
+static void	reassign(char **new_envp, char **args)
 {
 	int		i;
 	int		arg_i;

@@ -42,20 +42,13 @@ static int	get_space_count(char *last_line)
 	return (space_count);
 }
 
-// space out the redirections if needed ex: ">out>>out2" = ">out >>out2"
-char	*space_out_redirections(char *last_line)
+static void	fill_new_line(char *n_last_line, char *last_line)
 {
 	int		i;
 	int		j;
 	int		in_quote;
-	int		space_count;
-	char	*n_last_line;
 
 	in_quote = -1;
-	space_count = get_space_count(last_line);
-	if (space_count == 0)
-		return (last_line);
-	n_last_line = malloc(sizeof(char) * ft_strlen(last_line) + space_count + 1);
 	j = 0;
 	i = -1;
 	while (last_line[++i])
@@ -73,6 +66,19 @@ char	*space_out_redirections(char *last_line)
 			n_last_line[j++] = last_line[i];
 	}
 	n_last_line[j] = 0;
+}
+
+// space out the redirections if needed ex: ">out>>out2" = ">out >>out2"
+char	*space_out_redirections(char *last_line)
+{
+	int		space_count;
+	char	*n_last_line;
+
+	space_count = get_space_count(last_line);
+	if (space_count == 0)
+		return (last_line);
+	n_last_line = malloc(sizeof(char) * ft_strlen(last_line) + space_count + 1);
+	fill_new_line(n_last_line, last_line);
 	free(last_line);
 	return (n_last_line);
 }

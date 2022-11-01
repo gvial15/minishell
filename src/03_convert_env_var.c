@@ -28,7 +28,7 @@ static char	*get_var_value(char *var)
 	int		i;
 	char	*value;
 
-	i= -1;
+	i = -1;
 	while (var[++i])
 		if (var[i] == '=')
 			break ;
@@ -71,7 +71,7 @@ static char	*replace(char *cmd, int var_i, t_ms *ms)
 	if (alr_exist != -1)
 		varvalue = get_var_value(ms->envp[alr_exist]);
 	else
-	 	varvalue = NULL;
+		varvalue = NULL;
 	new_cmd = ft_strjoin_gnl(new_cmd, varvalue);
 	if (varvalue)
 		free(varvalue);
