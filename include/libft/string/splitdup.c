@@ -19,7 +19,7 @@ char	**splitdup(char **split)
 
 	if (!split)
 		return (NULL);
-	new_split = malloc(sizeof(char *) * split_len(split) + 1);
+	new_split = ft_calloc(split_len(split) + 1, sizeof(char *));
 	i = -1;
 	while (split[++i])
 		new_split[i] = ft_strdup(split[i]);
