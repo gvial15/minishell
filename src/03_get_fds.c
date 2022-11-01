@@ -30,7 +30,7 @@ static void	check_heredocs(t_cmd *new_cmd, char **split)
 	int		i;
 	int		j;
 
-	new_cmd->heredoc = malloc(sizeof(int) * get_fds_count(split, '<') + 1);
+	new_cmd->heredoc = ft_calloc(get_fds_count(split, '<') + 1, sizeof(int));
 	j = 0;
 	i = -1;
 	while (split[++i])
