@@ -162,22 +162,21 @@ void	fct_sigint_prompter(int sig);
 void	fct_sigint_here_doc(int sig);
 
 //03_parsing
+void	parse(t_ms *ms);
 int		is_pipe(char *s);
-int		have_dbl_redirec(char *s);
-int		have_redirec(char *s);
-char	**split_quotes(char *cmd);
-int		new_i(char *cmd, int i);
-char	**split_cmds(char **cmd);
 void	free_cmds(t_ms *ms);
+int		new_i(char *cmd, int i);
+int		have_redirec(char *s);
+int		have_dbl_redirec(char *s);
+char	**split_cmds(char **cmd);
+char	**split_quotes(char *cmd);
 t_cmd	*lst_last(t_cmd *head);
 char	*remove_quotes(char *s);
 int		find_cmd_i(char **split);
-int		have_dbl_redirec(char *s);
-void	parse(t_ms *ms);
 char	*isolate_cmd(char *cmd_brut);
-char	*get_cmd_path(char **cmd, char **envp);
+char	*format_line(char *last_line);
 void	conv_env_var(char **cmd, t_ms *ms);
-char	*space_out_redirections(char *last_line);
+char	*get_cmd_path(char **cmd, char **envp);
 char	**get_fds(t_cmd *new_cmd, char **cmd, char sign);
 
 //BUILTINS----------------------------------------------------------------------

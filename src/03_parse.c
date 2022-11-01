@@ -97,7 +97,7 @@ void	parse(t_ms *ms)
 {
 	char	**cmds;
 
-	ms->last_line = space_out_redirections(ms->last_line);
+	ms->last_line = format_line(ms->last_line);
 	cmds = split_quotes(ms->last_line);
 	cmds = split_cmds(cmds);
 	create_cmd_lst(ms, cmds);
