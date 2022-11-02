@@ -12,14 +12,14 @@
 
 #include "../include/minishell.h"
 
-static char	**create_args(void)
+static char	**create_args(char *var)
 {
 	char	path[1000];
 	char	**args;
 
 	args = ft_calloc(3, sizeof(char *));
 	args[0] = ft_strdup("export");
-	args[1] = ft_strjoin_gnl(ft_strdup("PWD="), getcwd(path, 1000));
+	args[1] = ft_strjoin_gnl(ft_strdup(var), getcwd(path, 1000));
 	args[2] = 0;
 	return (args);
 }
@@ -41,8 +41,11 @@ static void	access_n_cd(t_ms *ms, t_cmd *cmd, char *newpath)
 	}
 	else
 	{
+		args = create_args("OLDPWD=");
+		ms->envp = export_env_var(args, ms);
+		free_split(args);
 		chdir(newpath);
-		args = create_args();
+		args = create_args("PWD=");
 		ms->envp = export_env_var(args, ms);
 		free_split(args);
 	}
