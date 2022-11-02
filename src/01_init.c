@@ -32,6 +32,7 @@ void	fill_line_prompter(t_ms *ms)
 void	ms_init(t_ms *ms, char **envp)
 {
 	ms->envp = splitdup(envp);
+	ms->envp = export_("SHELL=", "/bin/ms", ms);
 	ms->cmds = NULL;
 	ms->last_line = NULL;
 	ms->line_path = NULL;
