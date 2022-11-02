@@ -38,22 +38,12 @@ static char	**get_paths(char **envp)
 	return (paths);
 }
 
-char	*get_cmd_path(char **cmd, char **envp)
+static char	*find_path(char **paths, char *cmd_without_args)
 {
 	int		i;
-	int		cmd_i;
 	char	*path;
-	char	**paths;
-	char	*cmd_without_args;
 
 	i = -1;
-	cmd_i = find_cmd_i(cmd);
-	path = NULL;
-	if (cmd_i == -1)
-		return (NULL);
-	paths = get_paths(envp);
-	cmd_without_args = ft_strdup(cmd[cmd_i]);
-	cmd_without_args = remove_quotes(cmd_without_args);
 	while (paths[++i])
 	{
 		if (cmd_without_args == NULL)
@@ -64,6 +54,24 @@ char	*get_cmd_path(char **cmd, char **envp)
 		free(path);
 		path = NULL;
 	}
+	return (path);
+}
+
+char	*get_cmd_path(char **cmd, char **envp)
+{
+	int		cmd_i;
+	char	*path;
+	char	**paths;
+	char	*cmd_without_args;
+
+	cmd_i = find_cmd_i(cmd);
+	path = NULL;
+	if (cmd_i == -1)
+		return (NULL);
+	paths = get_paths(envp);
+	cmd_without_args = ft_strdup(cmd[cmd_i]);
+	cmd_without_args = remove_quotes(cmd_without_args);
+	path = find_path(paths, cmd_without_args);
 	free_split(paths);
 	if (path == NULL)
 		return (cmd_without_args);
