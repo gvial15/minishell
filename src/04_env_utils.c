@@ -75,7 +75,7 @@ int	valid_unset(char *var, int err)
 	while (var[++i])
 	{
 		if (!ft_isalnum(var[i]) || (i == 0 && var[i] != '_'
-			&& !ft_isalpha(var[i])))
+				&& !ft_isalpha(var[i])))
 		{
 			if (err)
 				printf("unset: `%s': not a valid identifier\n", var);
