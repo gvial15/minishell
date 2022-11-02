@@ -205,6 +205,7 @@ char	*get_varname(char *var);
 int		valid_unset(char *var, int err);
 int		valid_export(char *var, int err);
 int		already_exist(char *varname, char **envp);
+char	**export_(char *varname, char *varvalue, t_ms *ms);
 
 // utils
 int		lst_len(t_cmd *head);
