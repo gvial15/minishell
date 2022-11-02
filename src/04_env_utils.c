@@ -23,7 +23,10 @@ void	export_print(char **envp)
 	{
 		varname = get_varname(envp[i]);
 		varvalue = get_varvalue(envp[i]);
-		printf("declare -x %s=\"%s\"\n", varname, varvalue);
+		if (varvalue != NULL)
+			printf("declare -x %s=\"%s\"\n", varname, varvalue);
+		else
+			printf("declare -x %s=\"\"\n", varname);
 		free(varname);
 		free(varvalue);
 	}
