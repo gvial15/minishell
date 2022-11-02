@@ -34,7 +34,8 @@ static int	valid_cmd(char *line)
 		if (val == 0)
 			return (1);
 		val = 0;
-		i++;
+		if (line[i] == '|')
+			i++;
 	}
 	if (i > 0
 		&& (line[i - 1] == '|' || line[i - 1] == '<' || line[i - 1] == '>'))
