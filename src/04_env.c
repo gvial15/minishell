@@ -31,7 +31,7 @@ char	**unset_env_var(char **args, t_ms *ms)
 	int		i;
 	int		j;
 	char	*varname;
-	int		var_count;
+	int		var_nb;
 	char	**new_envp;
 
 	if (split_len(args) == 1)
@@ -39,10 +39,10 @@ char	**unset_env_var(char **args, t_ms *ms)
 		ms->err_last_child = 1;
 		return (ms->envp);
 	}
-	var_count = unset_var_count(args, ms->envp);
-	if (var_count == 0)
+	var_nb = unset_var_count(args, ms->envp);
+	if (var_nb == 0)
 		return (ms->envp);
-	new_envp = ft_calloc(split_len(ms->envp) - var_count + 1, sizeof(char *));
+	new_envp = ft_calloc(split_len(ms->envp) - var_nb + 1, sizeof(char *));
 	j = -1;
 	i = -1;
 	while (ms->envp[++i])
@@ -52,8 +52,6 @@ char	**unset_env_var(char **args, t_ms *ms)
 			new_envp[++j] = ft_strdup(ms->envp[i]);
 	}
 	free_split(ms->envp);
-	ms->envp = NULL;
-	new_envp[++j] = 0;
 	return (new_envp);
 }
 
@@ -82,7 +80,8 @@ static int	export_var_count(char **args, char **envp)
 	count = 0;
 	i = 0;
 	while (args[++i])
-		if (valid_export(args[i], 1) && already_exist(get_varname(args[i]), envp) == -1)
+		if (valid_export(args[i], 1)
+			&& already_exist(get_varname(args[i]), envp) == -1)
 			count++;
 	return (count);
 }
@@ -107,7 +106,8 @@ char	**export_env_var(char **args, t_ms *ms)
 	i = split_len(new_envp);
 	j = 0;
 	while (args[++j])
-		if (valid_export(args[j], 0) && already_exist(get_varname(args[j]), new_envp) == -1)
+		if (valid_export(args[j], 0)
+			&& already_exist(get_varname(args[j]), new_envp) == -1)
 			new_envp[i++] = ft_strdup(args[j]);
 	free_split(ms->envp);
 	ms->envp = NULL;

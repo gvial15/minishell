@@ -86,13 +86,13 @@ static void	fill_new_line(char *n_last_line, char *last_line)
 // space out the pipes if needed ex: cat|cat|ls = cat | cat | ls
 char	*format_line(char *last_line)
 {
-	int		space_count;
+	int		space_nb;
 	char	*n_last_line;
 
-	space_count = get_space_count(last_line);
-	if (space_count == 0)
+	space_nb = get_space_count(last_line);
+	if (space_nb == 0)
 		return (last_line);
-	n_last_line = ft_calloc(ft_strlen(last_line) + space_count + 1, sizeof(char));
+	n_last_line = ft_calloc(ft_strlen(last_line) + space_nb + 1, sizeof(char));
 	fill_new_line(n_last_line, last_line);
 	free(last_line);
 	return (n_last_line);

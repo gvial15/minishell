@@ -48,7 +48,6 @@ void	ms_init(t_ms *ms, char **envp)
 
 void	ms_reset(t_ms *ms)
 {
-	//close_all_cmd_fdin_fdout(ms);
 	if (ms->last_line)
 		free(ms->last_line);
 	ms->last_line = NULL;
