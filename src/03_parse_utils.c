@@ -75,23 +75,20 @@ int	find_cmd_i(char **s)
 {
 	int	i;
 
-	i = 0;
-	while (s[i])
+	i = -1;
+	while (s[++i])
 	{
 		if (!have_redirec(s[i]))
 		{
-			if (i == 0)
-				break ;
-			if (i > 1 && !have_redirec(s[i - 1]) && have_dbl_redirec(s[i - 2])
-				&& ft_strlen(s[i - 2]) == 2)
-				break ;
-			if (i > 1 && !have_redirec(s[i - 1]) && have_redirec(s[i - 2])
-				&& ft_strlen(s[i - 2]) == 1)
-				break ;
-			if (have_redirec(s[i - 1]) && ft_strlen(s[i - 1]) > 1
-				&& !have_dbl_redirec(s[i - 1]))
-				break ;
-			if (have_dbl_redirec(s[i - 1]) && ft_strlen(s[i - 1]) > 2)
+			if ((i == 0) || (i > 1 && !have_redirec(s[i - 1])
+					&& have_dbl_redirec(s[i - 2])
+					&& ft_strlen(s[i - 2]) == 2)
+				|| (i > 1 && !have_redirec(s[i - 1]) && have_redirec(s[i - 2])
+					&& ft_strlen(s[i - 2]) == 1)
+				|| (have_redirec(s[i - 1]) && ft_strlen(s[i - 1]) > 1
+					&& !have_dbl_redirec(s[i - 1]))
+				|| (have_dbl_redirec(s[i - 1])
+					&& ft_strlen(s[i - 1]) > 2))
 				break ;
 		}
 		if (s[i + 1] == 0)
@@ -99,7 +96,6 @@ int	find_cmd_i(char **s)
 			i = -1;
 			break ;
 		}
-		i++;
 	}
 	return (i);
 }
