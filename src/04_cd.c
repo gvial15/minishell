@@ -22,7 +22,7 @@ char	**export_(char *varname, char *varvalue, t_ms *ms)
 	args[1] = ft_strjoin(varname, varvalue);
 	args[2] = 0;
 	new_envp = export_env_var(args, ms);
-	free(args);
+	free_split(args);
 	return (new_envp);
 }
 
