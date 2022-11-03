@@ -37,6 +37,7 @@ char	*ft_strchr(const char *s, int c);
 char	*ft_strrchr(const char *s, int c);
 char	**ft_split(const char *s, char c);
 char	**splitdup(char **split);
+char	*split_to_str(char **split, int free);
 size_t	split_count(char *s, char c);
 char	*ft_ultox(unsigned long n, int caps);
 char	*ft_strjoin(char const *s1, char const *s2);
