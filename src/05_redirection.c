@@ -6,7 +6,7 @@
 /*   By: mraymond <mraymond@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 18:29:35 by mraymond          #+#    #+#             */
-/*   Updated: 2022/10/25 11:02:25 by mraymond         ###   ########.fr       */
+/*   Updated: 2022/11/03 10:41:04 by mraymond         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,30 @@ int	print_open_err(char *filename, int error)
 		printf("%s\n", ERR_OPEN_NOSUCH);
 	else if (error == openerr_perm)
 		printf("%s\n", ERR_OPEN_PERM);
+	else if (error == openerr_isdir)
+		printf("%s\n", ERR_OPEN_ISDIR);
 	return (-1);
+}
+
+/*Return 1 if respect criteria _ 0 if not _ -1 if not exist
+**path: file or folder path/name
+** f_or_d: f for file, d for directory
+** r : 1 if want to know if able to read
+** w : 1 if want to know if able to write
+** Put 0 if not a criteria
+*/
+int	am_i_this(char *path, char f_or_d, int r, int w)
+{
+	struct stat	stat_buffer;
+
+	if (stat(path, &stat_buffer) == -1)
+		return (-1);
+	if ((f_or_d == 'd' && (stat_buffer.st_mode & S_IFMT) != S_IFDIR)
+		|| (f_or_d == 'f' && (stat_buffer.st_mode & S_IFMT) != S_IFREG)
+		|| (r == 1 && access(path, R_OK) == -1)
+		|| (w == 1 && access(path, W_OK) == -1))
+		return (0);
+	return (1);
 }
 
 int	redirection_out(t_cmd *cmd)
@@ -70,8 +93,9 @@ int	redirection_out(t_cmd *cmd)
 	new_fd_out = 0;
 	while (cmd->fd_out[++i] && new_fd_out != -1)
 	{
-		if (access(cmd->fd_out[i], F_OK) != -1
-			&& access(cmd->fd_out[i], W_OK) == -1)
+		if (am_i_this(cmd->fd_out[i], 'd', 0, 0) == 1)
+			new_fd_out = print_open_err(cmd->fd_out[i], openerr_isdir);
+		else if (am_i_this(cmd->fd_out[i], 0, 0, 1) == 0)
 			new_fd_out = print_open_err(cmd->fd_out[i], openerr_perm);
 		else if (cmd->append == 1)
 			new_fd_out = open(cmd->fd_out[i], O_WRONLY | O_CREAT | O_APPEND,

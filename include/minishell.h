@@ -6,7 +6,7 @@
 /*   By: mraymond <mraymond@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/29 18:27:32 by gvial             #+#    #+#             */
-/*   Updated: 2022/10/25 12:05:09 by mraymond         ###   ########.fr       */
+/*   Updated: 2022/11/03 10:31:05 by mraymond         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,7 @@
 //access_err
 # define ERR_OPEN_NOSUCH ": No such file or directory"
 # define ERR_OPEN_PERM ": Permission denied"
+# define ERR_OPEN_ISDIR ": Is a directory"
 
 //execve err
 # define ERR_EXECVE "command not found: "
@@ -88,7 +89,8 @@ enum e_line_err
 enum e_open_err
 {
 	openerr_nosuch = 1,
-	openerr_perm
+	openerr_perm,
+	openerr_isdir
 };
 
 //==============================================================================
@@ -230,6 +232,7 @@ void	child_exit(t_ms *ms);
 int		redirection_in(t_ms *ms, t_cmd *cmd);
 int		open_fd_in(char *filename);
 int		print_open_err(char *filename, int error);
+int		am_i_this(char *path, char f_or_d, int r, int w);
 int		redirection_out(t_cmd *cmd);
 
 //05_here_doc.c
