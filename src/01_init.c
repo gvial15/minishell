@@ -31,7 +31,16 @@ void	fill_line_prompter(t_ms *ms)
 
 void	ms_init(t_ms *ms, char **envp)
 {
+	char	*shlvl;
+	char	*shlvl_up;
+
 	ms->envp = splitdup(envp);
+	shlvl = get_varvalue(ms->envp[already_exist(ft_strdup("SHLVL"), ms->envp)]);
+	shlvl_up = ft_itoa(ft_atoi(shlvl) + 1);
+	ms->envp = export_("SHELL=", "/bin/ms", ms);
+	ms->envp = export_("SHLVL=", shlvl_up, ms);
+	free(shlvl);
+	free(shlvl_up);
 	ms->cmds = NULL;
 	ms->last_line = NULL;
 	ms->line_path = NULL;

@@ -23,7 +23,10 @@ void	export_print(char **envp)
 	{
 		varname = get_varname(envp[i]);
 		varvalue = get_varvalue(envp[i]);
-		printf("declare -x %s=\"%s\"\n", varname, varvalue);
+		if (varvalue != NULL)
+			printf("declare -x %s=\"%s\"\n", varname, varvalue);
+		else
+			printf("declare -x %s=\"\"\n", varname);
 		free(varname);
 		free(varvalue);
 	}
@@ -74,7 +77,8 @@ int	valid_unset(char *var, int err)
 	i = -1;
 	while (var[++i])
 	{
-		if (!ft_isalnum(var[i]) || (i == 0 && !ft_isalpha(var[i])))
+		if (!ft_isalnum(var[i]) || (i == 0 && var[i] != '_'
+				&& !ft_isalpha(var[i])))
 		{
 			if (err)
 				printf("unset: `%s': not a valid identifier\n", var);
