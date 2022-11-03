@@ -83,7 +83,7 @@ static char	*replace(char *cmd, int var_i, t_ms *ms)
 	return (new_cmd);
 }
 
-void	conv_env_var(char **cmd, t_ms *ms)
+void	conv_env_var(char **cmd, t_ms *ms, int here_doc)
 {
 	int		i;
 	int		var_i;
@@ -94,10 +94,11 @@ void	conv_env_var(char **cmd, t_ms *ms)
 		var_i = env_var_i(cmd[i]);
 		while (var_i != -1)
 		{
-			if ((ft_strlen(cmd[i - 1]) == 2
-				&& ft_strnstr(cmd[i -1], "<<", ft_strlen(cmd[i - 1])))
+			if ((i != 0 && ft_strlen(cmd[i - 1]) == 2
+				&& ft_strnstr(cmd[i -1], "<<", ft_strlen(cmd[i - 1]))
+				&& here_doc == 0)
 				|| ft_strnstr(cmd[i], "<<", 2))
-				break ;
+					break ;
 			cmd[i] = replace(cmd[i], var_i, ms);
 			var_i = env_var_i(cmd[i]);
 		}
