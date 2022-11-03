@@ -6,7 +6,7 @@
 /*   By: mraymond <mraymond@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/29 18:28:01 by gvial             #+#    #+#             */
-/*   Updated: 2022/10/25 11:10:48 by mraymond         ###   ########.fr       */
+/*   Updated: 2022/11/03 11:15:29 by mraymond         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,6 +127,7 @@ void	waiting_n_closefd(t_ms *ms)
 		else
 			ms->err_last_child = WEXITSTATUS(status);
 	}
+	
 	if (ms->signal != 0 && ms->nb_cmd == 1)
 		ms->err_last_child = 130;
 }

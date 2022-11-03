@@ -6,7 +6,7 @@
 /*   By: mraymond <mraymond@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/05 09:58:59 by mraymond          #+#    #+#             */
-/*   Updated: 2022/11/02 15:53:30 by mraymond         ###   ########.fr       */
+/*   Updated: 2022/11/03 11:06:34 by mraymond         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ void	fct_sigint(int sig)
 	ms = get_ms(0);
 	signal_init(sit_exec);
 	ms->signal = sig;
+	ms->err_last_child = 130;
 	if (ms->cmd_index < ms->nb_cmd && ms)
 		child_exit(ms);
 }
