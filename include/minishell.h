@@ -6,7 +6,7 @@
 /*   By: mraymond <mraymond@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/29 18:27:32 by gvial             #+#    #+#             */
-/*   Updated: 2022/11/03 10:31:05 by mraymond         ###   ########.fr       */
+/*   Updated: 2022/11/04 09:57:53 by mraymond         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -243,6 +243,7 @@ void	close_n_free_mspipe(t_ms *ms);
 void	closefd_ifopen(int fd);
 t_cmd	*cmd_lst_index(t_ms *ms, int cmd_index);
 int		child_process_to_index(t_ms *ms, int waitpid_return);
+void	if_xnot0_skipline(void);
 
 //==============================================================================
 
