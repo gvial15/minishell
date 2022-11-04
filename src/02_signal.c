@@ -6,7 +6,7 @@
 /*   By: mraymond <mraymond@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/05 09:58:59 by mraymond          #+#    #+#             */
-/*   Updated: 2022/11/04 09:59:47 by mraymond         ###   ########.fr       */
+/*   Updated: 2022/11/04 10:02:45 by mraymond         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,4 +74,3 @@ void	fct_sigint_here_doc(int sig)
 	else
 		write(1, "\n", 1);
 }
-
