@@ -6,7 +6,7 @@
 /*   By: mraymond <mraymond@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/24 11:01:40 by mraymond          #+#    #+#             */
-/*   Updated: 2022/10/24 11:15:12 by mraymond         ###   ########.fr       */
+/*   Updated: 2022/11/03 15:08:14 by mraymond         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ static int	child_here_doc(char *str_eof, int fd_pipe[2])
 
 	close(fd_pipe[0]);
 	line = readline("> ");
-	while (line && ft_strncmp(line, str_eof, ft_strlen(line)))
+	while (line && ft_strncmp(line, str_eof, ft_strlen(line) + 1))
 	{
 		write(fd_pipe[1], line, ft_strlen(line));
 		write(fd_pipe[1], "\n", 1);
