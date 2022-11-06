@@ -25,7 +25,8 @@ void	child_execution(t_ms *ms)
 	{
 		execve(cmd->cmd_path, cmd->args, ms->envp);
 		dup2(fd_stdout, 1);
-		printf("%s%s%s\n", ERR_FIRST, ERR_EXECVE, cmd->args[0]);
+		if (cmd->args)
+			printf("%s%s%s\n", ERR_FIRST, ERR_EXECVE, cmd->args[0]);
 		ms->err_last_child = 127;
 	}
 	closefd_ifopen(1);
