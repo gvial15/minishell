@@ -20,7 +20,7 @@ char	*get_varvalue(char *var)
 	while (var[++i])
 		if (var[i] == '=')
 			break ;
-	if (var[i + 1] == 0)
+	if (!var[i] || !var[i + 1])
 		return (NULL);
 	value = ft_substr(var, i + 1, ft_strlen(var) - i);
 	return (value);
