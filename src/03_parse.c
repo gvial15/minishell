@@ -50,8 +50,6 @@ char	**get_args(char **cmd)
 	i = find_cmd_i(cmd);
 	if (i == -1)
 		return (NULL);
-	if (i == split_len(cmd))
-		return (&cmd[i - 1]);
 	arg_count = 0;
 	while (cmd[++i] && !have_redirec(cmd[i]))
 		arg_count++;

@@ -21,7 +21,7 @@ void	child_execution(t_ms *ms)
 	fd_stdout = pipe_redirection(ms, cmd);
 	if (builtin_checker(cmd) == 1)
 		builtin_exec(ms, cmd);
-	else
+	else if (cmd->cmd_path)
 	{
 		execve(cmd->cmd_path, cmd->args, ms->envp);
 		dup2(fd_stdout, 1);
