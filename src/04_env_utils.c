@@ -97,7 +97,8 @@ int	valid_export(char *var, int err)
 	{
 		if (var[i] == '=' && i != 0)
 			break ;
-		if (i == 0 && (!ft_isalpha(var[i]) || var[i] == '='))
+		if ((i == 0 && (!ft_isalpha(var[i]) || var[i] == '='))
+			|| !ft_isalnum(var[i]))
 		{
 			if (err)
 				printf("export: '%s': not a valid identifier\n", var);
