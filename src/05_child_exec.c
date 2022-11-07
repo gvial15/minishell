@@ -6,12 +6,14 @@
 /*   By: mraymond <mraymond@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 18:36:55 by mraymond          #+#    #+#             */
-/*   Updated: 2022/10/20 15:13:34 by mraymond         ###   ########.fr       */
+/*   Updated: 2022/11/07 11:00:57 by mraymond         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
+/* Execution of child command. CLear n exit if builtin or execve fail
+*/
 void	child_execution(t_ms *ms)
 {
 	t_cmd	*cmd;
@@ -33,6 +35,7 @@ void	child_execution(t_ms *ms)
 	child_exit(ms);
 }
 
+// Set set stdin and stdout, make copy of stdout for error management
 int	pipe_redirection(t_ms *ms, t_cmd *cmd)
 {
 	int	fd_stdout;
@@ -44,7 +47,21 @@ int	pipe_redirection(t_ms *ms, t_cmd *cmd)
 	return (fd_stdout);
 }
 
+// if last cmd, keep err_last_child
+// close and free and exit
 void	child_exit(t_ms *ms)
+{
+	int	last_err;
+
+	last_err = 0;
+	if (ms->cmd_index == ms->nb_cmd - 1)
+		last_err = ms->err_last_child;
+	child_cleaning(ms);
+	exit(last_err);
+}
+
+// Closing and free all
+void	child_cleaning(t_ms *ms)
 {
 	close_all_cmd_fdin_fdout(ms);
 	closefd_ifopen(0);
@@ -52,27 +69,8 @@ void	child_exit(t_ms *ms)
 	closefd_ifopen(ms->std_fd[0]);
 	closefd_ifopen(ms->std_fd[1]);
 	clear_history();
-	if (ms->cmd_index == ms->nb_cmd - 1)
-	{
-		ms_reset(ms);
-		exit(ms->err_last_child);
-	}
 	ms_reset(ms);
-	exit(0);
+	if (ms->envp)
+		free_split(ms->envp);
+	get_ms(1);
 }
-
-/*
-void	child_exit(t_ms *ms)
-{
-	close_all_cmd_fdin_fdout(ms);
-	closefd_ifopen(0);
-	closefd_ifopen(1);
-	if (ms->cmd_index == ms->nb_cmd - 1)
-	{
-		ms_reset(ms);
-		exit(ms->err_last_child);
-	}
-	ms_reset(ms);
-	exit(0);
-}
-*/

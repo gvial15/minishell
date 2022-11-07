@@ -6,12 +6,16 @@
 /*   By: mraymond <mraymond@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/29 18:28:01 by gvial             #+#    #+#             */
-/*   Updated: 2022/11/04 09:56:25 by mraymond         ###   ########.fr       */
+/*   Updated: 2022/11/07 11:13:13 by mraymond         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
+/* Set nb_cmd and malloc child_id
+** set the signal to execution mode
+** if just one cmd and its a built in, execute builtin in main process
+** else create process for each process*/
 void	exec(t_ms *ms)
 {
 	ms->nb_cmd = lst_len(ms->cmds);
@@ -33,6 +37,7 @@ void	exec(t_ms *ms)
 	}
 }
 
+// Create pipe for link between cmd and fill ms->pipe
 void	fd_allocation(t_ms *ms)
 {
 	int	i;
@@ -50,6 +55,7 @@ void	fd_allocation(t_ms *ms)
 	}
 }
 
+//Fill cmd->fildes with redirection or ms->pipe. Free ms-pipe
 void	fd_redirection(t_ms *ms)
 {
 	int		cmd_index;
@@ -78,6 +84,7 @@ void	fd_redirection(t_ms *ms)
 	close_n_free_mspipe(ms);
 }
 
+// Loop of child process + fill ms->child_id with process id 
 void	child_creation(t_ms *ms)
 {
 	int		process_id;

@@ -6,13 +6,13 @@
 /*   By: mraymond <mraymond@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 08:57:42 by mraymond          #+#    #+#             */
-/*   Updated: 2022/10/20 14:20:34 by mraymond         ###   ########.fr       */
+/*   Updated: 2022/11/07 10:26:04 by mraymond         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-//check if its a builtin
+// if cmd->args[0] is a builtin -> return 1 else return 0
 int	builtin_checker(t_cmd *cmd)
 {
 	if (!cmd->args)
@@ -28,6 +28,7 @@ int	builtin_checker(t_cmd *cmd)
 	return (0);
 }
 
+// Plus certain de sa necessite mais ca marche???
 static void	builtin_redirection(t_ms *ms, t_cmd *cmd, int in_out)
 {
 	if (in_out == 0)
@@ -42,6 +43,7 @@ static void	builtin_redirection(t_ms *ms, t_cmd *cmd, int in_out)
 	}
 }
 
+// Select and execute the good builtin 
 void	builtin_exec(t_ms *ms, t_cmd *cmd)
 {
 	builtin_redirection(ms, cmd, 0);

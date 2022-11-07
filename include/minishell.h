@@ -6,7 +6,7 @@
 /*   By: mraymond <mraymond@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/29 18:27:32 by gvial             #+#    #+#             */
-/*   Updated: 2022/11/04 09:57:53 by mraymond         ###   ########.fr       */
+/*   Updated: 2022/11/07 10:49:19 by mraymond         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,7 @@
 # define ERR_BUILT_NOTINPWD ": string not in pwd: "
 # define ERR_BUILT_PDFRULES ": not covered according to subject"
 # define ERR_BUILT_NONNUM ": numeric argument required"
+# define ERR_BUILT_NOTDIR ": Not a directory"
 
 //==============================================================================
 
@@ -172,7 +173,6 @@ int		have_redirec(char *s);
 int		have_dbl_redirec(char *s);
 char	**split_cmds(char **cmd);
 char	**split_quotes(char *cmd);
-t_cmd	*lst_last(t_cmd *head);
 char	*remove_quotes(char *s);
 int		find_cmd_i(char **split);
 char	*isolate_cmd(char *cmd_brut);
@@ -209,12 +209,11 @@ int		valid_export(char *var, int err);
 int		already_exist(char *varname, char **envp);
 char	**export_(char *varname, char *varvalue, t_ms *ms);
 
-// utils
-int		lst_len(t_cmd *head);
-
 //utils2
-void	free_dbl_ptr(void **ptr, int option);
+//void	free_dbl_ptr(void **ptr, int option);
 void	close_all_cmd_fdin_fdout(t_ms *ms);
+t_cmd	*lst_last(t_cmd *head);
+int		lst_len(t_cmd *head);
 
 //EXECUTION---------------------------------------------------------------------
 //05_exec.c
@@ -228,6 +227,7 @@ void	waiting_n_closefd(t_ms *ms);
 void	child_execution(t_ms *ms);
 int		pipe_redirection(t_ms *ms, t_cmd *cmd);
 void	child_exit(t_ms *ms);
+void	child_cleaning(t_ms *ms);
 
 //05_redirection.c
 int		redirection_in(t_ms *ms, t_cmd *cmd);
