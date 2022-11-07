@@ -12,7 +12,19 @@
 
 #include "../include/minishell.h"
 
-static int	child_here_doc(char *str_eof, int fd_pipe[2])
+// repair
+static char	*conv_env_var_here_doc(char *line, t_ms *ms)
+{
+	char	**split;
+	char	*new_line;
+
+	split = split_quotes(line);
+	conv_env_var(split, ms, 1);
+	new_line = split_to_str(split, 1);
+	return (new_line);
+}
+
+static int	child_here_doc(char *str_eof, int fd_pipe[2], t_ms *ms)
 {
 	char	*line;
 
@@ -20,6 +32,8 @@ static int	child_here_doc(char *str_eof, int fd_pipe[2])
 	line = readline("> ");
 	while (line && ft_strncmp(line, str_eof, ft_strlen(line) + 1))
 	{
+		if (ft_strnstr(line, "$", ft_strlen(line)))
+			line = conv_env_var_here_doc(line, ms);
 		write(fd_pipe[1], line, ft_strlen(line));
 		write(fd_pipe[1], "\n", 1);
 		free(line);
@@ -39,7 +53,7 @@ int	here_doc(t_ms *ms, char *str_eof)
 	pipe(fd_pipe);
 	ms->here_doc_id = fork();
 	if (ms->here_doc_id == 0)
-		child_here_doc(str_eof, fd_pipe);
+		child_here_doc(str_eof, fd_pipe, ms);
 	close(fd_pipe[1]);
 	wait(0);
 	signal_init(sit_exec);

@@ -15,11 +15,20 @@
 static char	*get_full_path(char **envp)
 {
 	int	i;
+	int	path_exist;
 
+	path_exist = 0;
 	i = -1;
 	while (envp[++i])
+	{
 		if (!ft_strncmp(envp[i], "PATH=", 5))
+		{
+			path_exist = 1;
 			break ;
+		}
+	}
+	if (!path_exist)
+		return (NULL);
 	return (&envp[i][5]);
 }
 
@@ -30,6 +39,8 @@ static char	**get_paths(char **envp)
 	int		i;
 
 	full_path = get_full_path(envp);
+	if (!full_path)
+		return (NULL);
 	paths = ft_split(full_path, ':');
 	i = -1;
 	while (paths[++i])
@@ -69,6 +80,8 @@ char	*get_cmd_path(char **cmd, char **envp)
 	if (cmd_i == -1)
 		return (NULL);
 	paths = get_paths(envp);
+	if (!paths)
+		return (ft_strdup(cmd[cmd_i]));
 	cmd_without_args = ft_strdup(cmd[cmd_i]);
 	cmd_without_args = remove_quotes(cmd_without_args);
 	path = find_path(paths, cmd_without_args);

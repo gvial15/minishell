@@ -177,9 +177,9 @@ char	*remove_quotes(char *s);
 int		find_cmd_i(char **split);
 char	*isolate_cmd(char *cmd_brut);
 char	*format_line(char *last_line);
-void	conv_env_var(char **cmd, t_ms *ms);
 char	*get_cmd_path(char **cmd, char **envp);
 char	**get_fds(t_cmd *new_cmd, char **cmd, char sign);
+void	conv_env_var(char **cmd, t_ms *ms, int here_doc);
 
 //BUILTINS----------------------------------------------------------------------
 //04_builtin_frame.c

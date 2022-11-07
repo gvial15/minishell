@@ -4,7 +4,7 @@ SRCS = 	convert/ft_atoi.c  convert/ft_ltoa.c convert/ft_itoa.c convert/ft_itoa_b
 		memory/ft_memcmp.c memory/ft_bzero.c memory/ft_calloc.c memory/free_split.c \
 		string/ft_strlcpy.c string/ft_strlcat.c string/ft_strnstr.c string/ft_strlen.c \
 		string/ft_strncmp.c string/ft_strchr.c string/ft_strrchr.c string/split_len.c \
-		string/ft_strdup.c string/ft_substr.c string/ft_strjoin.c string/splitdup.c \
+		string/ft_strdup.c string/ft_substr.c string/ft_strjoin.c string/splitdup.c string/split_to_str.c \
 		string/ft_striteri.c string/ft_strmapi.c string/ft_strtrim.c string/split_cpy.c \
 		print/ft_putchar_fd.c print/ft_putstr_fd.c print/ft_putendl_fd.c \
 		print/ft_putnbr_fd.c print/print_int_tab.c print/print_split.c \

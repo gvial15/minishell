@@ -26,6 +26,7 @@ static int	unset_var_count(char **args, char **envp)
 	return (count);
 }
 
+// redo unset
 char	**unset_env_var(char **args, t_ms *ms)
 {
 	int		i;
@@ -106,9 +107,15 @@ char	**export_env_var(char **args, t_ms *ms)
 	i = split_len(new_envp);
 	j = 0;
 	while (args[++j])
-		if (valid_export(args[j], 0)
-			&& already_exist(get_varname(args[j]), new_envp) == -1)
+	{
+		if (valid_export(args[j], 0))
+		{
+			if (already_exist(get_varname(args[j]), new_envp) == -1)
 			new_envp[i++] = ft_strdup(args[j]);
+			else
+			 	reassign(new_envp, args);
+		}
+	}
 	free_split(ms->envp);
 	ms->envp = NULL;
 	return (new_envp);
