@@ -6,7 +6,7 @@
 /*   By: mraymond <mraymond@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 12:51:26 by mraymond          #+#    #+#             */
-/*   Updated: 2022/10/21 15:05:45 by mraymond         ###   ########.fr       */
+/*   Updated: 2022/11/07 10:40:09 by mraymond         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ static int	ft_is_str_digit(char *str)
 	return (0);
 }
 
+// return strlen of long long
 static int	ll_len_limit(void)
 {
 	long long	pow10;
@@ -44,6 +45,7 @@ static int	ll_len_limit(void)
 	return (llmax_len + 1);
 }
 
+//convert str to long long
 static long long	ft_atoll(char *str)
 {
 	long long	val;
@@ -65,6 +67,7 @@ static long long	ft_atoll(char *str)
 	return (val);
 }
 
+//convert str to 0 to 255 int
 static int	llstr_modulo_256(char *str)
 {
 	long long	val;
@@ -77,6 +80,11 @@ static int	llstr_modulo_256(char *str)
 	return (modulo);
 }
 
+/* Message err if more than 1 arg
+** If arg is not num, return message err
+** if arg is num, convert the number to 0 to 255 number
+** only exit if not in child
+*/
 void	builtin_exit(t_ms *ms, t_cmd *cmd)
 {
 	if (cmd->args[1])

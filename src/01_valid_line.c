@@ -6,15 +6,13 @@
 /*   By: mraymond <mraymond@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/05 15:00:25 by mraymond          #+#    #+#             */
-/*   Updated: 2022/10/18 14:44:15 by mraymond         ###   ########.fr       */
+/*   Updated: 2022/11/07 09:29:16 by mraymond         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-/*return 0 if something each side of pipe. 
-Else return 1
-*/
+/*return 0 if something each side of pipe Else return 1*/
 static int	valid_cmd(char *line)
 {
 	int	i;
@@ -43,9 +41,7 @@ static int	valid_cmd(char *line)
 	return (0);
 }
 
-/*return 0 if quotes closed
-Else return 1
-*/
+/*Return 0 if quotes closed Else return 1*/
 static int	valid_quotes(char *line)
 {
 	int	i;
@@ -67,9 +63,9 @@ static int	valid_quotes(char *line)
 	return (1);
 }
 
-/*return 0 if valid line
-Else return (1)
-*/
+/* Check for unclosed quotes / empty command / bad redirection
+** return 0 if it's a valid line 
+** else print error_message and return error_number*/
 int	valid_line(char *line)
 {
 	int	error;
@@ -93,6 +89,7 @@ int	valid_line(char *line)
 	return (print_line_err(error));
 }
 
+/* print the error message accordingly of the error_number*/
 int	print_line_err(int error)
 {
 	if (error > 0)
@@ -120,6 +117,8 @@ int	print_line_err(int error)
 	return (error);
 }
 
+/* conversion error valid line to good ms->err_last_child ($?)
+** cannot be at the exit of valid line because of the 0 that return validline*/
 int	valid_line_error_conversion(int valid_line_return)
 {
 	if (valid_line_return == lineerr_quote)

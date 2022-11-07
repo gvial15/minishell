@@ -6,12 +6,13 @@
 /*   By: mraymond <mraymond@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 17:37:15 by mraymond          #+#    #+#             */
-/*   Updated: 2022/10/19 10:17:51 by mraymond         ###   ########.fr       */
+/*   Updated: 2022/11/07 09:32:50 by mraymond         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
+/*
 //option 0: with double ptr -- 1:only inside
 void	free_dbl_ptr(void **ptr, int option)
 {
@@ -26,7 +27,9 @@ void	free_dbl_ptr(void **ptr, int option)
 			free(ptr);
 	}
 }
+*/
 
+/* close all fd in all ms->cmds->fildes*/
 void	close_all_cmd_fdin_fdout(t_ms *ms)
 {
 	t_cmd	*cmd;
@@ -43,6 +46,7 @@ void	close_all_cmd_fdin_fdout(t_ms *ms)
 	}
 }
 
+/* return last node of the head list*/
 t_cmd	*lst_last(t_cmd *head)
 {
 	if (!head)
@@ -52,6 +56,7 @@ t_cmd	*lst_last(t_cmd *head)
 	return (head);
 }
 
+/* return the len of head list*/
 int	lst_len(t_cmd *head)
 {
 	int	len;

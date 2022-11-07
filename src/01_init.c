@@ -6,13 +6,13 @@
 /*   By: mraymond <mraymond@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/05 09:28:21 by mraymond          #+#    #+#             */
-/*   Updated: 2022/10/24 10:35:16 by mraymond         ###   ########.fr       */
+/*   Updated: 2022/11/07 09:18:35 by mraymond         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-//if init_workpath = 1, take the pwd working_path
+// Set the line prompter message (ms-> actual file $>)
 void	fill_line_prompter(t_ms *ms)
 {
 	int		i_last_dir;
@@ -29,6 +29,7 @@ void	fill_line_prompter(t_ms *ms)
 		PROMPTER_END, ft_strlen(PROMPTER_END) + 1);
 }
 
+//Initialize all the ms values
 void	ms_init(t_ms *ms, char **envp)
 {
 	char	*shlvl;
@@ -55,6 +56,7 @@ void	ms_init(t_ms *ms, char **envp)
 	ms->std_fd[1] = dup(1);
 }
 
+// free and reset all the ms->values for next line commands
 void	ms_reset(t_ms *ms)
 {
 	if (ms->last_line)
@@ -75,7 +77,8 @@ void	ms_reset(t_ms *ms)
 	ms->skip_cmd = 0;
 }
 
-//put 1 in arg to erase;
+/* Malloc and/or return or free ms
+** put 1 in arg to free*/
 t_ms	*get_ms(int erase)
 {
 	static t_ms	*ms = NULL;

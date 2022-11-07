@@ -6,13 +6,12 @@
 /*   By: mraymond <mraymond@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/24 11:01:40 by mraymond          #+#    #+#             */
-/*   Updated: 2022/11/03 15:08:14 by mraymond         ###   ########.fr       */
+/*   Updated: 2022/11/07 11:31:26 by mraymond         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-// repair
 static char	*conv_env_var_here_doc(char *line, t_ms *ms)
 {
 	char	**split;
@@ -24,6 +23,7 @@ static char	*conv_env_var_here_doc(char *line, t_ms *ms)
 	return (new_line);
 }
 
+// here doc loop inside child process for ctrl-d handling
 static int	child_here_doc(char *str_eof, int fd_pipe[2], t_ms *ms)
 {
 	char	*line;
@@ -39,15 +39,19 @@ static int	child_here_doc(char *str_eof, int fd_pipe[2], t_ms *ms)
 		free(line);
 		line = readline("> ");
 	}
+	close(fd_pipe[1]);
 	if (line)
 		free(line);
-	close(fd_pipe[1]);
+	else
+		exit(1);
 	exit(0);
 }
 
+// create pipe and child for heredoc loop
 int	here_doc(t_ms *ms, char *str_eof)
 {
-	int		fd_pipe[2];
+	int	fd_pipe[2];
+	int	status;
 
 	signal_init(sit_here_doc);
 	pipe(fd_pipe);
@@ -55,9 +59,9 @@ int	here_doc(t_ms *ms, char *str_eof)
 	if (ms->here_doc_id == 0)
 		child_here_doc(str_eof, fd_pipe, ms);
 	close(fd_pipe[1]);
-	wait(0);
+	waitpid(0, &status, 0);
 	signal_init(sit_exec);
-	if (ms->err_last_child == 1)
+	if (WEXITSTATUS(status) != 0)
 	{
 		close(fd_pipe[0]);
 		return (-1);

@@ -6,13 +6,13 @@
 /*   By: mraymond <mraymond@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 13:21:46 by mraymond          #+#    #+#             */
-/*   Updated: 2022/11/04 09:57:46 by mraymond         ###   ########.fr       */
+/*   Updated: 2022/11/07 11:07:28 by mraymond         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-//close all pipe open (but not 0 and 1)
+//close all ms->pipe open (except ms->pipe[0] and ms->pipe[last])
 void	close_n_free_mspipe(t_ms *ms)
 {
 	int	i;
@@ -24,6 +24,7 @@ void	close_n_free_mspipe(t_ms *ms)
 	ms->pipe = NULL;
 }
 
+// check if fd open and keep errno if close return error
 void	closefd_ifopen(int fd)
 {
 	struct stat	stat_buffer;
@@ -35,6 +36,7 @@ void	closefd_ifopen(int fd)
 	errno = temp_err;
 }
 
+//return the pointer of cmd accordingly of the index
 t_cmd	*cmd_lst_index(t_ms *ms, int cmd_index)
 {
 	int		i;
@@ -47,6 +49,7 @@ t_cmd	*cmd_lst_index(t_ms *ms, int cmd_index)
 	return (temp);
 }
 
+// return index of a child process using table ms->child_id
 int	child_process_to_index(t_ms *ms, int waitpid_return)
 {
 	int	i;
@@ -59,6 +62,8 @@ int	child_process_to_index(t_ms *ms, int waitpid_return)
 	return (i);
 }
 
+/* If terminal cursor x position is not 1, write \n
+*/
 void	if_xnot0_skipline(void)
 {
 	int				i;

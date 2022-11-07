@@ -6,7 +6,7 @@
 /*   By: mraymond <mraymond@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/29 18:27:46 by gvial             #+#    #+#             */
-/*   Updated: 2022/10/24 11:56:21 by mraymond         ###   ########.fr       */
+/*   Updated: 2022/11/07 09:13:46 by mraymond         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,10 @@ void	print_cmd_lst(t_cmd *head)
 }
 /************^^^^^testing functions^^^^^************/
 
+/* reset signal et ms
+** gestion du ctrl d et champs vide
+** add_history
+** return if a valid line*/
 static int	prompter(t_ms *ms)
 {
 	ms->signal = 0;
@@ -95,6 +99,10 @@ int	main(int ac, char **av, char **envp)
 	return (0);
 }
 
+/* Keep exit status
+** Write exit
+**clean and close everything
+** exit status*/
 void	history_clear_n_exit(t_ms *ms)
 {
 	int	status;
