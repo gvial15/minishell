@@ -113,7 +113,7 @@ char	**export_env_var(char **args, t_ms *ms)
 			if (already_exist(get_varname(args[j]), new_envp) == -1)
 			new_envp[i++] = ft_strdup(args[j]);
 			else
-			 	reassign(new_envp, args);
+				reassign(new_envp, args);
 		}
 	}
 	free_split(ms->envp);
