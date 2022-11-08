@@ -50,7 +50,8 @@ char	**unset_env_var(char **args, t_ms *ms)
 	i = -1;
 	while (args[++i])
 	{
-		if (valid_unset(args[i], 1) && already_exist(ft_strdup(args[i]), new_envp) != -1)
+		if (valid_unset(args[i], 1)
+			&& already_exist(ft_strdup(args[i]), new_envp) != -1)
 			new_envp = remove_one(new_envp, args[i]);
 	}
 	return (new_envp);

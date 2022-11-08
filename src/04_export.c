@@ -25,7 +25,7 @@ static char	**add_one(char **envp, char *var)
 	return (new_envp);
 }
 
-static char	*reassign (char *var, char *arg)
+static char	*reassign(char *var, char *arg)
 {
 	char	*new_var;
 
