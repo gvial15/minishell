@@ -12,44 +12,6 @@
 
 #include "../include/minishell.h"
 
-int	print_heredoc(int *heredoc)
-{
-	int	i;
-
-	if (!heredoc || heredoc[0] == -1)
-		return (printf("heredoc: (null)\n"));
-	printf("heredoc: ");
-	i = -1;
-	while (heredoc[++i] != -1)
-		printf("%i ", heredoc[i]);
-	printf("\n");
-	return (0);
-}
-
-void	print_cmd_lst(t_cmd *head)
-{
-	int	i;
-
-	i = 0;
-	while (head)
-	{
-		printf("*****\n");
-		printf("cmd#%i\n", i);
-		printf("cmd_path: %s\n", head->cmd_path);
-		printf("args:\n");
-		print_split(head->args);
-		printf("fd_in:\n");
-		print_split(head->fd_in);
-		printf("fd_out: \n");
-		print_split(head->fd_out);
-		printf("append:%i\n", head->append);
-		print_heredoc(head->heredoc);
-		head = head->next;
-		i++;
-	}
-}
-/************^^^^^testing functions^^^^^************/
-
 /* reset signal et ms
 ** gestion du ctrl d et champs vide
 ** add_history

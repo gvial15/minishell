@@ -141,8 +141,6 @@ typedef struct s_ms
 
 //PROTOTYPES_FILES==============================================================
 
-int		print_heredoc(int *heredoc);
-
 //0_main.c
 void	history_clear_n_exit(t_ms *ms);
 

@@ -75,7 +75,6 @@ SRCS 			= 	$(addprefix $(SRCS_DIR)/, $(SRCS_FILES))
 HEADERS			=	$(addprefix $(INCLUDE_DIR)/, $(HEADERS_FILES))
 
 OBJS 			= 	$(SRCS:$(SRCS_DIR)/%.c=$(OBJS_DIR)/%.o)
-OBJS_BONUS 		= 	$(SRCS_BONUS:$(SRCS_DIR_BONUS)/%.c=$(OBJS_DIR_BONUS)/%.o)
 
 LIBFT 			= 	$(addprefix $(LIBFT_DIR)/, $(LIBFT_FILES))
 LIBRD_MAKEFILE	=	$(addprefix $(LIBRD_DIR)/, Makefile)
@@ -121,8 +120,6 @@ clean:
 					@$(MAKE) -s clean -C $(LIBFT_DIR)
 					@$(RM) $(OBJS)
 					@$(RM) $(OBJS_DIR)
-					@$(RM) $(OBJS_BONUS)
-					@$(RM) $(OBJS_DIR_BONUS)
 					@echo "$R$ All objects       deleted$W"
 
 fclean: 			clean
@@ -130,7 +127,6 @@ fclean: 			clean
 					@$(MAKE) -s clean -C $(LIBRD_DIR)
 					@$(RM) $(NAME_DSYM)
 					@$(RM) $(NAME)
-					@$(RM) $(NAME_BONUS)
 					@echo "$R$(NAME) & lib   deleted$W"
 
 reset:				fclean
@@ -140,7 +136,7 @@ reset:				fclean
 re: 				fclean all
 
 debug: $(LIBFT)
-				gcc -g $(CFLAGS) $(LIBRARY) $(SRCS) -o $(NAME) -D DEBUG=1
+				gcc -g $(CFLAGS) $(LIBRARY) $(SRCS) -o $(NAME)
 
 #PHONY--------------------------------------------------------------------------
 
