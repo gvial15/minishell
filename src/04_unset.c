@@ -30,6 +30,7 @@ static char	**remove_one(char **envp, char *varname)
 			&& ft_strlen(env_varname) == ft_strlen(varname));
 		else
 			new_envp[++j] = ft_strdup(envp[i]);
+		free(env_varname);
 	}
 	free_split(envp);
 	return (new_envp);
