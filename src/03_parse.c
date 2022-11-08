@@ -94,7 +94,7 @@ void	parse(t_ms *ms)
 
 	ms->last_line = format_line(ms->last_line);
 	cmds = split_quotes(ms->last_line);
- 	cmds = split_cmds(cmds);
+	cmds = split_cmds(cmds);
 	create_cmd_lst(ms, cmds);
 	free_split(cmds);
 	free(ms->last_line);
